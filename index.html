@@ -3517,8 +3517,8 @@
                     <div class="activity-controls" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
                         <input type="text" id="activitySearch" placeholder=" بحث في السجل..." class="settings-input" style="flex: 1; min-width: 200px;" onkeyup="filterActivityLog()">
                         <button class="btn btn-primary" onclick="refreshActivityLog()"> تحديث</button>
-                        <button class="btn btn-success" onclick="exportActivityLog()"> تصدير</button>
-                        <button class="btn btn-danger" onclick="clearActivityLog()"> مسح السجل</button>
+                        <button id="exportActivityBtn" class="btn btn-success" onclick="exportActivityLog()" style="display: none;"> تصدير</button>
+                        <button id="clearActivityBtn" class="btn btn-danger" onclick="clearActivityLog()" style="display: none;"> مسح السجل</button>
                     </div>
                     <div id="activityLogContent" class="activity-log-container"></div>
                 </div>
@@ -3875,6 +3875,7 @@ let agentReports = {};
             }
             
             updateAdminTabsVisibility();
+            updateActivityLogButtonsVisibility();
             updateCurrentDate();
             
             setTimeout(() => {
@@ -3955,6 +3956,17 @@ let agentReports = {};
                 });
             } else {
                 adminTabs.forEach(tab => tab.style.display = 'none');
+            }
+        }
+        function updateActivityLogButtonsVisibility() {
+            const exportBtn = document.getElementById('exportActivityBtn');
+            const clearBtn = document.getElementById('clearActivityBtn');
+            if (currentUserRole === 'admin') {
+                if (exportBtn) exportBtn.style.display = 'inline-block';
+                if (clearBtn) clearBtn.style.display = 'inline-block';
+            } else {
+                if (exportBtn) exportBtn.style.display = 'none';
+                if (clearBtn) clearBtn.style.display = 'none';
             }
         }
         
@@ -12945,6 +12957,10 @@ let agentReports = {};
             });
         }
         function exportActivityLog() {
+            if (currentUserRole !== 'admin') {
+                showAlert(document.getElementById('usersAlert'), 'ليس لديك صلاحية لتصدير سجل العمليات.', 'error');
+                return;
+            }
             if (activityLog.length === 0) {
                 alert('لا توجد عمليات للتصدير');
                 return;
@@ -12963,6 +12979,10 @@ let agentReports = {};
             showSuccessMessage('تم تصدير سجل العمليات بنجاح!');
         }
         function clearActivityLog() {
+            if (currentUserRole !== 'admin') {
+                showAlert(document.getElementById('usersAlert'), 'ليس لديك صلاحية لمسح سجل العمليات.', 'error');
+                return;
+            }
             if (confirm('هل أنت متأكد من مسح جميع سجل العمليات؟')) {
                 activityLog = [];
                 localStorage.removeItem('activityLog');
