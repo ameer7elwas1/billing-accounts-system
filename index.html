@@ -13,7 +13,21 @@
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous"></script>
-    <script src="js/config.js" onerror="(function(){const s=document.currentScript;if(s){s.onerror=null;s.remove();}})();"></script>
+    <script>
+        // تحميل config.js بشكل ديناميكي لتجنب خطأ 404 في Console
+        (function() {
+            const script = document.createElement('script');
+            script.src = 'js/config.js';
+            script.onerror = function() {
+                // الملف غير موجود (متوقع على GitHub Pages) - لا نعرض خطأ
+                this.remove();
+            };
+            script.onload = function() {
+                // الملف موجود - تم تحميله بنجاح
+            };
+            document.head.appendChild(script);
+        })();
+    </script>
     <style>
         :root {
             --bg-primary: #ffffff;
