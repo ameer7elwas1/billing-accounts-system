@@ -16,16 +16,18 @@
     <script>
         // تحميل config.js بشكل ديناميكي لتجنب خطأ 404 في Console
         (function() {
-            const script = document.createElement('script');
-            script.src = 'js/config.js';
-            script.onerror = function() {
-                // الملف غير موجود (متوقع على GitHub Pages) - لا نعرض خطأ
-                this.remove();
-            };
-            script.onload = function() {
-                // الملف موجود - تم تحميله بنجاح
-            };
-            document.head.appendChild(script);
+            fetch('js/config.js')
+                .then(response => {
+                    if (response.ok) {
+                        const script = document.createElement('script');
+                        script.src = 'js/config.js';
+                        document.head.appendChild(script);
+                    }
+                    // إذا كان الملف غير موجود (404) - لا نفعل شيء (متوقع على GitHub Pages)
+                })
+                .catch(() => {
+                    // خطأ في الشبكة - لا نفعل شيء
+                });
         })();
     </script>
     <style>
