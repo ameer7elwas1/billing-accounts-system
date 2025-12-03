@@ -9754,6 +9754,8 @@ let agentReports = {};
             loadSettings();
             loadActivityLog();
             restoreTabAndScroll();
+            restoreScrollPosition();
+            setupScrollPositionSaving();
             loadTheme();
             const savedDefaultPercentage = parseFloat(localStorage.getItem('defaultAgentPercentage')) || 16;
             const defaultPercentageInput = document.getElementById('defaultAgentPercentage');
@@ -9801,6 +9803,9 @@ let agentReports = {};
         });
         window.addEventListener('beforeunload', function() {
             try {
+                const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+                localStorage.setItem('pageScrollPosition', scrollPosition.toString());
+                
                 if (agentReports && Object.keys(agentReports).length > 0) {
                     const agentReportsSummary = Object.keys(agentReports).reduce((acc, agentName) => {
                         acc[agentName] = {};
@@ -9901,6 +9906,27 @@ let agentReports = {};
                         }, 400);
                     }
                 }, 200);
+            }
+        }
+        function setupScrollPositionSaving() {
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+                    localStorage.setItem('pageScrollPosition', scrollPosition.toString());
+                }, 150);
+            }, { passive: true });
+        }
+        function restoreScrollPosition() {
+            const savedScrollPosition = localStorage.getItem('pageScrollPosition');
+            if (savedScrollPosition) {
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: parseInt(savedScrollPosition),
+                        behavior: 'auto'
+                    });
+                }, 100);
             }
         }
         function setupFileUploads() {
