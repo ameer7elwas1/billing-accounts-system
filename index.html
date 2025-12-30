@@ -3085,6 +3085,10 @@
                         <span class="nav-icon">📊</span>
                         <span class="nav-text">نسبة الوكلاء</span>
                     </div>
+                    <div class="nav-item" onclick="switchTab('ministryPercentage')">
+                        <span class="nav-icon"></span>
+                        <span class="nav-text">نسبة الوزارة</span>
+                    </div>
                     <div class="nav-item" onclick="switchTab('activity')">
                         <span class="nav-icon">📝</span>
                         <span class="nav-text">سجل العمليات</span>
@@ -3461,6 +3465,88 @@
                     </div>
                 </div>
             </div>
+            <div id="ministryPercentageTab" class="tab-content">
+                <div class="section">
+                    <h3 class="section-title"> </h3>
+                    <div style="margin-bottom: 20px; padding: 20px; background: rgba(128, 28, 50, 0.05); border-radius: 12px;">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #801c32;">رفع ملف Excel بالتفعيلات:</label>
+                            <div class="file-upload" id="ministryFileUpload">
+                                <p> اسحب ملف Excel هنا أو انقر للاختيار</p>
+                                <input type="file" id="ministryFileInput" accept=".xlsx,.xls" style="display: none;">
+                            </div>
+                            <div id="ministryFileName" class="success-message hidden" style="margin-top: 10px;"></div>
+                        </div>
+                        <div style="margin-top: 20px; display: flex; gap: 10px;">
+                            <button class="btn btn-primary" onclick="analyzeMinistryPercentageData()">تحليل بيانات نسبة الوزارة</button>
+                            <button class="btn btn-warning" onclick="resetMinistryData()">مسح البيانات</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="ministryResults" class="section hidden" style="padding: 20px; overflow: visible; overflow-x: hidden; width: 100%; max-width: 100%; box-sizing: border-box;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; width: 100%; max-width: 100%; box-sizing: border-box;">
+                        <h3 class="section-title" style="margin: 0; font-size: 1.3rem; padding-bottom: 10px;"> نسبة الوزارة</h3>
+                        <button class="btn btn-success" onclick="exportMinistryPercentageToExcel()" style="padding: 8px 16px; font-size: 0.85rem;">
+                            تصدير Excel
+                        </button>
+                    </div>
+                    <div id="ministryTableContainer" style="overflow-x: auto; overflow-y: auto; max-height: 70vh; width: 100%; max-width: 100%; position: relative; z-index: 1; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; box-sizing: border-box; will-change: scroll-position; contain: layout style paint;">
+                        <table id="ministryTable" style="width: auto; min-width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; table-layout: auto; box-sizing: border-box;">
+                            <thead>
+                                <tr style="background: #801c32; color: white;">
+                                    <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">نوع الاشتراك</th>
+                                    <th colspan="5" id="ministryOldProjectHeader" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600;">المشروع القديم (50%)</th>
+                                    <th colspan="5" id="ministryNewProjectHeader" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600;">المشروع الجديد (27%)</th>
+                                    <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600;">المجموع الكلي</th>
+                                </tr>
+                                <tr style="background: #801c32; color: white;">
+                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">عدد الكارتات</th>
+                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">السعر</th>
+                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">المبلغ</th>
+                                    <th id="ministryOldProjectPercentageHeader" style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">نسبة الوزارة 50%</th>
+                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">المبلغ المستحق</th>
+                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">عدد الكارتات</th>
+                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">السعر</th>
+                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">المبلغ</th>
+                                    <th id="ministryNewProjectPercentageHeader" style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">نسبة الوزارة 27%</th>
+                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">المبلغ المستحق</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ministryTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="ministrySummary" style="margin-top: 20px; padding: 15px; background: rgba(128, 28, 50, 0.05); border-radius: 8px; display: none;">
+                        <h4 style="margin: 0 0 10px 0; color: #801c32; font-weight: 700;">ملخص النتائج</h4>
+                        <div id="ministrySummaryContent"></div>
+                    </div>
+                    <div id="ministryPriceDifferences" class="section hidden" style="margin-top: 20px; padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border: 2px solid rgba(255, 193, 7, 0.3);">
+                        <h4 style="margin: 0 0 15px 0; color: #856404; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.2rem;">⚠️</span>
+                            الاشتراكات التي فيها اختلاف في السعر
+                        </h4>
+                        <div id="ministryPriceDifferencesContent" style="overflow-x: auto;">
+                            <table id="priceDifferencesTable" style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background: #856404; color: white;">
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">#</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">اسم المستخدم</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">تابع إلى</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">نوع الاشتراك</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;"> المشروع</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر الرسمي</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر المكتوب</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر المستخدم</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">الفرق</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="priceDifferencesTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="settingsTab" class="tab-content">
                 <div class="section">
                     <h3 class="section-title"> الإعدادات</h3>
@@ -3498,6 +3584,20 @@
                                 <input type="number" id="defaultAgentPercentage" class="settings-input" value="16" min="0" max="100" step="0.01" onchange="saveDefaultPercentage()">
                                 <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-primary); font-weight: 600;"></p>
                             </div>
+                        </div>
+                        <div class="settings-section">
+                            <h4> إعدادات نسبة الوزارة</h4>
+                            <div class="settings-group">
+                                <label for="ministryOldProjectPercentage">نسبة الوزارة للمشروع القديم (%):</label>
+                                <input type="number" id="ministryOldProjectPercentage" class="settings-input" value="50" min="0" max="100" step="0.01" onchange="saveMinistryPercentages()">
+                                <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-primary); font-weight: 600;">النسبة المئوية للوزارة من إيرادات المشروع القديم</p>
+                            </div>
+                            <div class="settings-group">
+                                <label for="ministryNewProjectPercentage">نسبة الوزارة للمشروع الجديد (%):</label>
+                                <input type="number" id="ministryNewProjectPercentage" class="settings-input" value="27" min="0" max="100" step="0.01" onchange="saveMinistryPercentages()">
+                                <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-primary); font-weight: 600;">النسبة المئوية للوزارة من إيرادات المشروع الجديد</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="saveMinistryPercentages()" style="margin-top: 10px;"> حفظ إعدادات نسبة الوزارة</button>
                         </div>
                         <div class="settings-section">
                             <h4> الإشعارات</h4>
@@ -3682,6 +3782,10 @@ let agentReports = {};
         let basicDetails = [];
         let percentageData = null;
         let agentPercentages = JSON.parse(localStorage.getItem('agentPercentages') || '{}');
+        let ministryData = null;
+        let ministryResults = null;
+        let ministryOldProjectPercentage = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
+        let ministryNewProjectPercentage = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
         const SUPABASE_URL = (typeof window !== 'undefined' && typeof window.SUPABASE_URL !== 'undefined') ? window.SUPABASE_URL : 'https://qcbcjyhqgxwuqutzkxrh.supabase.co';
         const SUPABASE_ANON_KEY = (typeof window !== 'undefined' && typeof window.SUPABASE_ANON_KEY !== 'undefined') ? window.SUPABASE_ANON_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjYmNqeWhxZ3h3dXF1dHpreHJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEyMDE3NjQsImV4cCI6MjA2Njc3Nzc2NH0.y-hQVa6nzBpCMpXL7XbcWPMGafATvnMez3lAmFvb2zY';
         const SYSTEM_NAME = 'billing_accounts';
@@ -6390,6 +6494,1338 @@ let agentReports = {};
             }
             
             renderPercentageTable();
+        }
+        // وظائف نسبة الوزارة
+        function setupMinistryFileUpload() {
+            const fileUpload = document.getElementById('ministryFileUpload');
+            const fileInput = document.getElementById('ministryFileInput');
+            if (!fileUpload || !fileInput) return;
+            fileUpload.addEventListener('click', () => fileInput.click());
+            fileUpload.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUpload.style.background = 'rgba(128, 28, 50, 0.1)';
+            });
+            fileUpload.addEventListener('dragleave', () => {
+                fileUpload.style.background = '';
+            });
+            fileUpload.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUpload.style.background = '';
+                if (e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleMinistryFileUpload(e.dataTransfer.files[0]);
+                }
+            });
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleMinistryFileUpload(e.target.files[0]);
+                }
+            });
+        }
+        function handleMinistryFileUpload(file) {
+            const fileName = file.name;
+            document.getElementById('ministryFileName').textContent = `تم تحميل الملف: ${fileName}`;
+            document.getElementById('ministryFileName').classList.remove('hidden');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                ministryData = {
+                    data: XLSX.utils.sheet_to_json(firstSheet, { header: 1 }),
+                    fileName: fileName
+                };
+                showSuccessMessage(`تم تحميل ملف Excel بنجاح. اضغط على "تحليل بيانات نسبة الوزارة" للبدء`);
+                logActivity('رفع ملف نسبة الوزارة', `تم رفع ملف: ${fileName}`);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+        function analyzeMinistryPercentageData() {
+            if (!ministryData || !ministryData.data || ministryData.data.length === 0) {
+                alert('يرجى رفع ملف Excel أولاً');
+                return;
+            }
+            // تحديث النسب من localStorage قبل التحليل
+            ministryOldProjectPercentage = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
+            ministryNewProjectPercentage = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
+            try {
+                const data = ministryData.data;
+                if (data.length < 2) {
+                    alert('الملف لا يحتوي على بيانات كافية');
+                    return;
+                }
+                // البحث عن عمود نوع الاشتراك وعمود اسم المستخدم وعمود الوكيل
+                const headerRow = data[0];
+                let subscriptionColumnIndex = -1;
+                let usernameColumnIndex = -1;
+                let agentColumnIndex = -1;
+                for (let i = 0; i < headerRow.length; i++) {
+                    const header = String(headerRow[i] || '').toLowerCase().trim();
+                    if (header.includes('نوع') && header.includes('اشتراك') || 
+                        header.includes('subscription') || 
+                        header.includes('profile') ||
+                        header.includes('type')) {
+                        subscriptionColumnIndex = i;
+                    }
+                    // البحث عن عمود اسم المستخدم
+                    if ((header.includes('user') && header.includes('name')) ||
+                        header.includes('username') ||
+                        (header.includes('اسم') && (header.includes('مستخدم') || header.includes('user'))) ||
+                        header === 'user' || header === 'username') {
+                        usernameColumnIndex = i;
+                    }
+                    // البحث عن عمود الوكيل (عمود G أو البحث عن كلمة "وكيل" أو "agent")
+                    if (header.includes('وكيل') || header.includes('agent') || 
+                        header.includes('الوكيل') || i === 6) { // عمود G هو الفهرس 6
+                        agentColumnIndex = i;
+                    }
+                }
+                // إذا لم يتم العثور على عمود الوكيل بالبحث، نستخدم عمود G (الفهرس 6)
+                if (agentColumnIndex === -1 && headerRow.length > 6) {
+                    agentColumnIndex = 6;
+                }
+                if (subscriptionColumnIndex === -1) {
+                    // البحث في جميع الأعمدة
+                    for (let i = 0; i < headerRow.length; i++) {
+                        const header = String(headerRow[i] || '').toLowerCase().trim();
+                        if (header.includes('iraqcell') || header.includes('bronze') || 
+                            header.includes('silver') || header.includes('gold') || 
+                            header.includes('platinum')) {
+                            subscriptionColumnIndex = i;
+                            break;
+                        }
+                    }
+                }
+                if (subscriptionColumnIndex === -1) {
+                    alert('لم يتم العثور على عمود نوع الاشتراك. يرجى التأكد من أن الملف يحتوي على عمود بنوع الاشتراك');
+                    return;
+                }
+                // تجميع البيانات حسب نوع الاشتراك
+                const oldProjectSubscriptions = {
+                    'Iraqcell_Bronze_Profile': { count: 0, totalAmount: 0, price: 0 },
+                    'Iraqcell_Silver_Profile': { count: 0, totalAmount: 0, price: 0 },
+                    'Iraqcell_Gold_Profile': { count: 0, totalAmount: 0, price: 0 },
+                    'Iraqcell_Platinum_Profile': { count: 0, totalAmount: 0, price: 0 }
+                };
+                const newProjectSubscriptions = {
+                    'Iraqcell_Bronze_Profile_NEW': { count: 0, totalAmount: 0, price: 0 },
+                    'Iraqcell_Silver_Profile_NEW': { count: 0, totalAmount: 0, price: 0 },
+                    'Iraqcell_Gold_Profile_NEW': { count: 0, totalAmount: 0, price: 0 },
+                    'Iraqcell_Platinum_Profile_NEW': { count: 0, totalAmount: 0, price: 0 }
+                };
+                // مصفوفة لحفظ الاشتراكات التي فيها اختلاف في السعر
+                const priceDifferences = [];
+                // مصفوفات لحفظ تفاصيل كل اشتراك لكل مشروع
+                const oldProjectDetails = [];
+                const newProjectDetails = [];
+                // البحث عن عمود المبلغ (إن وجد)
+                let amountColumnIndex = -1;
+                let userPriceColumnIndex = -1;
+                for (let i = 0; i < headerRow.length; i++) {
+                    const header = String(headerRow[i] || '').toLowerCase().trim();
+                    // البحث عن عمود user price أولاً
+                    if (header.includes('user') && header.includes('price')) {
+                        userPriceColumnIndex = i;
+                    }
+                    // البحث عن عمود المبلغ/السعر العام
+                    if (header.includes('مبلغ') || header.includes('amount') || 
+                        header.includes('سعر') || header.includes('price') ||
+                        header.includes('فئة')) {
+                        if (amountColumnIndex === -1) {
+                            amountColumnIndex = i;
+                        }
+                    }
+                }
+                // إذا وجدنا عمود user price، نستخدمه بدلاً من amount
+                if (userPriceColumnIndex >= 0) {
+                    amountColumnIndex = userPriceColumnIndex;
+                }
+                // معالجة البيانات
+                for (let i = 1; i < data.length; i++) {
+                    const row = data[i];
+                    if (!row || row.length === 0) continue;
+                    const subscriptionType = String(row[subscriptionColumnIndex] || '').trim();
+                    if (!subscriptionType) continue;
+                    // تحديد نوع الاشتراك
+                    let subscriptionKey = null;
+                    let isNewProject = false;
+                    if (subscriptionType.includes('Bronze') || subscriptionType.includes('برونز')) {
+                        subscriptionKey = subscriptionType.includes('NEW') || subscriptionType.includes('_NEW') ? 
+                            'Iraqcell_Bronze_Profile_NEW' : 'Iraqcell_Bronze_Profile';
+                        isNewProject = subscriptionType.includes('NEW') || subscriptionType.includes('_NEW');
+                    } else if (subscriptionType.includes('Silver') || subscriptionType.includes('سلفر')) {
+                        subscriptionKey = subscriptionType.includes('NEW') || subscriptionType.includes('_NEW') ? 
+                            'Iraqcell_Silver_Profile_NEW' : 'Iraqcell_Silver_Profile';
+                        isNewProject = subscriptionType.includes('NEW') || subscriptionType.includes('_NEW');
+                    } else if (subscriptionType.includes('Gold') || subscriptionType.includes('كولد')) {
+                        subscriptionKey = subscriptionType.includes('NEW') || subscriptionType.includes('_NEW') ? 
+                            'Iraqcell_Gold_Profile_NEW' : 'Iraqcell_Gold_Profile';
+                        isNewProject = subscriptionType.includes('NEW') || subscriptionType.includes('_NEW');
+                    } else if (subscriptionType.includes('Platinum') || subscriptionType.includes('بلاتينيوم')) {
+                        subscriptionKey = subscriptionType.includes('NEW') || subscriptionType.includes('_NEW') ? 
+                            'Iraqcell_Platinum_Profile_NEW' : 'Iraqcell_Platinum_Profile';
+                        isNewProject = subscriptionType.includes('NEW') || subscriptionType.includes('_NEW');
+                    }
+                    if (!subscriptionKey) continue;
+                    // حساب المبلغ والسعر
+                    let amount = 0;
+                    let price = 0;
+                    const category = subscriptionKey.includes('Bronze') ? 'B' : 
+                                   subscriptionKey.includes('Silver') ? 'S' : 
+                                   subscriptionKey.includes('Gold') ? 'G' : 'P';
+                    
+                    // الحصول على السعر الرسمي حسب نوع الاشتراك
+                    const officialPrice = getSubscriptionPrice(subscriptionKey, category, 'basic');
+                    
+                    // قراءة السعر من حقل user price
+                    let userPrice = 0;
+                    if (amountColumnIndex >= 0 && row[amountColumnIndex] !== undefined && row[amountColumnIndex] !== null) {
+                        // تحويل القيمة إلى رقم مع التعامل مع القيم الفارغة والنصية
+                        const priceValue = String(row[amountColumnIndex]).trim();
+                        if (priceValue !== '' && priceValue !== '0' && priceValue !== 'null' && priceValue !== 'undefined') {
+                            userPrice = parseFloat(priceValue);
+                            // التحقق من أن القيمة رقم صحيح
+                            if (isNaN(userPrice) || userPrice <= 0) {
+                                userPrice = 0;
+                            }
+                        }
+                    }
+                    
+                    // قراءة اسم المستخدم والوكيل مرة واحدة
+                    const username = usernameColumnIndex >= 0 && row[usernameColumnIndex] 
+                        ? String(row[usernameColumnIndex]).trim() 
+                        : (row[0] || 'غير محدد');
+                    const agentName = agentColumnIndex >= 0 && row[agentColumnIndex] 
+                        ? String(row[agentColumnIndex]).trim() 
+                        : 'غير محدد';
+                    
+                    // تحديد السعر المستخدم للوزارة
+                    // إذا كان userPrice = 0 أو فارغ، نستخدم السعر الرسمي
+                    // إذا كان userPrice < السعر الرسمي، نستخدم السعر الرسمي (الوزارة تحاسب على السعر الرسمي)
+                    // إذا كان userPrice >= السعر الرسمي، نستخدم userPrice
+                    if (userPrice === 0 || isNaN(userPrice)) {
+                        price = officialPrice;
+                        amount = officialPrice;
+                    } else if (userPrice < officialPrice) {
+                        // إذا كان السعر أقل من الرسمي، الوزارة تحاسب على السعر الرسمي
+                        price = officialPrice;
+                        amount = officialPrice;
+                        // حفظ معلومات الاختلاف
+                        priceDifferences.push({
+                            username: username || 'غير محدد',
+                            agentName: agentName || 'غير محدد',
+                            subscriptionType: subscriptionType,
+                            officialPrice: officialPrice,
+                            userPrice: userPrice,
+                            usedPrice: officialPrice,
+                            difference: officialPrice - userPrice,
+                            projectType: isNewProject ? 'المشروع الجديد' : 'المشروع القديم'
+                        });
+                    } else if (userPrice > officialPrice) {
+                        // إذا كان السعر أكثر من الرسمي، نستخدم السعر المكتوب
+                        price = userPrice;
+                        amount = userPrice;
+                        // حفظ معلومات الاختلاف
+                        priceDifferences.push({
+                            username: username || 'غير محدد',
+                            agentName: agentName || 'غير محدد',
+                            subscriptionType: subscriptionType,
+                            officialPrice: officialPrice,
+                            userPrice: userPrice,
+                            usedPrice: userPrice,
+                            difference: userPrice - officialPrice,
+                            projectType: isNewProject ? 'المشروع الجديد' : 'المشروع القديم'
+                        });
+                    } else {
+                        // إذا كان السعر يساوي الرسمي بالضبط
+                        price = officialPrice;
+                        amount = officialPrice;
+                    }
+                    
+                    // حفظ تفاصيل الاشتراك
+                    
+                    const subscriptionDetail = {
+                        username: username || 'غير محدد',
+                        agentName: agentName || 'غير محدد',
+                        subscriptionType: subscriptionType,
+                        officialPrice: officialPrice,
+                        userPrice: userPrice || 0,
+                        usedPrice: price,
+                        amount: amount,
+                        category: category,
+                        rowData: row // حفظ بيانات الصف الكاملة
+                    };
+                    
+                    // إضافة إلى المجموعة المناسبة
+                    if (isNewProject && newProjectSubscriptions[subscriptionKey]) {
+                        newProjectSubscriptions[subscriptionKey].count++;
+                        newProjectSubscriptions[subscriptionKey].totalAmount += amount;
+                        // حفظ السعر (إذا كان هذا أول سجل، نستخدم السعر الحالي)
+                        if (newProjectSubscriptions[subscriptionKey].count === 1) {
+                            newProjectSubscriptions[subscriptionKey].price = price;
+                        } else {
+                            // حساب متوسط السعر من إجمالي المبلغ/العدد
+                            const avgPrice = newProjectSubscriptions[subscriptionKey].totalAmount / newProjectSubscriptions[subscriptionKey].count;
+                            newProjectSubscriptions[subscriptionKey].price = Math.round(avgPrice);
+                        }
+                        // حفظ تفاصيل الاشتراك للمشروع الجديد
+                        newProjectDetails.push(subscriptionDetail);
+                    } else if (!isNewProject && oldProjectSubscriptions[subscriptionKey]) {
+                        oldProjectSubscriptions[subscriptionKey].count++;
+                        oldProjectSubscriptions[subscriptionKey].totalAmount += amount;
+                        // حفظ السعر (إذا كان هذا أول سجل، نستخدم السعر الحالي)
+                        if (oldProjectSubscriptions[subscriptionKey].count === 1) {
+                            oldProjectSubscriptions[subscriptionKey].price = price;
+                        } else {
+                            // حساب متوسط السعر من إجمالي المبلغ/العدد
+                            const avgPrice = oldProjectSubscriptions[subscriptionKey].totalAmount / oldProjectSubscriptions[subscriptionKey].count;
+                            oldProjectSubscriptions[subscriptionKey].price = Math.round(avgPrice);
+                        }
+                        // حفظ تفاصيل الاشتراك للمشروع القديم
+                        oldProjectDetails.push(subscriptionDetail);
+                    }
+                }
+                // حساب نسبة الوزارة
+                ministryResults = {
+                    oldProject: {},
+                    newProject: {},
+                    totals: {
+                        oldProject: { totalCount: 0, totalAmount: 0, ministryAmount: 0 },
+                        newProject: { totalCount: 0, totalAmount: 0, ministryAmount: 0 },
+                        grandTotal: 0
+                    },
+                    priceDifferences: priceDifferences, // حفظ الاشتراكات التي فيها اختلاف
+                    oldProjectDetails: oldProjectDetails, // حفظ تفاصيل المشروع القديم
+                    newProjectDetails: newProjectDetails, // حفظ تفاصيل المشروع الجديد
+                    headerRow: headerRow // حفظ رأس الجدول
+                };
+                const subscriptionTypes = ['Bronze', 'Silver', 'Gold', 'Platinum'];
+                subscriptionTypes.forEach(type => {
+                    const oldKey = `Iraqcell_${type}_Profile`;
+                    const newKey = `Iraqcell_${type}_Profile_NEW`;
+                    const oldData = oldProjectSubscriptions[oldKey] || { count: 0, totalAmount: 0, price: 0 };
+                    const newData = newProjectSubscriptions[newKey] || { count: 0, totalAmount: 0, price: 0 };
+                    const oldMinistryAmount = oldData.totalAmount * (ministryOldProjectPercentage / 100);
+                    const newMinistryAmount = newData.totalAmount * (ministryNewProjectPercentage / 100);
+                    // حساب السعر (من البيانات أو من الأسعار الافتراضية)
+                    let oldPrice = oldData.price;
+                    let newPrice = newData.price;
+                    if (oldPrice === 0 && oldData.count > 0) {
+                        const category = type === 'Bronze' ? 'B' : type === 'Silver' ? 'S' : type === 'Gold' ? 'G' : 'P';
+                        oldPrice = getSubscriptionPrice(oldKey, category, 'basic');
+                    }
+                    if (newPrice === 0 && newData.count > 0) {
+                        const category = type === 'Bronze' ? 'B' : type === 'Silver' ? 'S' : type === 'Gold' ? 'G' : 'P';
+                        newPrice = getSubscriptionPrice(newKey, category, 'basic');
+                    }
+                    ministryResults.oldProject[type] = {
+                        count: oldData.count,
+                        amount: oldData.totalAmount,
+                        price: oldPrice,
+                        ministryPercentage: ministryOldProjectPercentage,
+                        ministryAmount: oldMinistryAmount
+                    };
+                    ministryResults.newProject[type] = {
+                        count: newData.count,
+                        amount: newData.totalAmount,
+                        price: newPrice,
+                        ministryPercentage: ministryNewProjectPercentage,
+                        ministryAmount: newMinistryAmount
+                    };
+                    ministryResults.totals.oldProject.totalCount += oldData.count;
+                    ministryResults.totals.oldProject.totalAmount += oldData.totalAmount;
+                    ministryResults.totals.oldProject.ministryAmount += oldMinistryAmount;
+                    ministryResults.totals.newProject.totalCount += newData.count;
+                    ministryResults.totals.newProject.totalAmount += newData.totalAmount;
+                    ministryResults.totals.newProject.ministryAmount += newMinistryAmount;
+                });
+                ministryResults.totals.grandTotal = ministryResults.totals.oldProject.ministryAmount + 
+                                                     ministryResults.totals.newProject.ministryAmount;
+                // عرض النتائج
+                renderMinistryTable();
+                document.getElementById('ministryResults').classList.remove('hidden');
+                showSuccessMessage('تم تحليل البيانات بنجاح');
+                logActivity('تحليل نسبة الوزارة', 'تم تحليل بيانات نسبة الوزارة بنجاح');
+            } catch (error) {
+                console.error('خطأ في تحليل البيانات:', error);
+                alert('حدث خطأ أثناء تحليل البيانات: ' + error.message);
+            }
+        }
+        function renderMinistryTable() {
+            if (!ministryResults) return;
+            // تحديث النسب من localStorage قبل العرض
+            ministryOldProjectPercentage = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
+            ministryNewProjectPercentage = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
+            const tbody = document.getElementById('ministryTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            const subscriptionTypes = [
+                { key: 'Bronze', name: 'Bronze', price: 30000 },
+                { key: 'Silver', name: 'Silver', price: 40000 },
+                { key: 'Gold', name: 'Gold', price: 50000 },
+                { key: 'Platinum', name: 'Platinum', price: 65000 }
+            ];
+            subscriptionTypes.forEach(type => {
+                const oldData = ministryResults.oldProject[type.key] || { count: 0, amount: 0, price: 0, ministryAmount: 0 };
+                const newData = ministryResults.newProject[type.key] || { count: 0, amount: 0, price: 0, ministryAmount: 0 };
+                const row = document.createElement('tr');
+                // استخدام النسب الجديدة من localStorage بدلاً من المحفوظة
+                const oldPercentage = ministryOldProjectPercentage;
+                const newPercentage = ministryNewProjectPercentage;
+                // إعادة حساب المبلغ المستحق باستخدام النسب الجديدة
+                const oldMinistryAmount = oldData.amount * (oldPercentage / 100);
+                const newMinistryAmount = newData.amount * (newPercentage / 100);
+                const oldPrice = oldData.price || 0;
+                const newPrice = newData.price || 0;
+                row.innerHTML = `
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: 600;">${type.name}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(oldData.count)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(oldPrice)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(oldData.amount)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${oldPercentage}%</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(oldMinistryAmount)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(newData.count)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(newPrice)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(newData.amount)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${newPercentage}%</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(newMinistryAmount)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 700; color: #801c32; font-size: 0.9rem;">${formatNumber(oldMinistryAmount + newMinistryAmount)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            // صف المجموع - إعادة حساب المبالغ المستحقة باستخدام النسب الجديدة
+            const totalRow = document.createElement('tr');
+            totalRow.style.borderTop = '3px solid #801c32';
+            totalRow.style.background = '#f8f9fa';
+            totalRow.style.fontWeight = 'bold';
+            const totals = ministryResults.totals;
+            // إعادة حساب المبالغ المستحقة باستخدام النسب الجديدة
+            const recalculatedOldMinistryAmount = totals.oldProject.totalAmount * (ministryOldProjectPercentage / 100);
+            const recalculatedNewMinistryAmount = totals.newProject.totalAmount * (ministryNewProjectPercentage / 100);
+            const recalculatedGrandTotal = recalculatedOldMinistryAmount + recalculatedNewMinistryAmount;
+            totalRow.innerHTML = `
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.9rem;">المجموع</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.oldProject.totalCount)}</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">-</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.oldProject.totalAmount)}</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${ministryOldProjectPercentage}%</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem; color: #801c32;">${formatNumber(recalculatedOldMinistryAmount)}</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.newProject.totalCount)}</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">-</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.newProject.totalAmount)}</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${ministryNewProjectPercentage}%</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem; color: #801c32;">${formatNumber(recalculatedNewMinistryAmount)}</td>
+                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 1rem; color: #801c32;">${formatNumber(recalculatedGrandTotal)}</td>
+            `;
+            tbody.appendChild(totalRow);
+            // عرض الملخص - إعادة حساب المبالغ المستحقة باستخدام النسب الجديدة
+            const summaryDiv = document.getElementById('ministrySummary');
+            const summaryContent = document.getElementById('ministrySummaryContent');
+            if (summaryDiv && summaryContent) {
+                // إعادة حساب المبالغ المستحقة باستخدام النسب الجديدة
+                const summaryOldMinistryAmount = totals.oldProject.totalAmount * (ministryOldProjectPercentage / 100);
+                const summaryNewMinistryAmount = totals.newProject.totalAmount * (ministryNewProjectPercentage / 100);
+                const summaryGrandTotal = summaryOldMinistryAmount + summaryNewMinistryAmount;
+                summaryContent.innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 10px;">
+                        <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #ddd;">
+                            <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">المشروع القديم (${ministryOldProjectPercentage}%)</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #801c32;">${formatNumber(summaryOldMinistryAmount)} د.ع</div>
+                        </div>
+                        <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #ddd;">
+                            <div style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">المشروع الجديد (${ministryNewProjectPercentage}%)</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #801c32;">${formatNumber(summaryNewMinistryAmount)} د.ع</div>
+                        </div>
+                        <div style="padding: 12px; background: #801c32; border-radius: 8px; color: white;">
+                            <div style="font-size: 0.85rem; margin-bottom: 5px; opacity: 0.9;">المجموع الكلي</div>
+                            <div style="font-size: 1.4rem; font-weight: 700;">${formatNumber(summaryGrandTotal)} د.ع</div>
+                        </div>
+                    </div>
+                `;
+                summaryDiv.style.display = 'block';
+            }
+            
+            // عرض الاشتراكات التي فيها اختلاف في السعر
+            renderPriceDifferences();
+        }
+        function renderPriceDifferences() {
+            if (!ministryResults || !ministryResults.priceDifferences || ministryResults.priceDifferences.length === 0) {
+                const differencesSection = document.getElementById('ministryPriceDifferences');
+                if (differencesSection) {
+                    differencesSection.classList.add('hidden');
+                }
+                return;
+            }
+            
+            const differencesSection = document.getElementById('ministryPriceDifferences');
+            const differencesTbody = document.getElementById('priceDifferencesTableBody');
+            if (!differencesSection || !differencesTbody) return;
+            
+            differencesSection.classList.remove('hidden');
+            differencesTbody.innerHTML = '';
+            
+            ministryResults.priceDifferences.forEach((diff, index) => {
+                const row = document.createElement('tr');
+                const isLower = diff.userPrice < diff.officialPrice;
+                const rowColor = isLower ? 'rgba(220, 53, 69, 0.1)' : 'rgba(40, 167, 69, 0.1)';
+                row.style.background = rowColor;
+                
+                const differenceText = isLower 
+                    ? `-${formatNumber(diff.difference)} (أقل من الرسمي)` 
+                    : `+${formatNumber(diff.difference)} (أكثر من الرسمي)`;
+                const differenceColor = isLower ? '#dc3545' : '#28a745';
+                
+                const agentDisplay = diff.agentName && diff.agentName !== 'غير محدد' 
+                    ? `  ${diff.agentName}` 
+                    : 'غير محدد';
+                row.innerHTML = `
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${index + 1}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${diff.username}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; font-weight: 500;">${agentDisplay}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${diff.subscriptionType}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${diff.projectType}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(diff.officialPrice)} د.ع</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(diff.userPrice)} د.ع</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(diff.usedPrice)} د.ع</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: ${differenceColor};">${differenceText}</td>
+                `;
+                differencesTbody.appendChild(row);
+            });
+        }
+        async function exportMinistryPercentageToExcel() {
+            if (!ministryResults) {
+                alert('لا توجد بيانات للتصدير');
+                return;
+            }
+            // تحديث النسب من localStorage قبل التصدير
+            ministryOldProjectPercentage = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
+            ministryNewProjectPercentage = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
+            
+            const currentDate = new Date();
+            const dateStr = formatDateForFilename(currentDate);
+            
+            try {
+                const ExcelJS = window.ExcelJS;
+                if (!ExcelJS) {
+                    exportMinistryPercentageToExcelXLSX();
+                    return;
+                }
+                
+                const workbook = new ExcelJS.Workbook();
+                
+                // تصدير المشروع القديم
+                if (ministryResults.oldProjectDetails && ministryResults.oldProjectDetails.length > 0) {
+                    await addProjectToWorkbook(workbook, 'old', ministryResults.oldProjectDetails, ministryOldProjectPercentage, dateStr, ExcelJS);
+                }
+                
+                // تصدير المشروع الجديد
+                if (ministryResults.newProjectDetails && ministryResults.newProjectDetails.length > 0) {
+                    await addProjectToWorkbook(workbook, 'new', ministryResults.newProjectDetails, ministryNewProjectPercentage, dateStr, ExcelJS);
+                }
+                
+                // تصدير الملف
+                const buffer = await workbook.xlsx.writeBuffer();
+                const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `نسبة_الوزارة_${dateStr}.xlsx`;
+                link.click();
+                
+                showSuccessMessage('تم تصدير ملف Excel بنجاح');
+                logActivity('تصدير نسبة الوزارة', 'تم تصدير بيانات نسبة الوزارة إلى Excel');
+            } catch (error) {
+                console.error('Error exporting to Excel:', error);
+                exportMinistryPercentageToExcelXLSX();
+            }
+        }
+        async function addProjectToWorkbook(workbook, projectType, details, percentage, dateStr, ExcelJS) {
+            const projectName = projectType === 'old' ? 'المشروع القديم' : 'المشروع الجديد';
+            
+            // ورقة الملخص
+            const summaryWorksheet = workbook.addWorksheet(`ملخص ${projectName}`);
+            summaryWorksheet.mergeCells('A1:F1');
+            const titleRow = summaryWorksheet.getRow(1);
+            titleRow.getCell(1).value = `فاتورة التحاسب مع شركة عراق سيل (كربلاء) - ${projectName}`;
+            titleRow.getCell(1).font = { bold: true, size: 16, color: { argb: 'FF801C32' } };
+            titleRow.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+            titleRow.height = 30;
+            
+            summaryWorksheet.mergeCells('A2:F2');
+            const dateRow = summaryWorksheet.getRow(2);
+            dateRow.getCell(1).value = `التاريخ: ${dateStr}`;
+            dateRow.getCell(1).font = { size: 12 };
+            dateRow.getCell(1).alignment = { horizontal: 'center' };
+            dateRow.height = 20;
+            
+            summaryWorksheet.mergeCells('A3:F3');
+            const percentageRow = summaryWorksheet.getRow(3);
+            percentageRow.getCell(1).value = `نسبة الوزارة: ${percentage}%`;
+            percentageRow.getCell(1).font = { size: 12, bold: true };
+            percentageRow.getCell(1).alignment = { horizontal: 'center' };
+            percentageRow.height = 20;
+            
+            summaryWorksheet.addRow([]);
+            
+            // رؤوس الأعمدة
+            const headerRow = summaryWorksheet.addRow([
+                'نوع الاشتراك',
+                'عدد الكارتات',
+                'السعر',
+                'المبلغ الإجمالي',
+                `نسبة الوزارة ${percentage}%`,
+                'المبلغ المستحق'
+            ]);
+            headerRow.font = { bold: true, size: 12, color: { argb: 'FFFFFFFF' } };
+            headerRow.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FF801C32' }
+            };
+            headerRow.alignment = { horizontal: 'center', vertical: 'middle' };
+            headerRow.height = 25;
+            headerRow.eachCell((cell) => {
+                cell.border = {
+                    top: { style: 'thin', color: { argb: 'FF000000' } },
+                    bottom: { style: 'thin', color: { argb: 'FF000000' } },
+                    left: { style: 'thin', color: { argb: 'FF000000' } },
+                    right: { style: 'thin', color: { argb: 'FF000000' } }
+                };
+            });
+            
+            // تجميع البيانات حسب نوع الاشتراك
+            const summaryByType = {
+                'Bronze': { count: 0, totalAmount: 0, price: 0 },
+                'Silver': { count: 0, totalAmount: 0, price: 0 },
+                'Gold': { count: 0, totalAmount: 0, price: 0 },
+                'Platinum': { count: 0, totalAmount: 0, price: 0 }
+            };
+            
+            details.forEach(detail => {
+                let type = '';
+                if (detail.subscriptionType.includes('Bronze') || detail.subscriptionType.includes('برونز')) {
+                    type = 'Bronze';
+                } else if (detail.subscriptionType.includes('Silver') || detail.subscriptionType.includes('سلفر')) {
+                    type = 'Silver';
+                } else if (detail.subscriptionType.includes('Gold') || detail.subscriptionType.includes('كولد')) {
+                    type = 'Gold';
+                } else if (detail.subscriptionType.includes('Platinum') || detail.subscriptionType.includes('بلاتينيوم')) {
+                    type = 'Platinum';
+                }
+                
+                if (type && summaryByType[type]) {
+                    summaryByType[type].count++;
+                    summaryByType[type].totalAmount += detail.amount;
+                    if (summaryByType[type].count === 1) {
+                        summaryByType[type].price = detail.usedPrice;
+                    } else {
+                        summaryByType[type].price = Math.round(summaryByType[type].totalAmount / summaryByType[type].count);
+                    }
+                }
+            });
+            
+            const subscriptionTypes = ['Bronze', 'Silver', 'Gold', 'Platinum'];
+            let totalCount = 0;
+            let totalAmount = 0;
+            let totalMinistryAmount = 0;
+            
+            subscriptionTypes.forEach(type => {
+                const data = summaryByType[type];
+                if (data.count > 0) {
+                    const ministryAmount = data.totalAmount * (percentage / 100);
+                    const dataRow = summaryWorksheet.addRow([
+                        type,
+                        data.count,
+                        data.price,
+                        data.totalAmount,
+                        `${percentage}%`,
+                        ministryAmount
+                    ]);
+                    dataRow.eachCell((cell, colNumber) => {
+                        if (colNumber >= 2 && typeof cell.value === 'number') {
+                            cell.numFmt = '#,##0';
+                        }
+                        cell.font = { size: 11 };
+                        cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                        cell.border = {
+                            top: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                            bottom: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                            left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                            right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+                        };
+                    });
+                    totalCount += data.count;
+                    totalAmount += data.totalAmount;
+                    totalMinistryAmount += ministryAmount;
+                }
+            });
+            
+            // صف المجموع
+            summaryWorksheet.addRow([]);
+            const totalRow = summaryWorksheet.addRow([
+                'المجموع',
+                totalCount,
+                '-',
+                totalAmount,
+                '',
+                totalMinistryAmount
+            ]);
+            totalRow.font = { bold: true, size: 12 };
+            totalRow.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFF8F9FA' }
+            };
+            totalRow.eachCell((cell, colNumber) => {
+                if (colNumber >= 2 && typeof cell.value === 'number') {
+                    cell.numFmt = '#,##0';
+                }
+                cell.font = { bold: true, size: 12 };
+                cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                cell.border = {
+                    top: { style: 'thick', color: { argb: 'FF801C32' } },
+                    bottom: { style: 'medium', color: { argb: 'FF000000' } },
+                    left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                    right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+                };
+            });
+            
+            summaryWorksheet.columns = [
+                { width: 20 },
+                { width: 18 },
+                { width: 15 },
+                { width: 18 },
+                { width: 20 },
+                { width: 20 }
+            ];
+            
+            // ورقة التفاصيل الكاملة
+            const detailsWorksheet = workbook.addWorksheet(`تفاصيل ${projectName}`);
+            detailsWorksheet.mergeCells('A1:K1');
+            const detailsTitleRow = detailsWorksheet.getRow(1);
+            detailsTitleRow.getCell(1).value = `تفاصيل جميع الاشتراكات - ${projectName}`;
+            detailsTitleRow.getCell(1).font = { bold: true, size: 16, color: { argb: 'FF801C32' } };
+            detailsTitleRow.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+            detailsTitleRow.height = 30;
+            
+            detailsWorksheet.mergeCells('A2:K2');
+            const detailsDateRow = detailsWorksheet.getRow(2);
+            detailsDateRow.getCell(1).value = `التاريخ: ${dateStr}`;
+            detailsDateRow.getCell(1).font = { size: 12 };
+            detailsDateRow.getCell(1).alignment = { horizontal: 'center' };
+            detailsDateRow.height = 20;
+            
+            detailsWorksheet.mergeCells('A3:K3');
+            const detailsPercentageRow = detailsWorksheet.getRow(3);
+            detailsPercentageRow.getCell(1).value = `نسبة الوزارة: ${percentage}%`;
+            detailsPercentageRow.getCell(1).font = { size: 12, bold: true };
+            detailsPercentageRow.getCell(1).alignment = { horizontal: 'center' };
+            detailsPercentageRow.height = 20;
+            
+            detailsWorksheet.addRow([]);
+            
+            // رؤوس الأعمدة للتفاصيل
+            const detailsHeaderRow = detailsWorksheet.addRow([
+                '#',
+                'اسم المستخدم',
+                'تابع إلى',
+                'نوع الاشتراك',
+                'السعر الرسمي',
+                'السعر المكتوب',
+                'السعر المستخدم',
+                'المبلغ',
+                `نسبة الوزارة ${percentage}%`,
+                'المبلغ المستحق',
+                'ملاحظات'
+            ]);
+            detailsHeaderRow.font = { bold: true, size: 12, color: { argb: 'FFFFFFFF' } };
+            detailsHeaderRow.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FF801C32' }
+            };
+            detailsHeaderRow.alignment = { horizontal: 'center', vertical: 'middle' };
+            detailsHeaderRow.height = 25;
+            detailsHeaderRow.eachCell((cell) => {
+                cell.border = {
+                    top: { style: 'thin', color: { argb: 'FF000000' } },
+                    bottom: { style: 'thin', color: { argb: 'FF000000' } },
+                    left: { style: 'thin', color: { argb: 'FF000000' } },
+                    right: { style: 'thin', color: { argb: 'FF000000' } }
+                };
+            });
+            
+            details.forEach((detail, index) => {
+                const ministryAmount = detail.amount * (percentage / 100);
+                const hasDifference = detail.userPrice > 0 && detail.userPrice !== detail.officialPrice;
+                const note = hasDifference 
+                    ? (detail.userPrice < detail.officialPrice 
+                        ? 'السعر أقل من الرسمي - تم استخدام السعر الرسمي'
+                        : 'السعر أكثر من الرسمي - تم استخدام السعر المكتوب')
+                    : '';
+                
+                const dataRow = detailsWorksheet.addRow([
+                    index + 1,
+                    detail.username,
+                    detail.agentName,
+                    detail.subscriptionType,
+                    detail.officialPrice,
+                    detail.userPrice || detail.officialPrice,
+                    detail.usedPrice,
+                    detail.amount,
+                    `${percentage}%`,
+                    ministryAmount,
+                    note
+                ]);
+                dataRow.eachCell((cell, colNumber) => {
+                    if (colNumber >= 5 && colNumber <= 11 && typeof cell.value === 'number') {
+                        cell.numFmt = '#,##0';
+                    }
+                    cell.font = { size: 11 };
+                    cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                    cell.border = {
+                        top: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                        bottom: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                        left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                        right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+                    };
+                });
+            });
+            
+            // صف المجموع في التفاصيل
+            detailsWorksheet.addRow([]);
+            const detailsTotalRow = detailsWorksheet.addRow([
+                'المجموع',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                totalAmount,
+                '',
+                totalMinistryAmount,
+                ''
+            ]);
+            detailsTotalRow.font = { bold: true, size: 12 };
+            detailsTotalRow.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFF8F9FA' }
+            };
+            detailsTotalRow.eachCell((cell, colNumber) => {
+                if (colNumber >= 8 && typeof cell.value === 'number') {
+                    cell.numFmt = '#,##0';
+                }
+                cell.font = { bold: true, size: 12 };
+                cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                cell.border = {
+                    top: { style: 'thick', color: { argb: 'FF801C32' } },
+                    bottom: { style: 'medium', color: { argb: 'FF000000' } },
+                    left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                    right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+                };
+            });
+            
+            detailsWorksheet.columns = [
+                { width: 8 },
+                { width: 20 },
+                { width: 20 },
+                { width: 25 },
+                { width: 15 },
+                { width: 15 },
+                { width: 15 },
+                { width: 15 },
+                { width: 18 },
+                { width: 18 },
+                { width: 40 }
+            ];
+            
+            // ورقة الاختلافات (إن وجدت)
+            const projectDifferences = ministryResults.priceDifferences.filter(diff => 
+                diff.projectType === projectName
+            );
+            
+            if (projectDifferences.length > 0) {
+                const differencesWorksheet = workbook.addWorksheet(`اختلافات ${projectName}`);
+                differencesWorksheet.mergeCells('A1:I1');
+                const diffTitleRow = differencesWorksheet.getRow(1);
+                diffTitleRow.getCell(1).value = `الاشتراكات التي فيها اختلاف في السعر - ${projectName}`;
+                diffTitleRow.getCell(1).font = { bold: true, size: 16, color: { argb: 'FF801C32' } };
+                diffTitleRow.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+                diffTitleRow.height = 30;
+                
+                differencesWorksheet.mergeCells('A2:I2');
+                const diffDateRow = differencesWorksheet.getRow(2);
+                diffDateRow.getCell(1).value = `التاريخ: ${dateStr}`;
+                diffDateRow.getCell(1).font = { size: 12 };
+                diffDateRow.getCell(1).alignment = { horizontal: 'center' };
+                diffDateRow.height = 20;
+                
+                differencesWorksheet.addRow([]);
+                
+                const diffHeaderRow = differencesWorksheet.addRow([
+                    '#',
+                    'اسم المستخدم',
+                    'تابع إلى',
+                    'نوع الاشتراك',
+                    'السعر الرسمي',
+                    'السعر المكتوب',
+                    'السعر المستخدم',
+                    'الفرق',
+                    'ملاحظات'
+                ]);
+                diffHeaderRow.font = { bold: true, size: 12, color: { argb: 'FFFFFFFF' } };
+                diffHeaderRow.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FF801C32' }
+                };
+                diffHeaderRow.alignment = { horizontal: 'center', vertical: 'middle' };
+                diffHeaderRow.height = 25;
+                diffHeaderRow.eachCell((cell) => {
+                    cell.border = {
+                        top: { style: 'thin', color: { argb: 'FF000000' } },
+                        bottom: { style: 'thin', color: { argb: 'FF000000' } },
+                        left: { style: 'thin', color: { argb: 'FF000000' } },
+                        right: { style: 'thin', color: { argb: 'FF000000' } }
+                    };
+                });
+                
+                let totalDifference = 0;
+                projectDifferences.forEach((diff, index) => {
+                    const isLower = diff.userPrice < diff.officialPrice;
+                    const note = isLower 
+                        ? 'الوزارة تحاسب على السعر الرسمي' 
+                        : 'الوزارة تحاسب على السعر المكتوب';
+                    
+                    totalDifference += Math.abs(diff.difference);
+                    
+                    const diffDataRow = differencesWorksheet.addRow([
+                        index + 1,
+                        diff.username,
+                        diff.agentName,
+                        diff.subscriptionType,
+                        diff.officialPrice,
+                        diff.userPrice,
+                        diff.usedPrice,
+                        diff.difference,
+                        note
+                    ]);
+                    diffDataRow.eachCell((cell, colNumber) => {
+                        if (colNumber >= 5 && colNumber <= 8 && typeof cell.value === 'number') {
+                            cell.numFmt = '#,##0';
+                        }
+                        cell.font = { size: 11 };
+                        cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                        cell.border = {
+                            top: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                            bottom: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                            left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                            right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+                        };
+                    });
+                });
+                
+                // صف المجموع
+                differencesWorksheet.addRow([]);
+                const diffTotalRow = differencesWorksheet.addRow([
+                    'المجموع',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    totalDifference,
+                    ''
+                ]);
+                diffTotalRow.font = { bold: true, size: 12 };
+                diffTotalRow.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFF8F9FA' }
+                };
+                diffTotalRow.eachCell((cell, colNumber) => {
+                    if (colNumber === 8 && typeof cell.value === 'number') {
+                        cell.numFmt = '#,##0';
+                    }
+                    cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                    cell.border = {
+                        top: { style: 'thick', color: { argb: 'FF801C32' } },
+                        bottom: { style: 'medium', color: { argb: 'FF000000' } },
+                        left: { style: 'thin', color: { argb: 'FFDDDDDD' } },
+                        right: { style: 'thin', color: { argb: 'FFDDDDDD' } }
+                    };
+                });
+                
+                differencesWorksheet.columns = [
+                    { width: 8 },
+                    { width: 20 },
+                    { width: 20 },
+                    { width: 25 },
+                    { width: 15 },
+                    { width: 15 },
+                    { width: 15 },
+                    { width: 15 },
+                    { width: 40 }
+                ];
+            }
+            // لا نقوم بتصدير الملف هنا، سيتم التصدير من الدالة الرئيسية
+        }
+        function exportMinistryPercentageToExcelXLSX() {
+            if (!ministryResults) {
+                alert('لا توجد بيانات للتصدير');
+                return;
+            }
+            // تحديث النسب من localStorage قبل التصدير
+            ministryOldProjectPercentage = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
+            ministryNewProjectPercentage = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
+            
+            const dateStr = formatDateForFilename(new Date());
+            
+            try {
+                const wb = XLSX.utils.book_new();
+                
+                // تصدير المشروع القديم
+                if (ministryResults.oldProjectDetails && ministryResults.oldProjectDetails.length > 0) {
+                    addProjectToWorkbookXLSX(wb, 'old', ministryResults.oldProjectDetails, ministryOldProjectPercentage, dateStr);
+                }
+                
+                // تصدير المشروع الجديد
+                if (ministryResults.newProjectDetails && ministryResults.newProjectDetails.length > 0) {
+                    addProjectToWorkbookXLSX(wb, 'new', ministryResults.newProjectDetails, ministryNewProjectPercentage, dateStr);
+                }
+                
+                const filename = `نسبة_الوزارة_${dateStr}.xlsx`;
+                XLSX.writeFile(wb, filename);
+                
+                showSuccessMessage('تم تصدير ملف Excel بنجاح');
+                logActivity('تصدير نسبة الوزارة', 'تم تصدير بيانات نسبة الوزارة إلى Excel');
+            } catch (error) {
+                console.error('Error exporting to Excel:', error);
+                alert('حدث خطأ أثناء تصدير البيانات');
+            }
+        }
+        function addProjectToWorkbookXLSX(wb, projectType, details, percentage, dateStr) {
+            const projectName = projectType === 'old' ? 'المشروع القديم' : 'المشروع الجديد';
+            
+            // ورقة الملخص
+            const summaryData = [];
+            summaryData.push([`فاتورة التحاسب مع شركة عراق سيل (كربلاء) - ${projectName}`]);
+            summaryData.push([`التاريخ: ${dateStr}`]);
+            summaryData.push([`نسبة الوزارة: ${percentage}%`]);
+            summaryData.push([]);
+            summaryData.push([
+                'نوع الاشتراك',
+                'عدد الكارتات',
+                'السعر',
+                'المبلغ الإجمالي',
+                `نسبة الوزارة ${percentage}%`,
+                'المبلغ المستحق'
+            ]);
+            
+            // تجميع البيانات حسب نوع الاشتراك
+            const summaryByType = {
+                'Bronze': { count: 0, totalAmount: 0, price: 0 },
+                'Silver': { count: 0, totalAmount: 0, price: 0 },
+                'Gold': { count: 0, totalAmount: 0, price: 0 },
+                'Platinum': { count: 0, totalAmount: 0, price: 0 }
+            };
+            
+            details.forEach(detail => {
+                let type = '';
+                if (detail.subscriptionType.includes('Bronze') || detail.subscriptionType.includes('برونز')) {
+                    type = 'Bronze';
+                } else if (detail.subscriptionType.includes('Silver') || detail.subscriptionType.includes('سلفر')) {
+                    type = 'Silver';
+                } else if (detail.subscriptionType.includes('Gold') || detail.subscriptionType.includes('كولد')) {
+                    type = 'Gold';
+                } else if (detail.subscriptionType.includes('Platinum') || detail.subscriptionType.includes('بلاتينيوم')) {
+                    type = 'Platinum';
+                }
+                
+                if (type && summaryByType[type]) {
+                    summaryByType[type].count++;
+                    summaryByType[type].totalAmount += detail.amount;
+                    if (summaryByType[type].count === 1) {
+                        summaryByType[type].price = detail.usedPrice;
+                    } else {
+                        summaryByType[type].price = Math.round(summaryByType[type].totalAmount / summaryByType[type].count);
+                    }
+                }
+            });
+            
+            const subscriptionTypes = ['Bronze', 'Silver', 'Gold', 'Platinum'];
+            let totalCount = 0;
+            let totalAmount = 0;
+            let totalMinistryAmount = 0;
+            
+            subscriptionTypes.forEach(type => {
+                const data = summaryByType[type];
+                if (data.count > 0) {
+                    const ministryAmount = data.totalAmount * (percentage / 100);
+                    summaryData.push([
+                        type,
+                        data.count,
+                        data.price,
+                        data.totalAmount,
+                        `${percentage}%`,
+                        ministryAmount
+                    ]);
+                    totalCount += data.count;
+                    totalAmount += data.totalAmount;
+                    totalMinistryAmount += ministryAmount;
+                }
+            });
+            
+            summaryData.push([]);
+            summaryData.push([
+                'المجموع',
+                totalCount,
+                '-',
+                totalAmount,
+                '',
+                totalMinistryAmount
+            ]);
+            
+            const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+            XLSX.utils.book_append_sheet(wb, wsSummary, `ملخص ${projectName}`);
+            
+            // ورقة التفاصيل الكاملة
+            const detailsData = [];
+            detailsData.push([`تفاصيل جميع الاشتراكات - ${projectName}`]);
+            detailsData.push([`التاريخ: ${dateStr}`]);
+            detailsData.push([`نسبة الوزارة: ${percentage}%`]);
+            detailsData.push([]);
+            detailsData.push([
+                '#',
+                'اسم المستخدم',
+                'تابع إلى',
+                'نوع الاشتراك',
+                'السعر الرسمي',
+                'السعر المكتوب',
+                'السعر المستخدم',
+                'المبلغ',
+                `نسبة الوزارة ${percentage}%`,
+                'المبلغ المستحق',
+                'ملاحظات'
+            ]);
+            
+            details.forEach((detail, index) => {
+                const ministryAmount = detail.amount * (percentage / 100);
+                const hasDifference = detail.userPrice > 0 && detail.userPrice !== detail.officialPrice;
+                const note = hasDifference 
+                    ? (detail.userPrice < detail.officialPrice 
+                        ? 'السعر أقل من الرسمي - تم استخدام السعر الرسمي'
+                        : 'السعر أكثر من الرسمي - تم استخدام السعر المكتوب')
+                    : '';
+                
+                detailsData.push([
+                    index + 1,
+                    detail.username,
+                    detail.agentName,
+                    detail.subscriptionType,
+                    detail.officialPrice,
+                    detail.userPrice || detail.officialPrice,
+                    detail.usedPrice,
+                    detail.amount,
+                    `${percentage}%`,
+                    ministryAmount,
+                    note
+                ]);
+            });
+            
+            detailsData.push([]);
+            detailsData.push([
+                'المجموع',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                totalAmount,
+                '',
+                totalMinistryAmount,
+                ''
+            ]);
+            
+            const wsDetails = XLSX.utils.aoa_to_sheet(detailsData);
+            XLSX.utils.book_append_sheet(wb, wsDetails, `تفاصيل ${projectName}`);
+            
+            // ورقة الاختلافات (إن وجدت)
+            const projectDifferences = ministryResults.priceDifferences.filter(diff => 
+                diff.projectType === projectName
+            );
+            
+            if (projectDifferences.length > 0) {
+                const differencesData = [];
+                differencesData.push([`الاشتراكات التي فيها اختلاف في السعر - ${projectName}`]);
+                differencesData.push([`التاريخ: ${dateStr}`]);
+                differencesData.push([]);
+                differencesData.push([
+                    '#',
+                    'اسم المستخدم',
+                    'تابع إلى',
+                    'نوع الاشتراك',
+                    'السعر الرسمي',
+                    'السعر المكتوب',
+                    'السعر المستخدم',
+                    'الفرق',
+                    'ملاحظات'
+                ]);
+                
+                projectDifferences.forEach((diff, index) => {
+                    const isLower = diff.userPrice < diff.officialPrice;
+                    const note = isLower 
+                        ? 'الوزارة تحاسب على السعر الرسمي' 
+                        : 'الوزارة تحاسب على السعر المكتوب';
+                    
+                    differencesData.push([
+                        index + 1,
+                        diff.username,
+                        diff.agentName,
+                        diff.subscriptionType,
+                        diff.officialPrice,
+                        diff.userPrice,
+                        diff.usedPrice,
+                        diff.difference,
+                        note
+                    ]);
+                });
+                
+                const wsDifferences = XLSX.utils.aoa_to_sheet(differencesData);
+                XLSX.utils.book_append_sheet(wb, wsDifferences, `اختلافات ${projectName}`);
+            }
+        }
+        function resetMinistryData() {
+            if (confirm('هل تريد مسح البيانات؟')) {
+                ministryData = null;
+                ministryResults = null;
+                document.getElementById('ministryFileName').classList.add('hidden');
+                document.getElementById('ministryResults').classList.add('hidden');
+                document.getElementById('ministryFileInput').value = '';
+                document.getElementById('ministryTableBody').innerHTML = '';
+                document.getElementById('ministrySummary').style.display = 'none';
+                showSuccessMessage('تم مسح البيانات');
+                logActivity('مسح نسبة الوزارة', 'تم مسح بيانات نسبة الوزارة');
+            }
+        }
+        function saveMinistryPercentages() {
+            const oldProjectPercentage = parseFloat(document.getElementById('ministryOldProjectPercentage').value);
+            const newProjectPercentage = parseFloat(document.getElementById('ministryNewProjectPercentage').value);
+            
+            if (oldProjectPercentage < 0 || oldProjectPercentage > 100) {
+                alert('نسبة المشروع القديم يجب أن تكون بين 0 و 100');
+                const saved = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
+                document.getElementById('ministryOldProjectPercentage').value = saved;
+                return;
+            }
+            
+            if (newProjectPercentage < 0 || newProjectPercentage > 100) {
+                alert('نسبة المشروع الجديد يجب أن تكون بين 0 و 100');
+                const saved = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
+                document.getElementById('ministryNewProjectPercentage').value = saved;
+                return;
+            }
+            
+            ministryOldProjectPercentage = oldProjectPercentage;
+            ministryNewProjectPercentage = newProjectPercentage;
+            localStorage.setItem('ministryOldProjectPercentage', oldProjectPercentage.toString());
+            localStorage.setItem('ministryNewProjectPercentage', newProjectPercentage.toString());
+            
+            // تحديث رؤوس الجدول
+            const oldProjectHeader = document.getElementById('ministryOldProjectHeader');
+            const newProjectHeader = document.getElementById('ministryNewProjectHeader');
+            const oldProjectPercentageHeader = document.getElementById('ministryOldProjectPercentageHeader');
+            const newProjectPercentageHeader = document.getElementById('ministryNewProjectPercentageHeader');
+            
+            if (oldProjectHeader) {
+                oldProjectHeader.textContent = `المشروع القديم (${oldProjectPercentage}%)`;
+            }
+            if (newProjectHeader) {
+                newProjectHeader.textContent = `المشروع الجديد (${newProjectPercentage}%)`;
+            }
+            if (oldProjectPercentageHeader) {
+                oldProjectPercentageHeader.textContent = `نسبة الوزارة ${oldProjectPercentage}%`;
+            }
+            if (newProjectPercentageHeader) {
+                newProjectPercentageHeader.textContent = `نسبة الوزارة ${newProjectPercentage}%`;
+            }
+            
+            // تحديث الجدول إذا كان موجوداً
+            if (ministryResults) {
+                // إعادة حساب النتائج مع النسب الجديدة
+                const subscriptionTypes = ['Bronze', 'Silver', 'Gold', 'Platinum'];
+                subscriptionTypes.forEach(type => {
+                    const oldData = ministryResults.oldProject[type];
+                    const newData = ministryResults.newProject[type];
+                    if (oldData) {
+                        oldData.ministryPercentage = oldProjectPercentage;
+                        oldData.ministryAmount = oldData.amount * (oldProjectPercentage / 100);
+                    }
+                    if (newData) {
+                        newData.ministryPercentage = newProjectPercentage;
+                        newData.ministryAmount = newData.amount * (newProjectPercentage / 100);
+                    }
+                });
+                // إعادة حساب المجاميع
+                ministryResults.totals.oldProject.ministryAmount = 0;
+                ministryResults.totals.newProject.ministryAmount = 0;
+                subscriptionTypes.forEach(type => {
+                    const oldData = ministryResults.oldProject[type];
+                    const newData = ministryResults.newProject[type];
+                    if (oldData) {
+                        ministryResults.totals.oldProject.ministryAmount += oldData.ministryAmount;
+                    }
+                    if (newData) {
+                        ministryResults.totals.newProject.ministryAmount += newData.ministryAmount;
+                    }
+                });
+                ministryResults.totals.grandTotal = ministryResults.totals.oldProject.ministryAmount + 
+                                                     ministryResults.totals.newProject.ministryAmount;
+                // إعادة عرض الجدول
+                renderMinistryTable();
+            }
+            
+            logActivity('حفظ الإعدادات', `تم تحديث نسبة الوزارة: المشروع القديم ${oldProjectPercentage}% والمشروع الجديد ${newProjectPercentage}%`);
+            showSuccessMessage(`تم حفظ إعدادات نسبة الوزارة: المشروع القديم ${oldProjectPercentage}% والمشروع الجديد ${newProjectPercentage}%`);
+        }
+        function loadMinistryPercentages() {
+            const oldProjectPercentage = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
+            const newProjectPercentage = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
+            
+            ministryOldProjectPercentage = oldProjectPercentage;
+            ministryNewProjectPercentage = newProjectPercentage;
+            
+            const oldProjectInput = document.getElementById('ministryOldProjectPercentage');
+            const newProjectInput = document.getElementById('ministryNewProjectPercentage');
+            
+            if (oldProjectInput) {
+                oldProjectInput.value = oldProjectPercentage;
+            }
+            if (newProjectInput) {
+                newProjectInput.value = newProjectPercentage;
+            }
+            
+            // تحديث رؤوس الجدول
+            const oldProjectHeader = document.getElementById('ministryOldProjectHeader');
+            const newProjectHeader = document.getElementById('ministryNewProjectHeader');
+            const oldProjectPercentageHeader = document.getElementById('ministryOldProjectPercentageHeader');
+            const newProjectPercentageHeader = document.getElementById('ministryNewProjectPercentageHeader');
+            
+            if (oldProjectHeader) {
+                oldProjectHeader.textContent = `المشروع القديم (${oldProjectPercentage}%)`;
+            }
+            if (newProjectHeader) {
+                newProjectHeader.textContent = `المشروع الجديد (${newProjectPercentage}%)`;
+            }
+            if (oldProjectPercentageHeader) {
+                oldProjectPercentageHeader.textContent = `نسبة الوزارة ${oldProjectPercentage}%`;
+            }
+            if (newProjectPercentageHeader) {
+                newProjectPercentageHeader.textContent = `نسبة الوزارة ${newProjectPercentage}%`;
+            }
         }
         let lastPercentageDataHash = '';
         let isRenderingTable = false;
@@ -9750,9 +11186,11 @@ let agentReports = {};
             setupPercentageFileUpload();
             setupPercentageTableEventListeners();
             setupFileUploads();
+            setupMinistryFileUpload();
             loadSidebarState();
             loadPercentageData();
             loadSettings();
+            loadMinistryPercentages();
             loadActivityLog();
             restoreTabAndScroll();
             restoreScrollPosition();
@@ -9860,10 +11298,11 @@ let agentReports = {};
                 else if (tabName === 'advanced') navItems[3]?.classList.add('active');
                 else if (tabName === 'agents') navItems[4]?.classList.add('active');
                 else if (tabName === 'agentPercentage') navItems[5]?.classList.add('active');
-                else if (tabName === 'activity') navItems[6]?.classList.add('active');
-                else if (tabName === 'settings') navItems[7]?.classList.add('active');
-                else if (tabName === 'archive') navItems[8]?.classList.add('active');
-                else if (tabName === 'users') navItems[9]?.classList.add('active');
+                else if (tabName === 'ministryPercentage') navItems[6]?.classList.add('active');
+                else if (tabName === 'activity') navItems[7]?.classList.add('active');
+                else if (tabName === 'settings') navItems[8]?.classList.add('active');
+                else if (tabName === 'archive') navItems[9]?.classList.add('active');
+                else if (tabName === 'users') navItems[10]?.classList.add('active');
             }
             const tabElement = document.getElementById(tabName + 'Tab');
             if (tabElement) {
@@ -9878,6 +11317,8 @@ let agentReports = {};
                     renderAgentsList();
                 } else if (tabName === 'agentPercentage') {
                     updateAgentsListForPercentage();
+                } else if (tabName === 'ministryPercentage') {
+                    // لا حاجة لإجراءات إضافية عند فتح تبويب نسبة الوزارة
                 } else if (tabName === 'activity') {
                     setTimeout(() => refreshActivityLog(), 100);
                 } else if (tabName === 'archive') {
