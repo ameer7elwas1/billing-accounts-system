@@ -1,0 +1,54 @@
+app.get('/', (req, res) => {
+  res.send(`
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<title>إحصائيات المشتركين - IraqCell</title>
+<style>
+  body { font-family: Arial, sans-serif; direction: rtl; padding: 20px; }
+  h1 { color: #0066cc; }
+  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+  th { background-color: #f2f2f2; }
+</style>
+</head>
+<body>
+<h1>إحصائيات المشتركين - IraqCell</h1>
+<button onclick="loadStats()">تحميل الإحصائيات</button>
+<div id="stats"></div>
+
+<script>
+async function loadStats() {
+  const container = document.getElementById('stats');
+  container.innerHTML = 'جاري التحميل...';
+
+  try {
+    const res = await fetch('/api/stats');
+    if (!res.ok) throw new Error('فشل تحميل البيانات');
+    const data = await res.json();
+
+    let html = '<table><thead><tr><th>الوصف</th><th>القيمة</th></tr></thead><tbody>';
+
+    if (data.totalSubscribers !== undefined) {
+      html += \`<tr><td>عدد المشتركين الكلي</td><td>\${data.totalSubscribers}</td></tr>\`;
+    }
+    if (data.activeSubscribers !== undefined) {
+      html += \`<tr><td>عدد المشتركين الفعالين</td><td>\${data.activeSubscribers}</td></tr>\`;
+    }
+    if (data.expiredSubscribers !== undefined) {
+      html += \`<tr><td>عدد المشتركين المنتهية اشتراكاتهم</td><td>\${data.expiredSubscribers}</td></tr>\`;
+    }
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  } catch(e) {
+    container.innerHTML = '<p style="color:red;">' + e.message + '</p>';
+  }
+}
+</script>
+
+</body>
+</html>
+  `);
+});
