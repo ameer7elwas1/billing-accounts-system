@@ -3470,7 +3470,7 @@
                         </div>
                         <div style="flex: 1;">
                             <h3 class="section-title" style="margin: 0 0 8px 0; font-size: 1.8rem; color: #801c32; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">نسبة الوزارة</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.95rem; line-height: 1.5;">حساب نسبة الوزارة بناءً على الاشتراكات (المشروع القديم والمشروع الجديد)</p>
+                            <p style="margin: 0; color: #666; font-size: 0.95rem; line-height: 1.5;"></p>
                         </div>
                     </div>
                     <div style="margin-bottom: 20px; padding: 20px; background: rgba(128, 28, 50, 0.05); border-radius: 12px;">
@@ -3500,40 +3500,83 @@
                             تصدير Excel
                         </button>
                     </div>
-                    <div id="ministryTableContainer" style="overflow-x: auto; overflow-y: auto; max-height: 70vh; width: 100%; max-width: 100%; position: relative; z-index: 1; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; box-sizing: border-box; will-change: scroll-position; contain: layout style paint;">
-                        <table id="ministryTable" style="width: auto; min-width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; table-layout: auto; box-sizing: border-box;">
-                            <thead>
-                                <tr style="background: #801c32; color: white;">
-                                    <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">نوع الاشتراك</th>
-                                    <th colspan="5" id="ministryOldProjectHeader" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600;">المشروع القديم (50%)</th>
-                                    <th colspan="5" id="ministryNewProjectHeader" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600;">المشروع الجديد (27%)</th>
-                                    <th rowspan="2" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; vertical-align: middle; font-size: 0.75rem; font-weight: 600;">المجموع الكلي</th>
-                                </tr>
-                                <tr style="background: #801c32; color: white;">
-                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">عدد الكارتات</th>
-                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">السعر</th>
-                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">المبلغ</th>
-                                    <th id="ministryOldProjectPercentageHeader" style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">نسبة الوزارة 50%</th>
-                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">المبلغ المستحق</th>
-                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">عدد الكارتات</th>
-                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">السعر</th>
-                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">المبلغ</th>
-                                    <th id="ministryNewProjectPercentageHeader" style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">نسبة الوزارة 27%</th>
-                                    <th style="padding: 6px 4px; text-align: center; border: 1px solid #ddd; font-size: 0.7rem; font-weight: 500;">المبلغ المستحق</th>
-                                </tr>
-                            </thead>
-                            <tbody id="ministryTableBody">
-                            </tbody>
-                        </table>
+                    <div id="ministryOldProjectContainer" style="margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 15px; color: #801c32; font-weight: 700; font-size: 1.2rem; padding: 10px; background: rgba(128, 28, 50, 0.1); border-radius: 8px;">
+                            <span id="ministryOldProjectTitle">المشروع القديم (50%)</span>
+                        </h3>
+                        <div style="overflow-x: auto; overflow-y: auto; max-height: 70vh; width: 100%; max-width: 100%; position: relative; z-index: 1; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; box-sizing: border-box; will-change: scroll-position; contain: layout style paint;">
+                            <table id="ministryOldProjectTable" style="width: auto; min-width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; table-layout: auto; box-sizing: border-box;">
+                                <thead>
+                                    <tr style="background: #801c32; color: white;">
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">ت</th>
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">الفئة</th>
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">السعر</th>
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">العدد</th>
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">القيمة</th>
+                                        <th id="ministryOldProjectPercentageHeader" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">النسبة 50%</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ministryOldProjectTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="ministryNewProjectContainer" style="margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 15px; color: #801c32; font-weight: 700; font-size: 1.2rem; padding: 10px; background: rgba(128, 28, 50, 0.1); border-radius: 8px;">
+                            <span id="ministryNewProjectTitle">المشروع الجديد (27%)</span>
+                        </h3>
+                        <div style="overflow-x: auto; overflow-y: auto; max-height: 70vh; width: 100%; max-width: 100%; position: relative; z-index: 1; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; box-sizing: border-box; will-change: scroll-position; contain: layout style paint;">
+                            <table id="ministryNewProjectTable" style="width: auto; min-width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; table-layout: auto; box-sizing: border-box;">
+                                <thead>
+                                    <tr style="background: #801c32; color: white;">
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">ت</th>
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">الفئة</th>
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">السعر</th>
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">العدد</th>
+                                        <th style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">القيمة</th>
+                                        <th id="ministryNewProjectPercentageHeader" style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-size: 0.75rem; font-weight: 600; background-color: #801c32;">النسبة 27%</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ministryNewProjectTableBody">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div id="ministrySummary" style="margin-top: 20px; padding: 15px; background: rgba(128, 28, 50, 0.05); border-radius: 8px; display: none;">
                         <h4 style="margin: 0 0 10px 0; color: #801c32; font-weight: 700;">ملخص النتائج</h4>
                         <div id="ministrySummaryContent"></div>
                     </div>
+                    <div id="ministryHigherPriceSubscriptions" class="section hidden" style="margin-top: 20px; padding: 15px; background: rgba(40, 167, 69, 0.1); border-radius: 8px; border: 2px solid rgba(40, 167, 69, 0.3);">
+                        <h4 style="margin: 0 0 15px 0; color: #28a745; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.2rem;">📈</span>
+                            الاشتراكات المباعة بسعر أعلى من الرسمي
+                        </h4>
+                        <div id="ministryHigherPriceContent" style="overflow-x: auto;">
+                            <table id="higherPriceTable" style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background: #28a745; color: white;">
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">#</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">اسم المستخدم</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">تابع إلى</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">نوع الاشتراك</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">المشروع</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر الرسمي</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر المكتوب</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر المستخدم</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">الفرق</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">القيمة</th>
+                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">النسبة</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="higherPriceTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div id="ministryPriceDifferences" class="section hidden" style="margin-top: 20px; padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border: 2px solid rgba(255, 193, 7, 0.3);">
                         <h4 style="margin: 0 0 15px 0; color: #856404; font-weight: 700; display: flex; align-items: center; gap: 10px;">
                             <span style="font-size: 1.2rem;">⚠️</span>
-                            الاشتراكات التي فيها اختلاف في السعر
+                            الاشتراكات التي فيها اختلاف في السعر (أقل من الرسمي)
                         </h4>
                         <div id="ministryPriceDifferencesContent" style="overflow-x: auto;">
                             <table id="priceDifferencesTable" style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
@@ -3546,7 +3589,6 @@
                                         <th style="padding: 8px; text-align: center; border: 1px solid #ddd;"> المشروع</th>
                                         <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر الرسمي</th>
                                         <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر المكتوب</th>
-                                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">السعر المستخدم</th>
                                         <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">الفرق</th>
                                     </tr>
                                 </thead>
@@ -3600,14 +3642,14 @@
                             <div class="settings-group">
                                 <label for="ministryOldProjectPercentage">نسبة الوزارة للمشروع القديم (%):</label>
                                 <input type="number" id="ministryOldProjectPercentage" class="settings-input" value="50" min="0" max="100" step="0.01" onchange="saveMinistryPercentages()">
-                                <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-primary); font-weight: 600;">النسبة المئوية للوزارة من إيرادات المشروع القديم</p>
+                                <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-primary); font-weight: 600;"></p>
                             </div>
                             <div class="settings-group">
                                 <label for="ministryNewProjectPercentage">نسبة الوزارة للمشروع الجديد (%):</label>
                                 <input type="number" id="ministryNewProjectPercentage" class="settings-input" value="27" min="0" max="100" step="0.01" onchange="saveMinistryPercentages()">
-                                <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-primary); font-weight: 600;">النسبة المئوية للوزارة من إيرادات المشروع الجديد</p>
+                                <p style="margin-top: 5px; font-size: 0.85rem; color: var(--text-primary); font-weight: 600;">  </p>
                             </div>
-                            <button class="btn btn-primary" onclick="saveMinistryPercentages()" style="margin-top: 10px;"> حفظ إعدادات نسبة الوزارة</button>
+                            <button class="btn btn-primary" onclick="saveMinistryPercentages()" style="margin-top: 10px;"> حفظ</button>
                         </div>
                         <div class="settings-section">
                             <h4> الإشعارات</h4>
@@ -6823,64 +6865,134 @@ let agentReports = {};
             if (!ministryResults) return;
             ministryOldProjectPercentage = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
             ministryNewProjectPercentage = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
-            const tbody = document.getElementById('ministryTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            const subscriptionTypes = [
-                { key: 'Bronze', name: 'Bronze', price: 30000 },
-                { key: 'Silver', name: 'Silver', price: 40000 },
-                { key: 'Gold', name: 'Gold', price: 50000 },
-                { key: 'Platinum', name: 'Platinum', price: 65000 }
-            ];
-            subscriptionTypes.forEach(type => {
-                const oldData = ministryResults.oldProject[type.key] || { count: 0, amount: 0, price: 0, ministryAmount: 0 };
-                const newData = ministryResults.newProject[type.key] || { count: 0, amount: 0, price: 0, ministryAmount: 0 };
-                const row = document.createElement('tr');
-                const oldPercentage = ministryOldProjectPercentage;
-                const newPercentage = ministryNewProjectPercentage;
-                const oldMinistryAmount = oldData.amount * (oldPercentage / 100);
-                const newMinistryAmount = newData.amount * (newPercentage / 100);
-                const oldPrice = oldData.price || 0;
-                const newPrice = newData.price || 0;
-                row.innerHTML = `
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: 600;">${type.name}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(oldData.count)}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(oldPrice)}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(oldData.amount)}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${oldPercentage}%</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(oldMinistryAmount)}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(newData.count)}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(newPrice)}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(newData.amount)}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${newPercentage}%</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(newMinistryAmount)}</td>
-                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 700; color: #801c32; font-size: 0.9rem;">${formatNumber(oldMinistryAmount + newMinistryAmount)}</td>
-                `;
-                tbody.appendChild(row);
-            });
-            const totalRow = document.createElement('tr');
-            totalRow.style.borderTop = '3px solid #801c32';
-            totalRow.style.background = '#f8f9fa';
-            totalRow.style.fontWeight = 'bold';
+            
+            // تعريف totals في بداية الدالة
             const totals = ministryResults.totals;
-            const recalculatedOldMinistryAmount = totals.oldProject.totalAmount * (ministryOldProjectPercentage / 100);
-            const recalculatedNewMinistryAmount = totals.newProject.totalAmount * (ministryNewProjectPercentage / 100);
-            const recalculatedGrandTotal = recalculatedOldMinistryAmount + recalculatedNewMinistryAmount;
-            totalRow.innerHTML = `
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.9rem;">المجموع</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.oldProject.totalCount)}</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">-</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.oldProject.totalAmount)}</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${ministryOldProjectPercentage}%</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem; color: #801c32;">${formatNumber(recalculatedOldMinistryAmount)}</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.newProject.totalCount)}</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">-</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.newProject.totalAmount)}</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${ministryNewProjectPercentage}%</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem; color: #801c32;">${formatNumber(recalculatedNewMinistryAmount)}</td>
-                <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 1rem; color: #801c32;">${formatNumber(recalculatedGrandTotal)}</td>
-            `;
-            tbody.appendChild(totalRow);
+            
+            // تحديث العناوين
+            const oldProjectTitle = document.getElementById('ministryOldProjectTitle');
+            if (oldProjectTitle) {
+                oldProjectTitle.textContent = `المشروع القديم (${ministryOldProjectPercentage}%)`;
+            }
+            const newProjectTitle = document.getElementById('ministryNewProjectTitle');
+            if (newProjectTitle) {
+                newProjectTitle.textContent = `المشروع الجديد (${ministryNewProjectPercentage}%)`;
+            }
+            const oldPercentageHeader = document.getElementById('ministryOldProjectPercentageHeader');
+            if (oldPercentageHeader) {
+                oldPercentageHeader.textContent = `النسبة ${ministryOldProjectPercentage}%`;
+            }
+            const newPercentageHeader = document.getElementById('ministryNewProjectPercentageHeader');
+            if (newPercentageHeader) {
+                newPercentageHeader.textContent = `النسبة ${ministryNewProjectPercentage}%`;
+            }
+            
+            const subscriptionTypes = [
+                { key: 'Bronze', name: 'Iraqcell_Bronze_Profile', price: 30000 },
+                { key: 'Silver', name: 'Iraqcell_Silver_Profile', price: 40000 },
+                { key: 'Gold', name: 'Iraqcell_Gold_Profile', price: 50000 },
+                { key: 'Platinum', name: 'Iraqcell_Platinum_Profile', price: 65000 }
+            ];
+            
+            // عرض جدول المشروع القديم
+            const oldTbody = document.getElementById('ministryOldProjectTableBody');
+            if (oldTbody) {
+                oldTbody.innerHTML = '';
+                let serialNumber = 1;
+                subscriptionTypes.forEach(type => {
+                    const oldData = ministryResults.oldProject[type.key] || { count: 0, amount: 0, price: 0, ministryAmount: 0 };
+                    const oldPercentage = ministryOldProjectPercentage;
+                    const oldMinistryAmount = oldData.amount * (oldPercentage / 100);
+                    const displayPrice = type.price;
+                    
+                    if (oldData.count > 0) {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd;">${serialNumber}</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: 600;">${type.name}</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(displayPrice)} د.ع</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(oldData.count)}</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(oldData.amount)} د.ع</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(oldMinistryAmount)} د.ع</td>
+                        `;
+                        oldTbody.appendChild(row);
+                        serialNumber++;
+                    }
+                });
+                
+                const recalculatedOldMinistryAmount = totals.oldProject.totalAmount * (ministryOldProjectPercentage / 100);
+                const oldTotalPrice = subscriptionTypes.reduce((sum, type) => {
+                    const oldData = ministryResults.oldProject[type.key] || { count: 0, amount: 0, price: 0 };
+                    if (oldData.count > 0) {
+                        return sum + type.price;
+                    }
+                    return sum;
+                }, 0);
+                
+                const oldTotalRow = document.createElement('tr');
+                oldTotalRow.style.borderTop = '3px solid #801c32';
+                oldTotalRow.style.background = '#f8f9fa';
+                oldTotalRow.style.fontWeight = 'bold';
+                oldTotalRow.innerHTML = `
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.9rem;">المجموع</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.9rem;">-</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(oldTotalPrice)} د.ع</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.oldProject.totalCount)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.oldProject.totalAmount)} د.ع</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem; color: #801c32;">${formatNumber(recalculatedOldMinistryAmount)} د.ع</td>
+                `;
+                oldTbody.appendChild(oldTotalRow);
+            }
+            
+            // عرض جدول المشروع الجديد
+            const newTbody = document.getElementById('ministryNewProjectTableBody');
+            if (newTbody) {
+                newTbody.innerHTML = '';
+                let serialNumber = 1;
+                subscriptionTypes.forEach(type => {
+                    const newData = ministryResults.newProject[type.key] || { count: 0, amount: 0, price: 0, ministryAmount: 0 };
+                    const newPercentage = ministryNewProjectPercentage;
+                    const newMinistryAmount = newData.amount * (newPercentage / 100);
+                    const displayPrice = type.price;
+                    
+                    if (newData.count > 0) {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd;">${serialNumber}</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: 600;">${type.name}_NEW</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(displayPrice)} د.ع</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(newData.count)}</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(newData.amount)} د.ع</td>
+                            <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(newMinistryAmount)} د.ع</td>
+                        `;
+                        newTbody.appendChild(row);
+                        serialNumber++;
+                    }
+                });
+                
+                const recalculatedNewMinistryAmount = totals.newProject.totalAmount * (ministryNewProjectPercentage / 100);
+                const newTotalPrice = subscriptionTypes.reduce((sum, type) => {
+                    const newData = ministryResults.newProject[type.key] || { count: 0, amount: 0, price: 0 };
+                    if (newData.count > 0) {
+                        return sum + type.price;
+                    }
+                    return sum;
+                }, 0);
+                
+                const newTotalRow = document.createElement('tr');
+                newTotalRow.style.borderTop = '3px solid #801c32';
+                newTotalRow.style.background = '#f8f9fa';
+                newTotalRow.style.fontWeight = 'bold';
+                newTotalRow.innerHTML = `
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.9rem;">المجموع</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.9rem;">-</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(newTotalPrice)} د.ع</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.newProject.totalCount)}</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem;">${formatNumber(totals.newProject.totalAmount)} د.ع</td>
+                    <td style="padding: 8px 6px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.85rem; color: #801c32;">${formatNumber(recalculatedNewMinistryAmount)} د.ع</td>
+                `;
+                newTbody.appendChild(newTotalRow);
+            }
             const summaryDiv = document.getElementById('ministrySummary');
             const summaryContent = document.getElementById('ministrySummaryContent');
             if (summaryDiv && summaryContent) {
@@ -6907,9 +7019,95 @@ let agentReports = {};
             }
             
             renderPriceDifferences();
+            renderHigherPriceSubscriptions();
+        }
+        function renderHigherPriceSubscriptions() {
+            if (!ministryResults || !ministryResults.priceDifferences || ministryResults.priceDifferences.length === 0) {
+                const higherPriceSection = document.getElementById('ministryHigherPriceSubscriptions');
+                if (higherPriceSection) {
+                    higherPriceSection.classList.add('hidden');
+                }
+                return;
+            }
+            
+            // تصفية الاشتراكات المباعة بسعر أعلى من الرسمي
+            const higherPriceSubscriptions = ministryResults.priceDifferences.filter(diff => diff.userPrice > diff.officialPrice);
+            
+            if (higherPriceSubscriptions.length === 0) {
+                const higherPriceSection = document.getElementById('ministryHigherPriceSubscriptions');
+                if (higherPriceSection) {
+                    higherPriceSection.classList.add('hidden');
+                }
+                return;
+            }
+            
+            const higherPriceSection = document.getElementById('ministryHigherPriceSubscriptions');
+            const higherPriceTbody = document.getElementById('higherPriceTableBody');
+            if (!higherPriceSection || !higherPriceTbody) return;
+            
+            higherPriceSection.classList.remove('hidden');
+            higherPriceTbody.innerHTML = '';
+            
+            ministryOldProjectPercentage = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
+            ministryNewProjectPercentage = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
+            
+            let totalValue = 0;
+            let totalMinistryAmount = 0;
+            
+            higherPriceSubscriptions.forEach((diff, index) => {
+                const row = document.createElement('tr');
+                row.style.background = 'rgba(40, 167, 69, 0.1)';
+                
+                const percentage = diff.projectType === 'المشروع القديم' ? ministryOldProjectPercentage : ministryNewProjectPercentage;
+                const ministryAmount = diff.usedPrice * (percentage / 100);
+                totalValue += diff.usedPrice;
+                totalMinistryAmount += ministryAmount;
+                
+                const agentDisplay = diff.agentName && diff.agentName !== 'غير محدد' 
+                    ? `  ${diff.agentName}` 
+                    : 'غير محدد';
+                
+                row.innerHTML = `
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${index + 1}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${diff.username}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; font-weight: 500;">${agentDisplay}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${diff.subscriptionType}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${diff.projectType}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(diff.officialPrice)} د.ع</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(diff.userPrice)} د.ع</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #28a745;">${formatNumber(diff.usedPrice)} د.ع</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #28a745;">+${formatNumber(diff.difference)} د.ع</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600;">${formatNumber(diff.usedPrice)} د.ع</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(ministryAmount)} د.ع</td>
+                `;
+                higherPriceTbody.appendChild(row);
+            });
+            
+            // إضافة صف المجموع
+            const totalRow = document.createElement('tr');
+            totalRow.style.borderTop = '3px solid #28a745';
+            totalRow.style.background = '#f8f9fa';
+            totalRow.style.fontWeight = 'bold';
+            totalRow.innerHTML = `
+                <td colspan="9" style="padding: 8px; text-align: center; border: 1px solid #ddd; font-weight: bold; font-size: 0.9rem;">المجموع</td>
+                <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.9rem;">${formatNumber(totalValue)} د.ع</td>
+                <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: bold; font-size: 0.9rem; color: #801c32;">${formatNumber(totalMinistryAmount)} د.ع</td>
+            `;
+            higherPriceTbody.appendChild(totalRow);
         }
         function renderPriceDifferences() {
             if (!ministryResults || !ministryResults.priceDifferences || ministryResults.priceDifferences.length === 0) {
+                const differencesSection = document.getElementById('ministryPriceDifferences');
+                if (differencesSection) {
+                    differencesSection.classList.add('hidden');
+                }
+                return;
+            }
+            
+            // تصفية الاشتراكات المباعة بسعر أقل من الرسمي فقط
+            const lowerPriceSubscriptions = ministryResults.priceDifferences.filter(diff => diff.userPrice < diff.officialPrice);
+            
+            if (lowerPriceSubscriptions.length === 0) {
                 const differencesSection = document.getElementById('ministryPriceDifferences');
                 if (differencesSection) {
                     differencesSection.classList.add('hidden');
@@ -6924,16 +7122,11 @@ let agentReports = {};
             differencesSection.classList.remove('hidden');
             differencesTbody.innerHTML = '';
             
-            ministryResults.priceDifferences.forEach((diff, index) => {
+            lowerPriceSubscriptions.forEach((diff, index) => {
                 const row = document.createElement('tr');
-                const isLower = diff.userPrice < diff.officialPrice;
-                const rowColor = isLower ? 'rgba(220, 53, 69, 0.1)' : 'rgba(40, 167, 69, 0.1)';
-                row.style.background = rowColor;
+                row.style.background = 'rgba(220, 53, 69, 0.1)';
                 
-                const differenceText = isLower 
-                    ? `-${formatNumber(diff.difference)} (أقل من الرسمي)` 
-                    : `+${formatNumber(diff.difference)} (أكثر من الرسمي)`;
-                const differenceColor = isLower ? '#dc3545' : '#28a745';
+                const differenceText = `-${formatNumber(diff.difference)} (أقل من الرسمي)`;
                 
                 const agentDisplay = diff.agentName && diff.agentName !== 'غير محدد' 
                     ? `  ${diff.agentName}` 
@@ -6946,8 +7139,7 @@ let agentReports = {};
                     <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${diff.projectType}</td>
                     <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(diff.officialPrice)} د.ع</td>
                     <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr;">${formatNumber(diff.userPrice)} د.ع</td>
-                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #801c32;">${formatNumber(diff.usedPrice)} د.ع</td>
-                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: ${differenceColor};">${differenceText}</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd; direction: ltr; font-weight: 600; color: #dc3545;">${differenceText}</td>
                 `;
                 differencesTbody.appendChild(row);
             });
@@ -7022,12 +7214,12 @@ let agentReports = {};
             summaryWorksheet.addRow([]);
             
             const headerRow = summaryWorksheet.addRow([
-                'نوع الاشتراك',
-                'عدد الكارتات',
+                'ت',
+                'الفئة',
                 'السعر',
-                'المبلغ الإجمالي',
-                `نسبة الوزارة ${percentage}%`,
-                'المبلغ المستحق'
+                'العدد',
+                'القيمة',
+                `النسبة ${percentage}%`
             ]);
             headerRow.font = { bold: true, size: 12, color: { argb: 'FFFFFFFF' } };
             headerRow.fill = {
@@ -7081,18 +7273,27 @@ let agentReports = {};
             let totalAmount = 0;
             let totalMinistryAmount = 0;
             
+            let serialNumber = 1;
             subscriptionTypes.forEach(type => {
                 const data = summaryByType[type];
                 if (data.count > 0) {
                     const ministryAmount = data.totalAmount * (percentage / 100);
+                    const typeName = type === 'Bronze' ? 'Iraqcell_Bronze_Profile' :
+                                   type === 'Silver' ? 'Iraqcell_Silver_Profile' :
+                                   type === 'Gold' ? 'Iraqcell_Gold_Profile' : 'Iraqcell_Platinum_Profile';
+                    // استخدام السعر الرسمي للعرض
+                    const displayPrice = type === 'Bronze' ? 30000 :
+                                       type === 'Silver' ? 40000 :
+                                       type === 'Gold' ? 50000 : 65000;
                     const dataRow = summaryWorksheet.addRow([
-                        type,
+                        serialNumber,
+                        typeName,
+                        displayPrice,
                         data.count,
-                        data.price,
                         data.totalAmount,
-                        `${percentage}%`,
                         ministryAmount
                     ]);
+                    serialNumber++;
                     dataRow.eachCell((cell, colNumber) => {
                         if (colNumber >= 2 && typeof cell.value === 'number') {
                             cell.numFmt = '#,##0';
@@ -7115,10 +7316,18 @@ let agentReports = {};
             summaryWorksheet.addRow([]);
             const totalRow = summaryWorksheet.addRow([
                 'المجموع',
-                totalCount,
                 '-',
+                subscriptionTypes.reduce((sum, type) => {
+                    const data = summaryByType[type];
+                    if (data.count > 0) {
+                        return sum + (type === 'Bronze' ? 30000 :
+                                     type === 'Silver' ? 40000 :
+                                     type === 'Gold' ? 50000 : 65000);
+                    }
+                    return sum;
+                }, 0),
+                totalCount,
                 totalAmount,
-                '',
                 totalMinistryAmount
             ]);
             totalRow.font = { bold: true, size: 12 };
@@ -7181,7 +7390,6 @@ let agentReports = {};
                 'نوع الاشتراك',
                 'السعر الرسمي',
                 'السعر المكتوب',
-                'السعر المستخدم',
                 'المبلغ',
                 `نسبة الوزارة ${percentage}%`,
                 'المبلغ المستحق',
@@ -7220,7 +7428,6 @@ let agentReports = {};
                     detail.subscriptionType,
                     detail.officialPrice,
                     detail.userPrice || detail.officialPrice,
-                    detail.usedPrice,
                     detail.amount,
                     `${percentage}%`,
                     ministryAmount,
@@ -7318,7 +7525,6 @@ let agentReports = {};
                     'نوع الاشتراك',
                     'السعر الرسمي',
                     'السعر المكتوب',
-                    'السعر المستخدم',
                     'الفرق',
                     'ملاحظات'
                 ]);
@@ -7355,7 +7561,6 @@ let agentReports = {};
                         diff.subscriptionType,
                         diff.officialPrice,
                         diff.userPrice,
-                        diff.usedPrice,
                         diff.difference,
                         note
                     ]);
@@ -7458,12 +7663,12 @@ let agentReports = {};
             summaryData.push([`نسبة الوزارة: ${percentage}%`]);
             summaryData.push([]);
             summaryData.push([
-                'نوع الاشتراك',
-                'عدد الكارتات',
+                'ت',
+                'الفئة',
                 'السعر',
-                'المبلغ الإجمالي',
-                `نسبة الوزارة ${percentage}%`,
-                'المبلغ المستحق'
+                'العدد',
+                'القيمة',
+                `النسبة ${percentage}%`
             ]);
             
             const summaryByType = {
@@ -7500,19 +7705,28 @@ let agentReports = {};
             let totalCount = 0;
             let totalAmount = 0;
             let totalMinistryAmount = 0;
+            let serialNumber = 1;
             
             subscriptionTypes.forEach(type => {
                 const data = summaryByType[type];
                 if (data.count > 0) {
                     const ministryAmount = data.totalAmount * (percentage / 100);
+                    const typeName = type === 'Bronze' ? 'Iraqcell_Bronze_Profile' :
+                                   type === 'Silver' ? 'Iraqcell_Silver_Profile' :
+                                   type === 'Gold' ? 'Iraqcell_Gold_Profile' : 'Iraqcell_Platinum_Profile';
+                    // استخدام السعر الرسمي للعرض
+                    const displayPrice = type === 'Bronze' ? 30000 :
+                                       type === 'Silver' ? 40000 :
+                                       type === 'Gold' ? 50000 : 65000;
                     summaryData.push([
-                        type,
+                        serialNumber,
+                        typeName,
+                        displayPrice,
                         data.count,
-                        data.price,
                         data.totalAmount,
-                        `${percentage}%`,
                         ministryAmount
                     ]);
+                    serialNumber++;
                     totalCount += data.count;
                     totalAmount += data.totalAmount;
                     totalMinistryAmount += ministryAmount;
@@ -7522,10 +7736,18 @@ let agentReports = {};
             summaryData.push([]);
             summaryData.push([
                 'المجموع',
-                totalCount,
                 '-',
+                subscriptionTypes.reduce((sum, type) => {
+                    const data = summaryByType[type];
+                    if (data.count > 0) {
+                        return sum + (type === 'Bronze' ? 30000 :
+                                     type === 'Silver' ? 40000 :
+                                     type === 'Gold' ? 50000 : 65000);
+                    }
+                    return sum;
+                }, 0),
+                totalCount,
                 totalAmount,
-                '',
                 totalMinistryAmount
             ]);
             
@@ -7544,7 +7766,6 @@ let agentReports = {};
                 'نوع الاشتراك',
                 'السعر الرسمي',
                 'السعر المكتوب',
-                'السعر المستخدم',
                 'المبلغ',
                 `نسبة الوزارة ${percentage}%`,
                 'المبلغ المستحق',
@@ -7567,7 +7788,6 @@ let agentReports = {};
                     detail.subscriptionType,
                     detail.officialPrice,
                     detail.userPrice || detail.officialPrice,
-                    detail.usedPrice,
                     detail.amount,
                     `${percentage}%`,
                     ministryAmount,
@@ -7609,7 +7829,6 @@ let agentReports = {};
                     'نوع الاشتراك',
                     'السعر الرسمي',
                     'السعر المكتوب',
-                    'السعر المستخدم',
                     'الفرق',
                     'ملاحظات'
                 ]);
@@ -7627,7 +7846,6 @@ let agentReports = {};
                         diff.subscriptionType,
                         diff.officialPrice,
                         diff.userPrice,
-                        diff.usedPrice,
                         diff.difference,
                         note
                     ]);
