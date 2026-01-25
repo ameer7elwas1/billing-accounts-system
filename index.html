@@ -35,7 +35,7 @@
             --bg-primary: #ffffff;
             --bg-secondary: #f8f9fa;
             --bg-tertiary: #f0f0f0;
-            --text-primary: #2c3e50;
+            --text-primary: #000000;
             --text-secondary: #5a6c7d;
             --text-tertiary: #95a5a6;
             --border-color: #801c32;
@@ -719,11 +719,10 @@
         }
 
         .sidebar {
-            width: 230px;
-            max-width: 230px;
-            background: linear-gradient(180deg, var(--sidebar-bg) 0%, rgba(255, 255, 255, 0.02) 100%);
+            width: 300px;
+            background: var(--sidebar-bg);
             border-left: 3px solid var(--primary-color);
-            box-shadow: 3px 0 20px rgba(0, 0, 0, 0.08), inset -1px 0 0 rgba(128, 28, 50, 0.1);
+            box-shadow: 3px 0 20px rgba(0, 0, 0, 0.08);
             position: fixed;
             right: 0;
             top: 0;
@@ -732,14 +731,14 @@
             display: flex;
             flex-direction: column;
             padding: 0;
-            overflow: hidden;
-            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-            box-sizing: border-box;
+            overflow-y: auto;
+            overflow-x: hidden;
+            transition: transform 0.3s ease;
         }
 
         [data-theme="dark"] .sidebar {
-            background: linear-gradient(180deg, var(--sidebar-bg) 0%, rgba(0, 0, 0, 0.2) 100%);
-            box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(128, 28, 50, 0.2);
+            background: var(--sidebar-bg);
+            box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3);
         }
 
         .sidebar.hidden {
@@ -843,21 +842,25 @@
         }
 
         .sidebar-header {
-            padding: 20px 15px 15px;
-            border-bottom: 1.5px solid var(--border-color);
-            margin-bottom: 8px;
-            transition: border-color 0.3s ease;
+            padding: 12px 14px 14px 14px;
+            border-bottom: 2px solid var(--border-color);
+            background: rgba(128, 28, 50, 0.05);
             flex-shrink: 0;
-            background: linear-gradient(135deg, rgba(128, 28, 50, 0.03) 0%, transparent 100%);
-            overflow: visible;
-            width: 100%;
-            box-sizing: border-box;
             position: relative;
-            min-height: 120px;
+            overflow: visible;
+            min-height: 110px;
         }
 
-        [data-theme="dark"] .sidebar-header {
-            background: linear-gradient(135deg, rgba(128, 28, 50, 0.1) 0%, transparent 100%);
+        .sidebar-header-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-start;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10001;
+            pointer-events: auto;
         }
 
         .sidebar-header-row {
@@ -870,15 +873,19 @@
 
         .sidebar-header h1 {
             font-size: 1.1rem;
-            color: var(--primary-color);
+            color: #000000;
             font-weight: 800;
             text-align: center;
-            margin: 45px 0 15px 0;
+            margin: 42px 0 10px 0;
             letter-spacing: 0.5px;
             flex: 1;
-            line-height: 1.3;
+            line-height: 1.4;
             transition: color 0.3s ease;
             padding: 0 10px;
+        }
+
+        [data-theme="dark"] .sidebar-header h1 {
+            color: #ffffff;
         }
 
         .search-container {
@@ -964,182 +971,231 @@
 
         .sidebar-nav {
             flex: 1;
-            padding: 8px 12px;
+            padding: 12px 10px;
             overflow-y: auto;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
+            flex-shrink: 1;
             min-height: 0;
-            margin-top: 5px;
         }
+
+        /* تحسين scrollbar للقائمة الجانبية */
+        .sidebar-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(128, 28, 50, 0.3);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(128, 28, 50, 0.5);
+        }
+
+        [data-theme="dark"] .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(128, 28, 50, 0.4);
+        }
+
+        [data-theme="dark"] .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(128, 28, 50, 0.6);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(128, 28, 50, 0.3);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(128, 28, 50, 0.5);
+        }
+
+        [data-theme="dark"] .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(128, 28, 50, 0.4);
+        }
+
+        [data-theme="dark"] .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(128, 28, 50, 0.6);
+        }
+
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            margin-bottom: 6px;
-            border-radius: 12px;
+            gap: 10px;
+            padding: 8px 12px;
+            margin-bottom: 0;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            color: var(--text-primary);
+            transition: all 0.25s ease;
+            color: #000000;
             font-weight: 600;
-            font-size: 0.9rem;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
+            font-size: 0.85rem;
+            background: var(--nav-bg);
+            border: 1.5px solid transparent;
             position: relative;
-            overflow: visible;
-            background: linear-gradient(135deg, var(--nav-bg) 0%, rgba(255, 255, 255, 0.02) 100%);
-            border: 1.5px solid rgba(128, 28, 50, 0.08);
-            backdrop-filter: blur(10px);
-            line-height: 1.5;
             flex-shrink: 0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-            min-height: 48px;
-            width: 100%;
+            min-height: 38px;
         }
 
         [data-theme="dark"] .nav-item {
-            color: #f5f5f5;
-            background: linear-gradient(135deg, var(--nav-bg) 0%, rgba(255, 255, 255, 0.03) 100%);
-            border-color: rgba(128, 28, 50, 0.15);
+            color: #e0e0e0;
         }
+
+        /* التأكد من أن جميع التبويبات (بما فيها admin-only) تستخدم نفس التنسيق */
+        .nav-item.admin-only {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            margin-bottom: 0;
+            border-radius: 8px;
+            color: #000000;
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: var(--nav-bg);
+            border: 1.5px solid transparent;
+            min-height: 38px;
+        }
+
+        [data-theme="dark"] .nav-item.admin-only {
+            color: #e0e0e0;
+        }
+
+        .nav-item.admin-only.active {
+            background: var(--nav-bg);
+            border-color: var(--primary-color);
+            border-width: 2px;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        [data-theme="dark"] .nav-item.admin-only.active {
+            color: #ffffff;
+            background: var(--nav-bg);
+        }
+
 
         .nav-item::before {
             content: '';
             position: absolute;
+            right: 0;
             top: 0;
-            right: 0;
-            width: 3px;
+            width: 4px;
             height: 100%;
-            background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-            transform: translateX(100%);
-            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 0 10px #801c3259
-        }
-
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: 0;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(128, 28, 50, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
-            pointer-events: none;
-        }
-
-        .nav-item:hover::after {
-            width: 150px;
-            height: 150px;
-        }
-
-        .nav-item:hover::before,
-        .nav-item.active::before {
-            transform: translateX(0);
+            background: var(--primary-color);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            border-radius: 0 10px 10px 0;
         }
 
         .nav-item:hover {
-            background: linear-gradient(135deg, var(--nav-hover) 0%, rgba(128, 28, 50, 0.1) 100%);
-            border-color: rgba(128, 28, 50, 0.2);
+            background: var(--nav-hover);
+            border-color: var(--border-color);
             transform: translateX(-2px);
-            box-shadow: 0 4px 14px rgba(128, 28, 50, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
-            color: var(--primary-color);
+            color: #000000;
+            box-shadow: 0 2px 6px rgba(128, 28, 50, 0.1);
+        }
+
+        [data-theme="dark"] .nav-item:hover {
+            color: #ffffff;
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(128, 28, 50, 0.15) 0%, rgba(128, 28, 50, 0.08) 100%);
-            border-color: rgba(128, 28, 50, 0.35);
-            color: var(--primary-color);
+            background: var(--nav-bg);
+            border-color: var(--primary-color);
+            border-width: 2px;
+            color: #000000;
             font-weight: 700;
-            box-shadow: 0 3px 12px rgba(128, 28, 50, 0.25), inset 0 0 24px rgba(128, 28, 50, 0.08);
-            transform: translateX(-2px);
+            box-shadow: 0 2px 6px rgba(128, 28, 50, 0.1);
         }
 
         [data-theme="dark"] .nav-item.active {
-            background: linear-gradient(135deg, rgba(128, 28, 50, 0.25) 0%, rgba(128, 28, 50, 0.15) 100%);
-            border-color: rgba(128, 28, 50, 0.4);
-            box-shadow: 0 2px 8px rgba(128, 28, 50, 0.3), inset 0 0 20px rgba(128, 28, 50, 0.1);
+            color: #ffffff;
+            background: var(--nav-bg);
+        }
+
+        .nav-item.active::before {
+            transform: scaleY(1);
         }
 
         .nav-icon {
-            font-size: 1.1rem;
-            width: 28px;
-            height: 28px;
+            font-size: 1rem;
+            width: 26px;
+            height: 26px;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            background: linear-gradient(135deg, rgba(128, 28, 50, 0.1) 0%, rgba(128, 28, 50, 0.05) 100%);
-            border-radius: 8px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            font-weight: 500;
+            background: rgba(128, 28, 50, 0.08);
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            line-height: 1;
+            color: #000000;
+            filter: grayscale(100%);
         }
 
-        .nav-item:hover .nav-icon {
-            background: linear-gradient(135deg, rgba(128, 28, 50, 0.18) 0%, rgba(128, 28, 50, 0.12) 100%);
-            transform: scale(1.05);
+        [data-theme="dark"] .nav-icon {
+            color: #e0e0e0;
         }
 
         .nav-item.active .nav-icon {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-            color: white;
-            box-shadow: 0 3px 8px rgba(128, 28, 50, 0.35);
+            background: rgba(128, 28, 50, 0.12);
+            transform: scale(1.02);
+        }
+
+        .nav-item:hover .nav-icon {
+            background: rgba(128, 28, 50, 0.12);
             transform: scale(1.05);
         }
 
         .nav-text {
             flex: 1;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.2px;
-            white-space: normal;
-            overflow: visible;
-            word-wrap: break-word;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-            color: var(--text-primary);
-            transition: color 0.25s ease, font-weight 0.25s ease;
-        }
-
-        .nav-item.active .nav-text {
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .nav-item:hover .nav-text {
-            font-weight: 600;
-            color: var(--primary-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.4;
+            font-size: 0.85rem;
+            color: #000000;
         }
 
         [data-theme="dark"] .nav-text {
-            color: var(--text-primary);
+            color: #e0e0e0;
         }
 
-        [data-theme="dark"] .nav-item.active .nav-text {
-            color: var(--primary-color);
+        .nav-item-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
         }
 
-        [data-theme="dark"] .nav-item:hover .nav-text {
-            color: var(--primary-color);
-        }
 
         .sidebar-footer {
-            padding: 6px 20px;
+            padding: 14px 16px;
             border-top: 2px solid var(--border-color);
             margin-top: auto;
             transition: border-color 0.3s ease;
             flex-shrink: 0;
+            background: rgba(128, 28, 50, 0.03);
         }
 
         .user-info-sidebar {
@@ -1153,25 +1209,42 @@
 
         .sidebar-user-info {
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             overflow: visible;
             margin-top: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .sidebar-user-name {
-            font-size: 0.9rem;
+            background: linear-gradient(135deg, #801c32, #a52d45);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
             font-weight: 700;
-            color: var(--text-primary);
-            margin: 0;
-            padding: 6px 10px;
-            cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(128, 28, 50, 0.3);
+            text-align: center;
+            letter-spacing: 0.5px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             position: relative;
-            opacity: 1;
-            overflow: visible;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: all 0.3s ease;
             width: 100%;
             box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-user-name-text {
+            font-size: 0.9rem;
+            font-weight: 700;
         }
 
         .sidebar-user-name:hover {
@@ -1305,12 +1378,12 @@
 
         .main-content {
             flex: 1;
-            margin-right: 250px;
+            margin-right: 280px;
             padding: 30px 25px;
             min-height: 100vh;
             transition: background-color 0.3s ease, color 0.3s ease;
-            width: calc(100% - 250px);
-            max-width: calc(100% - 250px);
+            width: calc(100% - 280px);
+            max-width: calc(100% - 280px);
             overflow-x: hidden;
             position: relative;
             z-index: 1;
@@ -3449,30 +3522,20 @@
             </button>
             <div class="sidebar" id="sidebar">
                 <div class="sidebar-header">
-                    <div
-                        style="display: flex; gap: 10px; align-items: center; justify-content: flex-start; position: absolute; top: 15px; right: 15px; z-index: 10001; pointer-events: auto;">
+                    <div class="sidebar-header-controls">
                         <button class="theme-toggle-btn-small" onclick="toggleTheme()" id="themeToggleBtn"
-                            title="تبديل الوضع المظلم/الفاتح" style="pointer-events: auto; z-index: 10002;">
-                            <span id="themeToggleIcon">🌙</span>
+                            title="تبديل الوضع المظلم/الفاتح">
+                            <span id="themeToggleIcon">☾</span>
                         </button>
                         <button class="sidebar-toggle-btn" id="sidebarToggleBtn" onclick="toggleSidebar()"
-                            title="إظهار/إخفاء القائمة الجانبية" style="pointer-events: auto; z-index: 10002;">
+                            title="إظهار/إخفاء القائمة الجانبية">
                             ☰
                         </button>
                     </div>
                     <h1>قسم الحسابات</h1>
-                    <div class="sidebar-user-info"
-                        style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 0;">
-                        <div id="sidebarUser" class="sidebar-user-name"
-                            style="background: linear-gradient(135deg, #801c32, #a52d45); color: white; padding: 14px 18px; border-radius: 12px; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 12px rgba(128, 28, 50, 0.4); text-align: center; letter-spacing: 0.5px; border: 2px solid rgba(255, 255, 255, 0.3); position: relative; cursor: pointer; user-select: none; -webkit-user-select: none; transition: all 0.3s ease; width: 100%; box-sizing: border-box;"
-                            onclick="toggleUserContactPopup(event)">
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-                                <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                    <span style="font-size: 1.3rem;"></span>
-                                    <span style="font-size: 1.05rem; font-weight: 700;">Ameer Helwas</span>
-                                </div>
-                                <div style="font-size: 0.75rem; opacity: 0.9; font-weight: 500;"></div>
-                            </div>
+                    <div class="sidebar-user-info">
+                        <div id="sidebarUser" class="sidebar-user-name" onclick="toggleUserContactPopup(event)">
+                            <span class="sidebar-user-name-text">Ameer Helwas</span>
                             <div id="userContactPopup" class="user-contact-popup">
                                 <div class="user-contact-item">
                                     <span class="user-contact-icon">
@@ -3524,44 +3587,44 @@
                 </div>
                 <div class="sidebar-nav">
                     <div class="nav-item active" onclick="switchTab('summary')">
-                        <span class="nav-icon">🏠</span>
+                        <span class="nav-icon">⌂</span>
                         <span class="nav-text">الرئيسية</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('basic')">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">□</span>
                         <span class="nav-text">العرض المجاني</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('twoMonths')">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">◇</span>
                         <span class="nav-text">عرض شهرين مخفض</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('advanced')">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">◆</span>
                         <span class="nav-text">عرض 3 أشهر مخفض</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('agents')">
-                        <span class="nav-icon"></span>
-                        <span class="nav-text">إدارة الوكلاء وعروضهم</span>
+                        <span class="nav-icon">☰</span>
+                        <span class="nav-text">إدارة الوكلاء</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('agentPercentage')">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">▣</span>
                         <span class="nav-text">نسبة الوكلاء</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('ministryPercentage')">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">▤</span>
                         <span class="nav-text">نسبة الوزارة</span>
                     </div>
+                    <div class="nav-item" onclick="switchTab('archive')">
+                        <span class="nav-icon">▦</span>
+                        <span class="nav-text">الأرشيف</span>
+                    </div>
                     <div class="nav-item" onclick="switchTab('activity')">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">☷</span>
                         <span class="nav-text">سجل العمليات</span>
                     </div>
                     <div class="nav-item" onclick="switchTab('settings')">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">⚙</span>
                         <span class="nav-text">الإعدادات</span>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('archive')">
-                        <span class="nav-icon"></span>
-                        <span class="nav-text">الأرشيف</span>
                     </div>
                     <div class="nav-item admin-only" onclick="switchTab('management')" style="display: none;">
                         <span class="nav-icon"></span>
@@ -3574,12 +3637,14 @@
                 </div>
                 <div class="sidebar-footer">
                     <button class="btn btn-secondary" onclick="switchUser()"
-                        style="width: 100%; background: #6c757d; border-color: #6c757d; color: white; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;"
-                        id="switchUserBtn">
-                        <span id="switchUserBtnName" style="font-weight: 600;">${loggedInUser || 'غير محدد'}</span>
-                        <span style="margin-right: 5px; font-size: 1.1rem;">↻</span>
+                        style="width: 100%; background: linear-gradient(135deg, #6c757d, #5a6268); border: none; color: white; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-radius: 10px; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s ease;"
+                        id="switchUserBtn"
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'">
+                        <span id="switchUserBtnName" style="font-weight: 600; font-size: 0.95rem;">${loggedInUser || 'غير محدد'}</span>
+                        <span style="margin-right: 5px; font-size: 1.2rem; transition: transform 0.3s ease;">↻</span>
                     </button>
-                    <div class="date-info-sidebar" id="currentDateTime" style="margin-top: 10px;"></div>
+                    <div class="date-info-sidebar" id="currentDateTime" style="margin-top: 12px; text-align: center; font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; padding: 8px; background: rgba(128, 28, 50, 0.05); border-radius: 8px;"></div>
                 </div>
             </div>
             <div class="main-content">
@@ -4284,7 +4349,7 @@
                             <div class="settings-section">
                                 <h4> النسب الافتراضية</h4>
                                 <div class="settings-group">
-                                    <label for="defaultAgentPercentage">النسبة الافتراضية للوكلاء الجدد (%):</label>
+                                    <label for="defaultAgentPercentage">النسبة الافتراضية للوكلاء الجدد (%)</label>
                                     <input type="number" id="defaultAgentPercentage" class="settings-input" value="16"
                                         min="0" max="100" step="0.01" onchange="saveDefaultPercentage()">
                                     <p
@@ -4295,7 +4360,7 @@
                             <div class="settings-section">
                                 <h4> إعدادات نسبة الوزارة</h4>
                                 <div class="settings-group">
-                                    <label for="ministryOldProjectPercentage">نسبة الوزارة للمشروع القديم (%):</label>
+                                    <label for="ministryOldProjectPercentage">نسبة الوزارة للمشروع القديم (%)</label>
                                     <input type="number" id="ministryOldProjectPercentage" class="settings-input"
                                         value="50" min="0" max="100" step="0.01" onchange="saveMinistryPercentages()">
                                     <p
@@ -4321,7 +4386,7 @@
                                 </label>
                                 <p
                                     style="margin-top: 12px; font-size: 0.85rem; color: var(--text-primary); line-height: 1.5; font-weight: 600;">
-                                    
+
                                 </p>
                             </div>
                         </div>
@@ -4367,7 +4432,7 @@
                             style="margin-bottom: 25px; padding: 20px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);">
                             <h4
                                 style="font-size: 1.2rem; font-weight: 800; color: var(--primary-color); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
-                                 الأرشيفات المتاحة:</h4>
+                                الأرشيفات المتاحة:</h4>
                             <div id="archivesList"
                                 style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-top: 15px;">
                             </div>
@@ -4378,7 +4443,7 @@
                                 <div style="margin-bottom: 20px;">
                                     <h4
                                         style="font-size: 1.1rem; font-weight: 800; color: var(--primary-color); margin-bottom: 15px;">
-                                         البحث عن وكيل</h4>
+                                        البحث عن وكيل</h4>
                                     <input type="text" id="archiveAgentSearch" class="settings-input"
                                         placeholder="اكتب اسم الوكيل للبحث..."
                                         style="width: 100%; padding: 14px 18px; font-size: 1rem; font-weight: 600; border-radius: 10px; border: 2px solid var(--border-color);"
@@ -4427,7 +4492,7 @@
                                     style="width: 100%; margin-bottom: 15px;" onchange="loadManagementExpenses()">
 
                                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #801c32;">
-                                      </label>
+                                </label>
                                 <div class="file-upload" id="managementMasterFileUpload" style="padding: 15px;">
                                     <p style="margin: 0; font-size: 0.9rem;">اسحب ملف Excel هنا أو انقر للاختيار</p>
                                     <input type="file" id="managementMasterFileInput" accept=".xlsx,.xls"
@@ -4552,7 +4617,7 @@
                                     تحليل ارباح وكيل
                                 </h3>
                                 <p style="margin: 5px 0 0 0; color: var(--text-secondary); font-size: 0.9rem;">
-                                     
+
                                 </p>
                             </div>
                         </div>
@@ -4561,21 +4626,21 @@
                             style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px;">
                             <div style="padding: 15px; background: rgba(128, 28, 50, 0.05); border-radius: 10px;">
                                 <label style="display: block; margin-bottom: 8px; font-weight: 700; color: #801c32;">
-                                    </label>
+                                </label>
                                 <select id="singleAgentSelect" class="settings-input"
                                     style="width: 100%; margin-bottom: 15px;">
-                                    <option value="">-- اختر الوكيل --</option>
+                                    <option value="">- اختر وكيل --</option>
                                 </select>
 
                                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #801c32;">
-                                      </label>
+                                </label>
                                 <div class="file-upload" id="singleAgentFileUpload" style="padding: 15px;">
                                     <p style="margin: 0; font-size: 0.9rem;">اسحب ملف Excel هنا أو انقر للاختيار</p>
                                     <input type="file" id="singleAgentFileInput" accept=".xlsx,.xls"
                                         style="display: none;">
                                 </div>
-                                <div id="singleAgentFileName" class="success-message hidden"
-                                    style="margin-top: 8px;"></div>
+                                <div id="singleAgentFileName" class="success-message hidden" style="margin-top: 8px;">
+                                </div>
                             </div>
                         </div>
 
@@ -4594,7 +4659,8 @@
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                             <h3 style="margin: 0; font-size: 1.3rem; color: #801c32; font-weight: 800;"> نتائج تحليل
                                 الوكيل: <span id="singleAgentResultName"></span></h3>
-                            <button class="btn btn-success" onclick="exportSingleAgentReportToExcel()" style="background: #801c32; border-color: #801c32; color: white;"> تصدير
+                            <button class="btn btn-success" onclick="exportSingleAgentReportToExcel()"
+                                style="background: #801c32; border-color: #801c32; color: white;"> تصدير
                                 Excel</button>
                         </div>
 
@@ -4679,9 +4745,9 @@
                 <div class="form-group">
                     <label for="userPassword">كلمة المرور <span id="passwordRequired">*</span></label>
                     <input type="password" id="userPassword"
-                        placeholder="أدخل كلمة المرور (اتركه فارغاً عند التعديل للحفاظ على الكلمة الحالية)">
+                        placeholder="أدخل كلمة المرور (اتركه فارغاً للحفاظ على الكلمة الحالية)">
                     <small style="color: var(--text-secondary); font-size: 0.85rem; display: block; margin-top: 5px;"
-                        id="passwordHint" style="display: none;">عند التعديل، اتركه فارغاً للحفاظ على كلمة المرور
+                        id="passwordHint" style="display: none;"> اتركه فارغاً للحفاظ على كلمة المرور
                         الحالية</small>
                 </div>
                 <div class="form-group">
@@ -4883,7 +4949,7 @@
                         const user = users[0];
 
                         if (!user.is_active) {
-                            showAlert(alertDiv, 'هذا المستخدم معطل. يرجى الاتصال بالمدير.', 'error');
+                            showAlert(alertDiv, 'الحساب معطل . يرجى الاتصال بالمدير.', 'error');
                             return;
                         }
 
@@ -5391,7 +5457,7 @@
 
                                 if (filtered.length > 0) {
                                     usernameExistsInCurrentSystem = true;
-                                    showAlert(alertDiv, 'اسم المستخدم موجود بالفعل في هذا النظام. يرجى اختيار اسم مستخدم آخر.', 'error');
+                                    showAlert(alertDiv, 'اسم المستخدم موجود بالفعل  . يرجى اختيار اسم مستخدم آخر.', 'error');
                                     return;
                                 }
                             }
@@ -5464,11 +5530,11 @@
                                             return;
                                         }
                                     } else {
-                                        showAlert(alertDiv, 'اسم المستخدم موجود بالفعل. يرجى اختيار اسم مستخدم آخر.', 'error');
+                                        showAlert(alertDiv, 'اسم المستخدم موجود . يرجى اختيار اسم مستخدم آخر.', 'error');
                                         return;
                                     }
                                 } catch (checkError) {
-                                    showAlert(alertDiv, 'اسم المستخدم موجود بالفعل. يرجى اختيار اسم مستخدم آخر.', 'error');
+                                    showAlert(alertDiv, 'اسم المستخدم موجود . يرجى اختيار اسم مستخدم آخر.', 'error');
                                     return;
                                 }
                             }
@@ -5484,7 +5550,7 @@
                 } catch (error) {
                     const errorMessage = error.message || error.toString() || 'خطأ غير معروف';
                     if (errorMessage.includes('duplicate key') || errorMessage.includes('23505') || errorMessage.includes('409')) {
-                        showAlert(alertDiv, 'اسم المستخدم موجود بالفعل. يرجى اختيار اسم مستخدم آخر.', 'error');
+                        showAlert(alertDiv, 'اسم المستخدم موجود . يرجى اختيار اسم مستخدم آخر.', 'error');
                     } else if (errorMessage.includes('Failed to fetch') || errorMessage.includes('network')) {
                         showAlert(alertDiv, 'حدث خطأ في الاتصال. يرجى التحقق من الاتصال بالإنترنت والمحاولة مرة أخرى.', 'error');
                     } else {
@@ -5672,7 +5738,7 @@
                 const subscription = String(subscriptionName).trim();
                 if (subscription.includes('Platinum') || subscription.includes('بلاتينيوم') || subscription.toLowerCase().includes('platinum')) {
                     return 'P';
-                } else if (subscription.includes('Gold') || subscription.includes('كولد') || subscription.toLowerCase().includes('gold')) {
+                } else if (subscription.includes('Gold') || subscription.includes('ذهبي') || subscription.toLowerCase().includes('gold')) {
                     return 'G';
                 } else if (subscription.includes('Silver') || subscription.includes('سلفر') || subscription.toLowerCase().includes('silver')) {
                     return 'S';
@@ -12477,7 +12543,7 @@
                 populateManagementAgentsSelect();
                 setupManagementAgentExcelUpload();
                 loadManagementReport();
-                
+
                 loadAgentsIntoSelect();
                 setupSingleAgentFileUpload();
             }
@@ -12765,7 +12831,7 @@
                     h.includes('agent') || h.includes('وكيل') || h.includes('الوكيل')
                 );
                 if (agentCol === -1 && managementAgentExcelData[0].length > 6) {
-                    agentCol = 6; 
+                    agentCol = 6;
                 }
 
                 let amountCol = headers.findIndex(h =>
@@ -12838,7 +12904,7 @@
                         usedPrice = officialPrice;
                     }
 
-                    const count = 1; 
+                    const count = 1;
                     const amount = usedPrice * count;
 
                     const ministryPercent = isNewProject ? ministryNew : ministryOld;
@@ -13536,8 +13602,11 @@
                                 .eq('analysis_type', 'two_months')
                                 .maybeSingle();
 
+                            const dbAgentNames = new Set();
+                            
                             if (basicArchive && basicArchive.data && basicArchive.data.agentReports) {
                                 Object.keys(basicArchive.data.agentReports).forEach(agentName => {
+                                    dbAgentNames.add(agentName);
                                     if (!agentReports[agentName]) {
                                         agentReports[agentName] = {};
                                     }
@@ -13549,6 +13618,7 @@
 
                             if (advancedArchive && advancedArchive.data && advancedArchive.data.agentReports) {
                                 Object.keys(advancedArchive.data.agentReports).forEach(agentName => {
+                                    dbAgentNames.add(agentName);
                                     if (!agentReports[agentName]) {
                                         agentReports[agentName] = {};
                                     }
@@ -13560,6 +13630,7 @@
 
                             if (twoMonthsArchive && twoMonthsArchive.data && twoMonthsArchive.data.agentReports) {
                                 Object.keys(twoMonthsArchive.data.agentReports).forEach(agentName => {
+                                    dbAgentNames.add(agentName);
                                     if (!agentReports[agentName]) {
                                         agentReports[agentName] = {};
                                     }
@@ -13567,6 +13638,31 @@
                                         agentReports[agentName].twoMonths = twoMonthsArchive.data.agentReports[agentName].twoMonths;
                                     }
                                 });
+                            }
+
+                            try {
+                                const savedAgentReports = loadDataFromStorage('agentReports', {});
+                                if (savedAgentReports && Object.keys(savedAgentReports).length > 0) {
+                                    let hasChanges = false;
+                                    Object.keys(savedAgentReports).forEach(agentName => {
+                                        if (!dbAgentNames.has(agentName)) {
+                                            delete savedAgentReports[agentName];
+                                            hasChanges = true;
+                                        }
+                                    });
+                                    
+                                    if (hasChanges) {
+                                        saveDataToStorage('agentReports', savedAgentReports);
+                                        const cleanedString = JSON.stringify(savedAgentReports);
+                                        if (cleanedString.length <= 2000000) {
+                                            localStorage.setItem('agentReports', cleanedString);
+                                        } else {
+                                            localStorage.removeItem('agentReports');
+                                        }
+                                    }
+                                }
+                            } catch (e) {
+                                console.warn('Error cleaning localStorage:', e);
                             }
                         } catch (e) {
                             console.warn('Error loading agentReports from database in restoreSavedData:', e);
@@ -13589,6 +13685,8 @@
                         } catch (e) {
                             console.warn('Could not save agentReports to localStorage:', e);
                         }
+                    } else {
+                        localStorage.removeItem('agentReports');
                     }
 
                     const savedBasicResults = loadDataFromStorage('basicResults');
@@ -16143,9 +16241,38 @@
                 if (!confirm(`هل أنت متأكد من حذف جميع التحليلات والبيانات للوكيل "${agentName}"؟\n\nسيتم حذف:\n- تحليل العرض المجاني\n- تحليل العرض المخفض 3 أشهر\n- تحليل العرض المخفض شهرين\n- بيانات النسبة المحفوظة\n\nيمكنك إجراء تحليلات جديدة بعد الحذف.`)) {
                     return;
                 }
+                
                 if (agentReports[agentName]) {
                     delete agentReports[agentName];
                 }
+                
+                try {
+                    const savedAgentReports = loadDataFromStorage('agentReports', {});
+                    if (savedAgentReports && savedAgentReports[agentName]) {
+                        delete savedAgentReports[agentName];
+                        saveDataToStorage('agentReports', savedAgentReports);
+                    }
+                    const agentReportsString = localStorage.getItem('agentReports');
+                    if (agentReportsString) {
+                        try {
+                            const agentReportsObj = JSON.parse(agentReportsString);
+                            if (agentReportsObj[agentName]) {
+                                delete agentReportsObj[agentName];
+                                const updatedString = JSON.stringify(agentReportsObj);
+                                if (updatedString.length <= 2000000) {
+                                    localStorage.setItem('agentReports', updatedString);
+                                } else {
+                                    localStorage.removeItem('agentReports');
+                                }
+                            }
+                        } catch (e) {
+                            console.warn('Error updating agentReports in localStorage:', e);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error deleting agentReports from localStorage:', error);
+                }
+                
                 if (agentPercentages[agentName]) {
                     delete agentPercentages[agentName];
                     localStorage.setItem('agentPercentages', JSON.stringify(agentPercentages));
@@ -16158,6 +16285,7 @@
                         }
                     }
                 }
+                
                 if (supabaseClient) {
                     try {
                         const monthYear = getCurrentMonthYear();
@@ -16195,6 +16323,54 @@
                         console.error('Error clearing reports from database:', error);
                     }
                 }
+                
+                try {
+                    const basicResultsEl = document.getElementById('basicResults');
+                    const advancedResultsEl = document.getElementById('advancedResults');
+                    const twoMonthsResultsEl = document.getElementById('twoMonthsResults');
+                    
+                    if (basicResultsEl && !basicResultsEl.classList.contains('hidden')) {
+                        const basicResultsGrid = document.getElementById('basicResultsGrid');
+                        if (basicResultsGrid) {
+                            const agentCards = basicResultsGrid.querySelectorAll(`[data-agent-name="${agentName}"]`);
+                            if (agentCards.length > 0) {
+                                agentCards.forEach(card => card.remove());
+                                if (basicResultsGrid.children.length === 0) {
+                                    basicResultsEl.classList.add('hidden');
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (advancedResultsEl && !advancedResultsEl.classList.contains('hidden')) {
+                        const advancedResultsGrid = document.getElementById('advancedResultsGrid');
+                        if (advancedResultsGrid) {
+                            const agentCards = advancedResultsGrid.querySelectorAll(`[data-agent-name="${agentName}"]`);
+                            if (agentCards.length > 0) {
+                                agentCards.forEach(card => card.remove());
+                                if (advancedResultsGrid.children.length === 0) {
+                                    advancedResultsEl.classList.add('hidden');
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (twoMonthsResultsEl && !twoMonthsResultsEl.classList.contains('hidden')) {
+                        const twoMonthsResultsGrid = document.getElementById('twoMonthsResultsGrid');
+                        if (twoMonthsResultsGrid) {
+                            const agentCards = twoMonthsResultsGrid.querySelectorAll(`[data-agent-name="${agentName}"]`);
+                            if (agentCards.length > 0) {
+                                agentCards.forEach(card => card.remove());
+                                if (twoMonthsResultsGrid.children.length === 0) {
+                                    twoMonthsResultsEl.classList.add('hidden');
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Error hiding results:', e);
+                }
+                
                 refreshAgentsList();
                 updateAgentSummary();
                 renderPercentageTable();
@@ -16275,6 +16451,41 @@
                     if (!supabaseClient) {
                         alert('خطأ: قاعدة البيانات غير متصلة');
                         return;
+                    }
+
+                    const currentMonthYear = getCurrentMonthYear();
+                    if (monthYear === currentMonthYear) {
+                        try {
+                            const savedAgentReports = loadDataFromStorage('agentReports', {});
+                            if (savedAgentReports && savedAgentReports[agentName]) {
+                                delete savedAgentReports[agentName];
+                                saveDataToStorage('agentReports', savedAgentReports);
+                            }
+                            
+                            const agentReportsString = localStorage.getItem('agentReports');
+                            if (agentReportsString) {
+                                try {
+                                    const agentReportsObj = JSON.parse(agentReportsString);
+                                    if (agentReportsObj[agentName]) {
+                                        delete agentReportsObj[agentName];
+                                        const updatedString = JSON.stringify(agentReportsObj);
+                                        if (updatedString.length <= 2000000) {
+                                            localStorage.setItem('agentReports', updatedString);
+                                        } else {
+                                            localStorage.removeItem('agentReports');
+                                        }
+                                    }
+                                } catch (e) {
+                                    console.warn('Error updating agentReports in localStorage:', e);
+                                }
+                            }
+                            
+                            if (agentReports[agentName]) {
+                                delete agentReports[agentName];
+                            }
+                        } catch (error) {
+                            console.error('Error deleting from localStorage:', error);
+                        }
                     }
 
                     const analysisTypes = ['basic', 'advanced', 'two_months'];
@@ -18262,7 +18473,7 @@
             }
 
             let managementMasterData = null;
-            let managementExpenses = {}; 
+            let managementExpenses = {};
 
             try {
                 const stored = localStorage.getItem('managementExpenses');
@@ -18399,7 +18610,7 @@
             }
 
             function analyzeManagementMasterData() {
-                const monthInput = document.getElementById('managementMonth').value; 
+                const monthInput = document.getElementById('managementMonth').value;
                 if (!monthInput) {
                     alert('يرجى اختيار الشهر أولاً');
                     return;
@@ -18439,10 +18650,10 @@
                 const data = managementMasterData;
                 const headerRow = data[0];
 
-                let amountIdx = 11; 
+                let amountIdx = 11;
                 let agentIdx = -1;
                 let subTypeIdx = -1;
-                let typeIdx = -1; 
+                let typeIdx = -1;
 
                 for (let i = 0; i < headerRow.length; i++) {
                     const h = String(headerRow[i] || '').toLowerCase().trim();
@@ -18481,7 +18692,7 @@
                 let totalSales = 0;
                 let totalAgentShare = 0;
 
-                const details = {}; 
+                const details = {};
 
                 const ministryOldPercent = parseFloat(localStorage.getItem('ministryOldProjectPercentage')) || 50;
                 const ministryNewPercent = parseFloat(localStorage.getItem('ministryNewProjectPercentage')) || 27;
@@ -18619,7 +18830,7 @@
 
             setupManagementMasterFileUpload();
 
-          
+
             let singleAgentData = null;
 
             function setupSingleAgentFileUpload() {
@@ -18680,7 +18891,7 @@
                 if (!select) return;
 
                 const agents = JSON.parse(localStorage.getItem('agentsList') || '[]');
-                
+
                 select.innerHTML = '<option value="">-- اختر الوكيل --</option>';
 
                 agents.forEach(agent => {
@@ -18717,7 +18928,7 @@
                     const row = data[i];
                     if (row && row.length > 0) {
                         const headerText = String(row.join(' ')).toLowerCase();
-                        if (headerText.includes('agent') || headerText.includes('وكيل') || 
+                        if (headerText.includes('agent') || headerText.includes('وكيل') ||
                             headerText.includes('profile') || headerText.includes('اشتراك') ||
                             headerText.includes('amount') || headerText.includes('مبلغ')) {
                             headerRowIndex = i;
@@ -18732,13 +18943,13 @@
                     return;
                 }
 
-                
-                const profileCol = 2;  
-                const agentNameCol = 6; 
-                const typeCol = 8;    
-                const amountCol = 11;   
 
-               
+                const profileCol = 2;
+                const agentNameCol = 6;
+                const typeCol = 8;
+                const amountCol = 11;
+
+
                 let managerCol = -1;
                 const headers = headerRow.map(h => String(h || '').toLowerCase().trim());
                 for (let i = 0; i < headers.length; i++) {
@@ -18797,33 +19008,33 @@
                     if (agentName) allAgentNames.add(agentName);
                     if (managerName) allAgentNames.add(managerName);
 
-                   
+
                     let isMatch = false;
-                    
+
                     const normalizedAgentName = agentName ? agentName.toLowerCase().trim() : '';
                     const normalizedManagerName = managerName ? managerName.toLowerCase().trim() : '';
                     const normalizedSelectedAgent = selectedAgent.toLowerCase().trim();
-                    
+
                     isMatch = normalizedAgentName === normalizedSelectedAgent ||
-                             normalizedManagerName === normalizedSelectedAgent;
-                    
+                        normalizedManagerName === normalizedSelectedAgent;
+
                     if (!isMatch) {
                         if (normalizedSelectedAgent.includes('@') && normalizedManagerName.includes('@')) {
                             isMatch = normalizedManagerName === normalizedSelectedAgent;
-                            
+
                             if (!isMatch) {
                                 const selectedBase = normalizedSelectedAgent.split('@')[0].trim();
                                 const managerBase = normalizedManagerName.split('@')[0].trim();
                                 isMatch = selectedBase === managerBase && selectedBase.length > 2;
                             }
                         }
-                        
+
                         if (!isMatch && !normalizedSelectedAgent.includes('@')) {
                             const cleanAgentName = normalizedAgentName.replace(/[@\s\-_]+/g, ' ').trim();
                             const cleanSelectedAgent = normalizedSelectedAgent.replace(/[@\s\-_]+/g, ' ').trim();
-                            
+
                             isMatch = cleanAgentName === cleanSelectedAgent ||
-                                     cleanAgentName.includes(cleanSelectedAgent);
+                                cleanAgentName.includes(cleanSelectedAgent);
                         }
                     }
 
@@ -18851,28 +19062,28 @@
 
                     totalAmount += amount;
 
-                    
+
                     let isNewProject = false;
-                    
-                    if (profileType && (profileType.toLowerCase().includes('new') || 
-                                       profileType.includes('جديد') ||
-                                       profileType.toLowerCase().includes('jadid'))) {
+
+                    if (profileType && (profileType.toLowerCase().includes('new') ||
+                        profileType.includes('جديد') ||
+                        profileType.toLowerCase().includes('jadid'))) {
                         isNewProject = true;
                     }
-                    
+
                     if (subscriptionType) {
                         const typeLower = subscriptionType.toLowerCase();
-                        if (typeLower.includes('new') || typeLower.includes('جديد') || 
+                        if (typeLower.includes('new') || typeLower.includes('جديد') ||
                             typeLower.includes('new project') || typeLower.includes('مشروع جديد')) {
                             isNewProject = true;
                         } else if (typeLower.includes('old') || typeLower.includes('قديم') ||
-                                   typeLower.includes('old project') || typeLower.includes('مشروع قديم')) {
+                            typeLower.includes('old project') || typeLower.includes('مشروع قديم')) {
                             isNewProject = false;
                         }
                     }
 
                     const agentPercent = isNewProject ? 16 : 15;
-                    const agentShare = amount * (agentPercent / 100); 
+                    const agentShare = amount * (agentPercent / 100);
 
                     const ministryRate = isNewProject ? ministryNewPercent : ministryOldPercent;
                     const ministryShare = amount * (ministryRate / 100);
@@ -18882,7 +19093,7 @@
                     totalCompanyShare += companyShare;
 
                     const agentNetProfit = agentShare;
-                    
+
                     totalAgentShare += agentShare;
                 }
 
@@ -18894,7 +19105,7 @@
                 if (matchedRows === 0) {
                     const agentList = Array.from(allAgentNames).slice(0, 5).join('، ');
                     showSingleAgentAlert(`لم يتم العثور على بيانات للوكيل "${selectedAgent}" في الملف.\n\nالأسماء الموجودة في الملف (أمثلة): ${agentList}${allAgentNames.size > 5 ? '...' : ''}`, 'error');
-                    document.getElementById('singleAgentDetailsBody').innerHTML = 
+                    document.getElementById('singleAgentDetailsBody').innerHTML =
                         '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #999;">لا توجد بيانات للوكيل المحدد في الملف</td></tr>';
                     return;
                 }
@@ -18907,7 +19118,7 @@
                 document.getElementById('singleAgentMinistryShare').textContent = formatNumberEnglish(totalMinistryShare);
                 document.getElementById('singleAgentNetProfit').textContent = formatNumberEnglish(totalAgentNetProfit);
 
-                showSingleAgentAlert(`تم تحليل بيانات الوكيل بنجاح (${matchedRows} صف)`, 'success');
+                showSingleAgentAlert(`تم تحليل  (${matchedRows} تفعيل)`, 'success');
             }
 
             function resetSingleAgentData() {
