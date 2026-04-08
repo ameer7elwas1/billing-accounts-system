@@ -4319,25 +4319,74 @@
                             <div class="settings-section">
                                 <h4> إعدادات الأسعار</h4>
                                 <div class="settings-group">
-                                    <label for="priceBronze"> Bronze</label>
+                                    <label for="priceBronze"> Bronze - السعر الشهري الرسمي</label>
                                     <input type="number" id="priceBronze" class="settings-input" value="30000" min="0"
                                         step="1000">
                                 </div>
                                 <div class="settings-group">
-                                    <label for="priceSilver"> Silver</label>
-                                    <input type="number" id="priceSilver" class="settings-input" value="40000" min="0"
+                                    <label for="priceSilver"> Silver - السعر الشهري الرسمي</label>
+                                    <input type="number" id="priceSilver" class="settings-input" value="42000" min="0"
                                         step="1000">
                                 </div>
                                 <div class="settings-group">
-                                    <label for="priceGold"> Gold</label>
+                                    <label for="priceGold"> Gold - السعر الشهري الرسمي</label>
                                     <input type="number" id="priceGold" class="settings-input" value="50000" min="0"
                                         step="1000">
                                 </div>
                                 <div class="settings-group">
-                                    <label for="pricePlatinum"> Platinum</label>
-                                    <input type="number" id="pricePlatinum" class="settings-input" value="65000" min="0"
+                                    <label for="pricePlatinum"> Platinum - السعر الشهري الرسمي</label>
+                                    <input type="number" id="pricePlatinum" class="settings-input" value="68000" min="0"
                                         step="1000">
                                 </div>
+
+                                <hr style="margin: 10px 0;">
+
+                                <h4> أسعار العرض المخفض لشهرين</h4>
+                                <div class="settings-group">
+                                    <label for="priceTwoMonthsBronze"> Bronze - عرض شهرين مخفض</label>
+                                    <input type="number" id="priceTwoMonthsBronze" class="settings-input" value="60000"
+                                        min="0" step="1000">
+                                </div>
+                                <div class="settings-group">
+                                    <label for="priceTwoMonthsSilver"> Silver - عرض شهرين مخفض</label>
+                                    <input type="number" id="priceTwoMonthsSilver" class="settings-input" value="84000"
+                                        min="0" step="1000">
+                                </div>
+                                <div class="settings-group">
+                                    <label for="priceTwoMonthsGold"> Gold - عرض شهرين مخفض</label>
+                                    <input type="number" id="priceTwoMonthsGold" class="settings-input" value="100000"
+                                        min="0" step="1000">
+                                </div>
+                                <div class="settings-group">
+                                    <label for="priceTwoMonthsPlatinum"> Platinum - عرض شهرين مخفض</label>
+                                    <input type="number" id="priceTwoMonthsPlatinum" class="settings-input"
+                                        value="136000" min="0" step="1000">
+                                </div>
+
+                                <hr style="margin: 10px 0;">
+
+                                <h4> أسعار العرض المخفض لثلاثة أشهر</h4>
+                                <div class="settings-group">
+                                    <label for="priceAdvancedBronze"> Bronze - عرض 3 أشهر مخفض</label>
+                                    <input type="number" id="priceAdvancedBronze" class="settings-input" value="90000"
+                                        min="0" step="1000">
+                                </div>
+                                <div class="settings-group">
+                                    <label for="priceAdvancedSilver"> Silver - عرض 3 أشهر مخفض</label>
+                                    <input type="number" id="priceAdvancedSilver" class="settings-input" value="126000"
+                                        min="0" step="1000">
+                                </div>
+                                <div class="settings-group">
+                                    <label for="priceAdvancedGold"> Gold - عرض 3 أشهر مخفض</label>
+                                    <input type="number" id="priceAdvancedGold" class="settings-input" value="150000"
+                                        min="0" step="1000">
+                                </div>
+                                <div class="settings-group">
+                                    <label for="priceAdvancedPlatinum"> Platinum - عرض 3 أشهر مخفض</label>
+                                    <input type="number" id="priceAdvancedPlatinum" class="settings-input" value="204000"
+                                        min="0" step="1000">
+                                </div>
+
                                 <button class="btn btn-primary" onclick="savePriceSettings()"> حفظ</button>
                             </div>
                             <div class="settings-section">
@@ -5687,49 +5736,60 @@
                 'كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران',
                 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'
             ];
+            const baseSubscriptionPrices = {
+                'Iraqcell_Bronze_Profile_NEW': 30000,
+                'Iraqcell_Bronze_Profile': 30000,
+                'Iraqcell_Silver_Profile_NEW': 40000,
+                'Iraqcell_Silver_Profile': 40000,
+                'Iraqcell_Gold_Profile_NEW': 50000,
+                'Iraqcell_Gold_Profile': 50000,
+                'Iraqcell_Platinum_Profile_NEW': 65000,
+                'Iraqcell_Platinum_Profile': 65000
+            };
+
             const subscriptionPrices = {
                 basic: {
                     'Iraqcell_Bronze_Profile_NEW': 30000,
                     'Iraqcell_Bronze_Profile': 30000,
-                    'Iraqcell_Silver_Profile_NEW': 40000,
-                    'Iraqcell_Silver_Profile': 40000,
+                    'Iraqcell_Silver_Profile_NEW': 42000,
+                    'Iraqcell_Silver_Profile': 42000,
                     'Iraqcell_Gold_Profile_NEW': 50000,
                     'Iraqcell_Gold_Profile': 50000,
-                    'Iraqcell_Platinum_Profile_NEW': 65000,
-                    'Iraqcell_Platinum_Profile': 65000
+                    'Iraqcell_Platinum_Profile_NEW': 68000,
+                    'Iraqcell_Platinum_Profile': 68000
                 },
                 advanced: {
                     promo: {
-                        'Iraqcell_Bronze_Profile_NEW': 75000,
-                        'Iraqcell_Bronze_Profile': 75000,
-                        'Iraqcell_Silver_Profile_NEW': 105000,
-                        'Iraqcell_Silver_Profile': 105000,
-                        'Iraqcell_Gold_Profile_NEW': 120000,
-                        'Iraqcell_Gold_Profile': 120000,
-                        'Iraqcell_Platinum_Profile_NEW': 165000,
-                        'Iraqcell_Platinum_Profile': 165000
-                    },
-                    official: {
                         'Iraqcell_Bronze_Profile_NEW': 90000,
                         'Iraqcell_Bronze_Profile': 90000,
-                        'Iraqcell_Silver_Profile_NEW': 120000,
-                        'Iraqcell_Silver_Profile': 120000,
+                        'Iraqcell_Silver_Profile_NEW': 126000,
+                        'Iraqcell_Silver_Profile': 126000,
                         'Iraqcell_Gold_Profile_NEW': 150000,
                         'Iraqcell_Gold_Profile': 150000,
-                        'Iraqcell_Platinum_Profile_NEW': 195000,
-                        'Iraqcell_Platinum_Profile': 195000
+                        'Iraqcell_Platinum_Profile_NEW': 204000,
+                        'Iraqcell_Platinum_Profile': 204000
+                    },
+                    official: {
+                        'Iraqcell_Bronze_Profile_NEW': 108000,
+                        'Iraqcell_Bronze_Profile': 108000,
+                        'Iraqcell_Silver_Profile_NEW': 144000,
+                        'Iraqcell_Silver_Profile': 144000,
+                        'Iraqcell_Gold_Profile_NEW': 180000,
+                        'Iraqcell_Gold_Profile': 180000,
+                        'Iraqcell_Platinum_Profile_NEW': 234000,
+                        'Iraqcell_Platinum_Profile': 234000
                     }
                 },
                 twoMonths: {
                     promo: {
-                        'Iraqcell_Bronze_Profile_NEW': 50000,
-                        'Iraqcell_Bronze_Profile': 50000,
-                        'Iraqcell_Silver_Profile_NEW': 70000,
-                        'Iraqcell_Silver_Profile': 70000,
-                        'Iraqcell_Gold_Profile_NEW': 80000,
-                        'Iraqcell_Gold_Profile': 80000,
-                        'Iraqcell_Platinum_Profile_NEW': 110000,
-                        'Iraqcell_Platinum_Profile': 110000
+                        'Iraqcell_Bronze_Profile_NEW': 60000,
+                        'Iraqcell_Bronze_Profile': 60000,
+                        'Iraqcell_Silver_Profile_NEW': 84000,
+                        'Iraqcell_Silver_Profile': 84000,
+                        'Iraqcell_Gold_Profile_NEW': 100000,
+                        'Iraqcell_Gold_Profile': 100000,
+                        'Iraqcell_Platinum_Profile_NEW': 136000,
+                        'Iraqcell_Platinum_Profile': 136000
                     }
                 }
             };
@@ -5997,10 +6057,11 @@
                             break;
                     }
                 }
-                const officialPriceP = subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] || 65000;
-                const officialPriceG = subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] || 50000;
-                const officialPriceS = subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] || 40000;
-                const officialPriceB = subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] || 30000;
+                // نسبة الوكيل تُحسب على الأسعار الأساسية بدون ضريبة الوزارة
+                const officialPriceP = baseSubscriptionPrices['Iraqcell_Platinum_Profile_NEW'] || 65000;
+                const officialPriceG = baseSubscriptionPrices['Iraqcell_Gold_Profile_NEW'] || 50000;
+                const officialPriceS = baseSubscriptionPrices['Iraqcell_Silver_Profile_NEW'] || 40000;
+                const officialPriceB = baseSubscriptionPrices['Iraqcell_Bronze_Profile_NEW'] || 30000;
                 const iqP = countP * officialPriceP;
                 const iqG = countG * officialPriceG;
                 const iqS = countS * officialPriceS;
@@ -7707,7 +7768,8 @@
                             subscriptionKey.includes('Silver') ? 'S' :
                                 subscriptionKey.includes('Gold') ? 'G' : 'P';
 
-                        const officialPrice = getSubscriptionPrice(subscriptionKey, category, 'basic');
+                        // الوزارة تحاسب على الأسعار الأساسية بدون الضريبة (30 / 40 / 50 / 65)
+                        const officialPrice = baseSubscriptionPrices[subscriptionKey] || getSubscriptionPrice(subscriptionKey, category, 'basic');
 
                         let userPrice = 0;
                         if (amountColumnIndex >= 0 && row[amountColumnIndex] !== undefined && row[amountColumnIndex] !== null) {
@@ -16661,51 +16723,155 @@
                     showSuccessMessage('تم مسح سجل العمليات');
                 }
             }
-            function loadSettings() {
-                const saved = JSON.parse(localStorage.getItem('appSettings') || '{}');
-                if (saved.bronze) {
-                    document.getElementById('priceBronze').value = saved.bronze;
-                    subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] = saved.bronze;
-                    subscriptionPrices.basic['Iraqcell_Bronze_Profile'] = saved.bronze;
-                }
-                if (saved.silver) {
-                    document.getElementById('priceSilver').value = saved.silver;
-                    subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] = saved.silver;
-                    subscriptionPrices.basic['Iraqcell_Silver_Profile'] = saved.silver;
-                }
-                if (saved.gold) {
-                    document.getElementById('priceGold').value = saved.gold;
-                    subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] = saved.gold;
-                    subscriptionPrices.basic['Iraqcell_Gold_Profile'] = saved.gold;
-                }
-                if (saved.platinum) {
-                    document.getElementById('pricePlatinum').value = saved.platinum;
-                    subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = saved.platinum;
-                    subscriptionPrices.basic['Iraqcell_Platinum_Profile'] = saved.platinum;
-                }
-                if (saved.notifications !== undefined) document.getElementById('enableNotifications').checked = saved.notifications;
+        function loadSettings() {
+            const saved = JSON.parse(localStorage.getItem('appSettings') || '{}');
+
+            if (saved.bronze) {
+                document.getElementById('priceBronze').value = saved.bronze;
+                subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] = saved.bronze;
+                subscriptionPrices.basic['Iraqcell_Bronze_Profile'] = saved.bronze;
             }
-            function savePriceSettings() {
-                const bronze = parseFloat(document.getElementById('priceBronze').value);
-                const silver = parseFloat(document.getElementById('priceSilver').value);
-                const gold = parseFloat(document.getElementById('priceGold').value);
-                const platinum = parseFloat(document.getElementById('pricePlatinum').value);
-                subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] = bronze;
-                subscriptionPrices.basic['Iraqcell_Bronze_Profile'] = bronze;
-                subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] = silver;
-                subscriptionPrices.basic['Iraqcell_Silver_Profile'] = silver;
-                subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] = gold;
-                subscriptionPrices.basic['Iraqcell_Gold_Profile'] = gold;
-                subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = platinum;
-                subscriptionPrices.basic['Iraqcell_Platinum_Profile'] = platinum;
-                const settings = {
-                    bronze, silver, gold, platinum,
-                    notifications: document.getElementById('enableNotifications').checked
-                };
-                localStorage.setItem('appSettings', JSON.stringify(settings));
-                logActivity('حفظ الإعدادات', `تم تحديث إعدادات الأسعار: Bronze=${bronze}, Silver=${silver}, Gold=${gold}, Platinum=${platinum}`);
-                showSuccessMessage('تم حفظ الإعدادات بنجاح! سيتم استخدام الأسعار الجديدة عند تحليل البيانات الجديدة.');
+            if (saved.silver) {
+                document.getElementById('priceSilver').value = saved.silver;
+                subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] = saved.silver;
+                subscriptionPrices.basic['Iraqcell_Silver_Profile'] = saved.silver;
             }
+            if (saved.gold) {
+                document.getElementById('priceGold').value = saved.gold;
+                subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] = saved.gold;
+                subscriptionPrices.basic['Iraqcell_Gold_Profile'] = saved.gold;
+            }
+            if (saved.platinum) {
+                document.getElementById('pricePlatinum').value = saved.platinum;
+                subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = saved.platinum;
+                subscriptionPrices.basic['Iraqcell_Platinum_Profile'] = saved.platinum;
+            }
+
+            // أسعار العرض المخفض لشهرين
+            if (saved.twoMonthsBronze) {
+                const el = document.getElementById('priceTwoMonthsBronze');
+                if (el) el.value = saved.twoMonthsBronze;
+                subscriptionPrices.twoMonths.promo['Iraqcell_Bronze_Profile_NEW'] = saved.twoMonthsBronze;
+                subscriptionPrices.twoMonths.promo['Iraqcell_Bronze_Profile'] = saved.twoMonthsBronze;
+            }
+            if (saved.twoMonthsSilver) {
+                const el = document.getElementById('priceTwoMonthsSilver');
+                if (el) el.value = saved.twoMonthsSilver;
+                subscriptionPrices.twoMonths.promo['Iraqcell_Silver_Profile_NEW'] = saved.twoMonthsSilver;
+                subscriptionPrices.twoMonths.promo['Iraqcell_Silver_Profile'] = saved.twoMonthsSilver;
+            }
+            if (saved.twoMonthsGold) {
+                const el = document.getElementById('priceTwoMonthsGold');
+                if (el) el.value = saved.twoMonthsGold;
+                subscriptionPrices.twoMonths.promo['Iraqcell_Gold_Profile_NEW'] = saved.twoMonthsGold;
+                subscriptionPrices.twoMonths.promo['Iraqcell_Gold_Profile'] = saved.twoMonthsGold;
+            }
+            if (saved.twoMonthsPlatinum) {
+                const el = document.getElementById('priceTwoMonthsPlatinum');
+                if (el) el.value = saved.twoMonthsPlatinum;
+                subscriptionPrices.twoMonths.promo['Iraqcell_Platinum_Profile_NEW'] = saved.twoMonthsPlatinum;
+                subscriptionPrices.twoMonths.promo['Iraqcell_Platinum_Profile'] = saved.twoMonthsPlatinum;
+            }
+
+            // أسعار العرض المخفض لثلاثة أشهر
+            if (saved.advancedBronze) {
+                const el = document.getElementById('priceAdvancedBronze');
+                if (el) el.value = saved.advancedBronze;
+                subscriptionPrices.advanced.promo['Iraqcell_Bronze_Profile_NEW'] = saved.advancedBronze;
+                subscriptionPrices.advanced.promo['Iraqcell_Bronze_Profile'] = saved.advancedBronze;
+            }
+            if (saved.advancedSilver) {
+                const el = document.getElementById('priceAdvancedSilver');
+                if (el) el.value = saved.advancedSilver;
+                subscriptionPrices.advanced.promo['Iraqcell_Silver_Profile_NEW'] = saved.advancedSilver;
+                subscriptionPrices.advanced.promo['Iraqcell_Silver_Profile'] = saved.advancedSilver;
+            }
+            if (saved.advancedGold) {
+                const el = document.getElementById('priceAdvancedGold');
+                if (el) el.value = saved.advancedGold;
+                subscriptionPrices.advanced.promo['Iraqcell_Gold_Profile_NEW'] = saved.advancedGold;
+                subscriptionPrices.advanced.promo['Iraqcell_Gold_Profile'] = saved.advancedGold;
+            }
+            if (saved.advancedPlatinum) {
+                const el = document.getElementById('priceAdvancedPlatinum');
+                if (el) el.value = saved.advancedPlatinum;
+                subscriptionPrices.advanced.promo['Iraqcell_Platinum_Profile_NEW'] = saved.advancedPlatinum;
+                subscriptionPrices.advanced.promo['Iraqcell_Platinum_Profile'] = saved.advancedPlatinum;
+            }
+
+            if (saved.notifications !== undefined) {
+                const checkbox = document.getElementById('enableNotifications');
+                if (checkbox) checkbox.checked = saved.notifications;
+            }
+        }
+        function savePriceSettings() {
+            const bronze = parseFloat(document.getElementById('priceBronze').value);
+            const silver = parseFloat(document.getElementById('priceSilver').value);
+            const gold = parseFloat(document.getElementById('priceGold').value);
+            const platinum = parseFloat(document.getElementById('pricePlatinum').value);
+
+            const twoMonthsBronze = parseFloat(document.getElementById('priceTwoMonthsBronze').value);
+            const twoMonthsSilver = parseFloat(document.getElementById('priceTwoMonthsSilver').value);
+            const twoMonthsGold = parseFloat(document.getElementById('priceTwoMonthsGold').value);
+            const twoMonthsPlatinum = parseFloat(document.getElementById('priceTwoMonthsPlatinum').value);
+
+            const advancedBronze = parseFloat(document.getElementById('priceAdvancedBronze').value);
+            const advancedSilver = parseFloat(document.getElementById('priceAdvancedSilver').value);
+            const advancedGold = parseFloat(document.getElementById('priceAdvancedGold').value);
+            const advancedPlatinum = parseFloat(document.getElementById('priceAdvancedPlatinum').value);
+
+            subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] = bronze;
+            subscriptionPrices.basic['Iraqcell_Bronze_Profile'] = bronze;
+            subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] = silver;
+            subscriptionPrices.basic['Iraqcell_Silver_Profile'] = silver;
+            subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] = gold;
+            subscriptionPrices.basic['Iraqcell_Gold_Profile'] = gold;
+            subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = platinum;
+            subscriptionPrices.basic['Iraqcell_Platinum_Profile'] = platinum;
+
+            subscriptionPrices.twoMonths.promo['Iraqcell_Bronze_Profile_NEW'] = twoMonthsBronze;
+            subscriptionPrices.twoMonths.promo['Iraqcell_Bronze_Profile'] = twoMonthsBronze;
+            subscriptionPrices.twoMonths.promo['Iraqcell_Silver_Profile_NEW'] = twoMonthsSilver;
+            subscriptionPrices.twoMonths.promo['Iraqcell_Silver_Profile'] = twoMonthsSilver;
+            subscriptionPrices.twoMonths.promo['Iraqcell_Gold_Profile_NEW'] = twoMonthsGold;
+            subscriptionPrices.twoMonths.promo['Iraqcell_Gold_Profile'] = twoMonthsGold;
+            subscriptionPrices.twoMonths.promo['Iraqcell_Platinum_Profile_NEW'] = twoMonthsPlatinum;
+            subscriptionPrices.twoMonths.promo['Iraqcell_Platinum_Profile'] = twoMonthsPlatinum;
+
+            subscriptionPrices.advanced.promo['Iraqcell_Bronze_Profile_NEW'] = advancedBronze;
+            subscriptionPrices.advanced.promo['Iraqcell_Bronze_Profile'] = advancedBronze;
+            subscriptionPrices.advanced.promo['Iraqcell_Silver_Profile_NEW'] = advancedSilver;
+            subscriptionPrices.advanced.promo['Iraqcell_Silver_Profile'] = advancedSilver;
+            subscriptionPrices.advanced.promo['Iraqcell_Gold_Profile_NEW'] = advancedGold;
+            subscriptionPrices.advanced.promo['Iraqcell_Gold_Profile'] = advancedGold;
+            subscriptionPrices.advanced.promo['Iraqcell_Platinum_Profile_NEW'] = advancedPlatinum;
+            subscriptionPrices.advanced.promo['Iraqcell_Platinum_Profile'] = advancedPlatinum;
+
+            const settings = {
+                bronze,
+                silver,
+                gold,
+                platinum,
+                twoMonthsBronze,
+                twoMonthsSilver,
+                twoMonthsGold,
+                twoMonthsPlatinum,
+                advancedBronze,
+                advancedSilver,
+                advancedGold,
+                advancedPlatinum,
+                notifications: document.getElementById('enableNotifications').checked
+            };
+            localStorage.setItem('appSettings', JSON.stringify(settings));
+            logActivity(
+                'حفظ الإعدادات',
+                `تم تحديث إعدادات الأسعار: ` +
+                `شهري Bronze=${bronze}, Silver=${silver}, Gold=${gold}, Platinum=${platinum} | ` +
+                `شهرين مخفض Bronze=${twoMonthsBronze}, Silver=${twoMonthsSilver}, Gold=${twoMonthsGold}, Platinum=${twoMonthsPlatinum} | ` +
+                `3 أشهر مخفض Bronze=${advancedBronze}, Silver=${advancedSilver}, Gold=${advancedGold}, Platinum=${advancedPlatinum}`
+            );
+            showSuccessMessage('تم حفظ الإعدادات بنجاح! سيتم استخدام الأسعار الجديدة عند تحليل البيانات الجديدة.');
+        }
             function saveDefaultPercentage() {
                 const defaultPercentage = parseFloat(document.getElementById('defaultAgentPercentage').value);
                 if (defaultPercentage < 0 || defaultPercentage > 100) {
