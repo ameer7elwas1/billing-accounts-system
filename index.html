@@ -6057,7 +6057,6 @@
                             break;
                     }
                 }
-                // نسبة الوكيل تُحسب على الأسعار الأساسية بدون ضريبة الوزارة
                 const officialPriceP = baseSubscriptionPrices['Iraqcell_Platinum_Profile_NEW'] || 65000;
                 const officialPriceG = baseSubscriptionPrices['Iraqcell_Gold_Profile_NEW'] || 50000;
                 const officialPriceS = baseSubscriptionPrices['Iraqcell_Silver_Profile_NEW'] || 40000;
@@ -7768,7 +7767,6 @@
                             subscriptionKey.includes('Silver') ? 'S' :
                                 subscriptionKey.includes('Gold') ? 'G' : 'P';
 
-                        // الوزارة تحاسب على الأسعار الأساسية بدون الضريبة (30 / 40 / 50 / 65)
                         const officialPrice = baseSubscriptionPrices[subscriptionKey] || getSubscriptionPrice(subscriptionKey, category, 'basic');
 
                         let userPrice = 0;
@@ -16723,31 +16721,47 @@
                     showSuccessMessage('تم مسح سجل العمليات');
                 }
             }
+        function applyBasePrice(category, value) {
+            if (value === null || value === undefined || Number.isNaN(value)) return;
+            const keyMap = {
+                bronze: 'Bronze',
+                silver: 'Silver',
+                gold: 'Gold',
+                platinum: 'Platinum'
+            };
+            const key = keyMap[category];
+            if (!key) return;
+            baseSubscriptionPrices[`Iraqcell_${key}_Profile_NEW`] = value;
+            baseSubscriptionPrices[`Iraqcell_${key}_Profile`] = value;
+        }
         function loadSettings() {
             const saved = JSON.parse(localStorage.getItem('appSettings') || '{}');
 
-            if (saved.bronze) {
+            if (saved.bronze !== undefined && saved.bronze !== null && !Number.isNaN(saved.bronze)) {
                 document.getElementById('priceBronze').value = saved.bronze;
                 subscriptionPrices.basic['Iraqcell_Bronze_Profile_NEW'] = saved.bronze;
                 subscriptionPrices.basic['Iraqcell_Bronze_Profile'] = saved.bronze;
+                applyBasePrice('bronze', saved.bronze);
             }
-            if (saved.silver) {
+            if (saved.silver !== undefined && saved.silver !== null && !Number.isNaN(saved.silver)) {
                 document.getElementById('priceSilver').value = saved.silver;
                 subscriptionPrices.basic['Iraqcell_Silver_Profile_NEW'] = saved.silver;
                 subscriptionPrices.basic['Iraqcell_Silver_Profile'] = saved.silver;
+                applyBasePrice('silver', saved.silver);
             }
-            if (saved.gold) {
+            if (saved.gold !== undefined && saved.gold !== null && !Number.isNaN(saved.gold)) {
                 document.getElementById('priceGold').value = saved.gold;
                 subscriptionPrices.basic['Iraqcell_Gold_Profile_NEW'] = saved.gold;
                 subscriptionPrices.basic['Iraqcell_Gold_Profile'] = saved.gold;
+                applyBasePrice('gold', saved.gold);
             }
-            if (saved.platinum) {
+            if (saved.platinum !== undefined && saved.platinum !== null && !Number.isNaN(saved.platinum)) {
                 document.getElementById('pricePlatinum').value = saved.platinum;
                 subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = saved.platinum;
                 subscriptionPrices.basic['Iraqcell_Platinum_Profile'] = saved.platinum;
+                applyBasePrice('platinum', saved.platinum);
             }
 
-            // أسعار العرض المخفض لشهرين
             if (saved.twoMonthsBronze) {
                 const el = document.getElementById('priceTwoMonthsBronze');
                 if (el) el.value = saved.twoMonthsBronze;
@@ -16773,7 +16787,6 @@
                 subscriptionPrices.twoMonths.promo['Iraqcell_Platinum_Profile'] = saved.twoMonthsPlatinum;
             }
 
-            // أسعار العرض المخفض لثلاثة أشهر
             if (saved.advancedBronze) {
                 const el = document.getElementById('priceAdvancedBronze');
                 if (el) el.value = saved.advancedBronze;
@@ -16828,6 +16841,10 @@
             subscriptionPrices.basic['Iraqcell_Gold_Profile'] = gold;
             subscriptionPrices.basic['Iraqcell_Platinum_Profile_NEW'] = platinum;
             subscriptionPrices.basic['Iraqcell_Platinum_Profile'] = platinum;
+            applyBasePrice('bronze', bronze);
+            applyBasePrice('silver', silver);
+            applyBasePrice('gold', gold);
+            applyBasePrice('platinum', platinum);
 
             subscriptionPrices.twoMonths.promo['Iraqcell_Bronze_Profile_NEW'] = twoMonthsBronze;
             subscriptionPrices.twoMonths.promo['Iraqcell_Bronze_Profile'] = twoMonthsBronze;
