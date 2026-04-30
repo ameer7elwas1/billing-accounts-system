@@ -3480,17 +3480,244 @@
             transform: none;
         }
 
-        *,
-        *::before,
-        *::after {
-            transition: none !important;
-            animation: none !important;
+        :root {
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --space-xs: 6px;
+            --space-sm: 10px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
         }
 
-        *:hover,
-        *:focus,
-        *:active {
-            transform: none !important;
+        body {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 45%);
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: var(--space-md);
+        }
+
+        .sidebar,
+        .section,
+        .modal-content,
+        .login-card,
+        .result-card,
+        .agent-card-improved {
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 12px 30px var(--shadow-sm);
+        }
+
+        .section,
+        .modal-content,
+        .login-card {
+            padding: var(--space-lg);
+        }
+
+        .sidebar {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .btn {
+            min-height: 42px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            letter-spacing: 0.1px;
+            border: 1px solid transparent;
+            box-shadow: 0 4px 12px var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            border-color: var(--primary-hover);
+        }
+
+        .btn:hover {
+            filter: brightness(1.04);
+            box-shadow: 0 8px 18px var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        input,
+        select,
+        textarea {
+            min-height: 42px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            padding: 10px 12px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--table-border);
+        }
+
+        th {
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        td,
+        th {
+            padding: 12px 10px;
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) td {
+            background: var(--bg-secondary);
+        }
+
+        .nav-item,
+        .tab-btn,
+        .sidebar-toggle-btn,
+        .theme-toggle-btn-small {
+            border-radius: var(--radius-md);
+        }
+
+        .nav-item:hover,
+        .tab-btn:hover {
+            background: var(--nav-hover);
+        }
+
+        * {
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease,
+                transform 0.15s ease, opacity 0.2s ease;
+        }
+
+        .floating-calculator-btn {
+            position: fixed;
+            left: 22px;
+            bottom: 22px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            color: #ffffff;
+            font-size: 1.6rem;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 10005;
+            box-shadow: 0 12px 28px var(--shadow-md);
+            touch-action: none;
+            user-select: none;
+        }
+
+        .floating-calculator-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 16px 34px var(--shadow-lg);
+        }
+
+        .calculator-modal-content {
+            max-width: 470px;
+            width: 95%;
+            padding: 20px;
+        }
+
+        .calculator-display {
+            width: 100%;
+            min-height: 62px;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-align: left;
+            direction: ltr;
+            font-size: 1.55rem;
+            font-weight: 700;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .calculator-toolbar,
+        .calculator-scientific-grid,
+        .calculator-main-grid {
+            display: grid;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .calculator-toolbar {
+            grid-template-columns: repeat(4, 1fr);
+            margin-top: 0;
+        }
+
+        .calculator-scientific-grid {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .calculator-main-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .calc-btn {
+            min-height: 48px;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .calc-btn:hover {
+            background: var(--bg-secondary);
+            transform: translateY(-1px);
+        }
+
+        .calc-btn.operator {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .calc-btn.equal {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            color: #ffffff;
+            border-color: transparent;
+            grid-row: span 2;
+            min-height: 106px;
+        }
+
+        .calc-btn.scientific {
+            background: color-mix(in srgb, var(--primary-light) 70%, var(--card-bg) 30%);
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        [data-theme="dark"] .calc-btn.scientific {
+            background: rgba(255, 71, 87, 0.2);
+        }
+
+        .calc-btn.wide {
+            grid-column: span 2;
         }
     </style>
 </head>
@@ -3594,6 +3821,10 @@
                         <span class="nav-icon">□</span>
                         <span class="nav-text">العرض المجاني</span>
                     </div>
+                    <div class="nav-item" onclick="switchTab('expireCompare')">
+                        <span class="nav-icon">◉</span>
+                        <span class="nav-text">عرض الاكسباير</span>
+                    </div>
                     <div class="nav-item" onclick="switchTab('twoMonths')">
                         <span class="nav-icon">◇</span>
                         <span class="nav-text">عرض شهرين مخفض</span>
@@ -3618,7 +3849,7 @@
                         <span class="nav-icon">▦</span>
                         <span class="nav-text">الأرشيف</span>
                     </div>
-                    <div class="nav-item" onclick="switchTab('activity')">
+                    <div class="nav-item admin-only" onclick="switchTab('activity')" style="display: none;">
                         <span class="nav-icon">☷</span>
                         <span class="nav-text">سجل العمليات</span>
                     </div>
@@ -3627,11 +3858,11 @@
                         <span class="nav-text">الإعدادات</span>
                     </div>
                     <div class="nav-item admin-only" onclick="switchTab('management')" style="display: none;">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">▥</span>
                         <span class="nav-text">الإدارة</span>
                     </div>
                     <div class="nav-item admin-only" onclick="switchTab('users')" style="display: none;">
-                        <span class="nav-icon"></span>
+                        <span class="nav-icon">☰</span>
                         <span class="nav-text">إدارة المستخدمين</span>
                     </div>
                 </div>
@@ -3834,6 +4065,79 @@
                     <div id="twoMonthsLoading" class="loading">
                         <div class="spinner"></div>
                         <p>جاري تحليل العرض المخفض لشهرين...</p>
+                    </div>
+                </div>
+                <div id="expireCompareTab" class="tab-content">
+                    <div class="section">
+                        <h3 class="section-title">عرض الاكسباير</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 15px;">
+                            ارفع ملف المنتهين (Expire) وملف Excel الحديث   
+                        </p>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                            <div>
+                                <label style="display:block; margin-bottom:8px; font-weight:600;">ملف Excel
+                                    المنتهين</label>
+                                <div class="file-upload" id="expireOldFileUpload" style="padding: 18px;">
+                                    <p>اسحب ملف Excel/CSV أو انقر للاختيار</p>
+                                    <input type="file" id="expireOldFileInput" accept=".xlsx,.xls,.csv"
+                                        style="display: none;">
+                                </div>
+                                <div id="expireOldFileName" class="success-message hidden" style="margin-top: 10px;">
+                                </div>
+                            </div>
+                            <div>
+                                <label style="display:block; margin-bottom:8px; font-weight:600;">ملف Excel
+                                    الحديث</label>
+                                <div class="file-upload" id="expireLatestFileUpload" style="padding: 18px;">
+                                    <p>اسحب ملف Excel/CSV أو انقر للاختيار</p>
+                                    <input type="file" id="expireLatestFileInput" accept=".xlsx,.xls,.csv"
+                                        style="display: none;">
+                                </div>
+                                <div id="expireLatestFileName" class="success-message hidden" style="margin-top: 10px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 10px;">
+                            <div>
+                                <label for="expireDateFrom" style="display:block; margin-bottom:8px; font-weight:600;">من
+                                    تاريخ</label>
+                                <input type="date" id="expireDateFrom" class="settings-input">
+                            </div>
+                            <div>
+                                <label for="expireDateTo" style="display:block; margin-bottom:8px; font-weight:600;">الى
+                                    تاريخ</label>
+                                <input type="date" id="expireDateTo" class="settings-input">
+                            </div>
+                        </div>
+                        <div style="margin-top: 18px;">
+                            <button class="btn btn-primary" onclick="analyzeExpireCompareData()">تحليل الاكسباير</button>
+                            <button class="btn btn-warning" onclick="resetExpireCompareResults()">مسح النتائج</button>
+                        </div>
+                    </div>
+                    <div id="expireCompareResults" class="section hidden">
+                        <h3 class="section-title">نتائج المشتركين الذين تم تفعيلهم</h3>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 15px;">
+                            <div class="result-card">
+                                <div class="result-card-value" id="expireMatchedCount">0</div>
+                                <div class="result-card-label">عدد المطابقات</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-card-value" id="expireSourceCount">0</div>
+                                <div class="result-card-label">عدد المنتهين بالملف القديم</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-card-value" id="expireLatestCount">0</div>
+                                <div class="result-card-label">عدد المشتركين في الملف الحديث</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-card-value" id="expireAgentsCount">0</div>
+                                <div class="result-card-label">عدد الوكلاء المشمولين</div>
+                            </div>
+                        </div>
+                        <div id="expireByAgentContainer"></div>
                     </div>
                 </div>
                 <div id="agentsTab" class="tab-content">
@@ -4516,8 +4820,8 @@
                         </div>
                     </div>
                 </div>
-                <div id="managementTab" class="tab-content hidden">
-                    <div class="section" style="padding: 20px;">
+                <div id="managementTab" class="tab-content">
+                    <div class="section">
                         <div
                             style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: linear-gradient(135deg, rgba(128, 28, 50, 0.1) 0%, rgba(128, 28, 50, 0.05) 100%); border-radius: 12px; border: 2px solid rgba(128, 28, 50, 0.2);">
                             <div
@@ -4595,7 +4899,7 @@
                         <div id="managementAlert"></div>
                     </div>
 
-                    <div id="managementResults" class="section hidden" style="padding: 20px; margin-top: 10px;">
+                    <div id="managementResults" class="section hidden">
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                             <h3 style="margin: 0; font-size: 1.3rem; color: #801c32; font-weight: 800;"> نتائج التحليل
@@ -4654,7 +4958,7 @@
                         </div>
                     </div>
 
-                    <div class="section" style="padding: 20px; margin-top: 30px; border-top: 3px solid #801c32;">
+                    <div class="section" style="border-top: 3px solid #801c32;">
                         <div
                             style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: linear-gradient(135deg, rgba(128, 28, 50, 0.1) 0%, rgba(128, 28, 50, 0.05) 100%); border-radius: 12px; border: 2px solid rgba(128, 28, 50, 0.2);">
                             <div
@@ -4703,7 +5007,7 @@
                         <div id="singleAgentAlert"></div>
                     </div>
 
-                    <div id="singleAgentResults" class="section hidden" style="padding: 20px; margin-top: 10px;">
+                    <div id="singleAgentResults" class="section hidden">
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                             <h3 style="margin: 0; font-size: 1.3rem; color: #801c32; font-weight: 800;"> نتائج تحليل
@@ -4747,8 +5051,7 @@
                 </div>
 
                 <div id="usersTab" class="tab-content">
-                    <div class="section"
-                        style="background: var(--card-bg); border-radius: 12px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div class="section">
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--border-color);">
                             <h3 class="section-title"
@@ -4876,6 +5179,8 @@
             let advancedDetails = [];
             let basicDetails = [];
             let percentageData = null;
+            let expireOldData = null;
+            let expireLatestData = null;
             let agentPercentages = JSON.parse(localStorage.getItem('agentPercentages') || '{}');
             let ministryData = null;
             let ministryResults = null;
@@ -5152,7 +5457,7 @@
                 const adminTabs = document.querySelectorAll('.admin-only');
                 if (currentUserRole === 'admin') {
                     adminTabs.forEach(tab => {
-                        tab.style.display = 'block';
+                        tab.style.display = 'flex';
                     });
                 } else {
                     adminTabs.forEach(tab => tab.style.display = 'none');
@@ -5821,6 +6126,12 @@
                         return subscriptionPrices.basic[subType];
                     }
                 } else if (type === 'advanced') {
+                    if (priceType === 'official') {
+                        const monthlyPrice = subscriptionPrices.basic[subType];
+                        if (monthlyPrice !== undefined && monthlyPrice !== null && !Number.isNaN(monthlyPrice)) {
+                            return monthlyPrice * 3;
+                        }
+                    }
                     if (priceType === 'promo' && subscriptionPrices.advanced.promo[subType]) {
                         return subscriptionPrices.advanced.promo[subType];
                     } else if (priceType === 'official' && subscriptionPrices.advanced.official[subType]) {
@@ -5839,6 +6150,10 @@
                     if (priceType === 'promo') {
                         return subscriptionPrices.advanced.promo[defaultName] || 0;
                     } else if (priceType === 'official') {
+                        const monthlyDefault = subscriptionPrices.basic[defaultName];
+                        if (monthlyDefault !== undefined && monthlyDefault !== null && !Number.isNaN(monthlyDefault)) {
+                            return monthlyDefault * 3;
+                        }
                         return subscriptionPrices.advanced.official[defaultName] || 0;
                     }
                 } else if (type === 'twoMonths') {
@@ -9886,7 +10201,12 @@
                         .eq('month_year', monthYear)
                         .maybeSingle();
                     if (!activityError && activityArchive && activityArchive.data) {
-                        activityLog = activityArchive.data;
+                        activityLog = Array.isArray(activityArchive.data)
+                            ? activityArchive.data.map(log => ({
+                                ...log,
+                                user: log.user || log.username || log.actor || log.user_name || 'غير محدد'
+                            }))
+                            : [];
                     } else {
                         activityLog = [];
                     }
@@ -12445,6 +12765,7 @@
                 setupPercentageFileUpload();
                 setupPercentageTableEventListeners();
                 setupFileUploads();
+                setupExpireCompareUploads();
                 setupMinistryFileUpload();
                 loadSidebarState();
                 loadPercentageData();
@@ -12545,6 +12866,10 @@
                 return `${day} ${month} ${year}`;
             }
             function switchTab(tabName) {
+                if (tabName === 'activity' && currentUserRole !== 'admin') {
+                    showAlert(document.getElementById('usersAlert'), 'ليس لديك صلاحية للوصول إلى سجل العمليات.', 'error');
+                    return;
+                }
                 document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
                 if (event && event.target.closest('.nav-item')) {
@@ -13469,6 +13794,460 @@
                 setupFileUpload('basic');
                 setupFileUpload('advanced');
                 setupFileUpload('twoMonths');
+            }
+            function setupExpireCompareUploads() {
+                setupExpireCompareUpload('expireOld');
+                setupExpireCompareUpload('expireLatest');
+            }
+            function setupExpireCompareUpload(prefix) {
+                const uploadDiv = document.getElementById(prefix + 'FileUpload');
+                const fileInput = document.getElementById(prefix + 'FileInput');
+                if (!uploadDiv || !fileInput) return;
+                uploadDiv.addEventListener('click', () => fileInput.click());
+                uploadDiv.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadDiv.classList.add('dragover');
+                });
+                uploadDiv.addEventListener('dragleave', () => {
+                    uploadDiv.classList.remove('dragover');
+                });
+                uploadDiv.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadDiv.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        handleExpireCompareFile(files[0], prefix);
+                    }
+                });
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        handleExpireCompareFile(e.target.files[0], prefix);
+                    }
+                });
+            }
+            function handleExpireCompareFile(file, prefix) {
+                const fileNameEl = document.getElementById(prefix + 'FileName');
+                if (fileNameEl) {
+                    fileNameEl.textContent = `تم اختيار الملف: ${file.name}`;
+                    fileNameEl.classList.remove('hidden');
+                }
+                const assignData = (processedData) => {
+                    if (prefix === 'expireOld') {
+                        expireOldData = processedData;
+                    } else {
+                        expireLatestData = processedData;
+                    }
+                    showSuccessMessage(`تم تحميل ${file.name} بنجاح - ${processedData.length} صف`);
+                };
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    try {
+                        if (file.name.toLowerCase().endsWith('.csv')) {
+                            Papa.parse(e.target.result, {
+                                header: false,
+                                skipEmptyLines: true,
+                                complete: function (results) {
+                                    assignData(convertArrayToObjects(results.data));
+                                }
+                            });
+                        } else if (file.name.toLowerCase().match(/\.(xlsx|xls)$/)) {
+                            const data = new Uint8Array(e.target.result);
+                            const workbook = XLSX.read(data, { type: 'array' });
+                            const firstSheetName = workbook.SheetNames[0];
+                            const worksheet = workbook.Sheets[firstSheetName];
+                            const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+                                header: 1,
+                                defval: "",
+                                raw: false
+                            });
+                            assignData(convertArrayToObjects(jsonData));
+                        } else {
+                            alert('نوع الملف غير مدعوم. يرجى اختيار ملف Excel (.xlsx, .xls) أو CSV');
+                        }
+                    } catch (error) {
+                        alert('خطأ في قراءة الملف: ' + error.message);
+                    }
+                };
+                if (file.name.toLowerCase().match(/\.(xlsx|xls)$/)) {
+                    reader.readAsArrayBuffer(file);
+                } else {
+                    reader.readAsText(file);
+                }
+            }
+            function parseFlexibleDate(value) {
+                if (value === null || value === undefined || value === '') return null;
+                let dateObj = null;
+                if (value instanceof Date) {
+                    dateObj = value;
+                } else if (typeof value === 'number' && value > 40000) {
+                    dateObj = new Date((value - 25569) * 86400 * 1000);
+                } else if (typeof value === 'string') {
+                    const dateStr = value.trim();
+                    const ddmmyyyy = dateStr.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+                    if (ddmmyyyy) {
+                        dateObj = new Date(parseInt(ddmmyyyy[3], 10), parseInt(ddmmyyyy[2], 10) - 1, parseInt(ddmmyyyy[1], 10));
+                    } else {
+                        const yyyymmdd = dateStr.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+                        if (yyyymmdd) {
+                            dateObj = new Date(parseInt(yyyymmdd[1], 10), parseInt(yyyymmdd[2], 10) - 1, parseInt(yyyymmdd[3], 10));
+                        } else {
+                            dateObj = new Date(dateStr);
+                        }
+                    }
+                } else {
+                    dateObj = new Date(value);
+                }
+                if (!dateObj || Number.isNaN(dateObj.getTime())) return null;
+                return dateObj;
+            }
+            function normalizeSubscriberId(value) {
+                const raw = String(value ?? '').trim();
+                if (!raw) return '';
+                const digits = raw.replace(/\D/g, '');
+                if (digits.length >= 8) return digits;
+                return raw.toLowerCase();
+            }
+            function extractSubscriberIdFromRow(row) {
+                const directCandidates = [
+                    row.username,
+                    row['ColumnB'], row[1],
+                    row.id,
+                    row['ColumnA'], row[0],
+                    row.national_id,
+                    row['ColumnT'], row[19],
+                    row['ColumnC'], row[2]
+                ];
+                for (const candidate of directCandidates) {
+                    const normalized = normalizeSubscriberId(candidate);
+                    if (normalized) return normalized;
+                }
+                for (let i = 0; i <= 20; i++) {
+                    const normalized = normalizeSubscriberId(row[i]);
+                    if (normalized) return normalized;
+                }
+                return '';
+            }
+            function getRowStatusText(row) {
+                const candidates = [row['ColumnI'], row[8], row['ColumnJ'], row[9], row['ColumnK'], row[10], row['ColumnL'], row[11], row['ColumnG'], row[6]];
+                for (let i = 0; i <= 20; i++) {
+                    candidates.push(row[i]);
+                }
+                return candidates
+                    .filter(v => v !== null && v !== undefined && String(v).trim() !== '')
+                    .map(v => String(v).toLowerCase())
+                    .join(' | ');
+            }
+            function extractExpirationDate(row) {
+                const candidates = [
+                    row.expiration,
+                    row['ColumnH'], row[7],
+                    row['ColumnB'], row[1]
+                ];
+                for (const value of candidates) {
+                    const parsed = parseFlexibleDate(value);
+                    if (parsed) return parsed;
+                }
+                return null;
+            }
+            function extractAgentNameFromRow(row) {
+                const candidates = [
+                    row.parent_name,
+                    row['ColumnO'], row[14],
+                    row.group_name,
+                    row['ColumnV'], row[21],
+                    row.company,
+                    row['ColumnW'], row[22],
+                    row.agent_name,
+                    row['ColumnF'], row[5]
+                ];
+                for (const value of candidates) {
+                    const text = String(value ?? '').trim();
+                    if (text) return text;
+                }
+                return 'غير محدد';
+            }
+            function extractSubscriberNameFromRow(row) {
+                const firstName = String(row.firstname ?? row['ColumnC'] ?? row[2] ?? '').trim();
+                const lastName = String(row.lastname ?? row['ColumnD'] ?? row[3] ?? '').trim();
+                const fullName = `${firstName} ${lastName}`.trim();
+                if (fullName) return fullName;
+                const fallback = String(row.name ?? row['ColumnE'] ?? row[4] ?? '').trim();
+                return fallback || 'غير محدد';
+            }
+            function extractPhoneFromRow(row) {
+                const phoneRaw = String(row.phone ?? row['ColumnF'] ?? row[5] ?? '').trim();
+                if (!phoneRaw) return '';
+                return phoneRaw;
+            }
+            function normalizeNameForCompare(name) {
+                return String(name ?? '')
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, ' ')
+                    .replace(/[أإآ]/g, 'ا')
+                    .replace(/ة/g, 'ه')
+                    .replace(/[^\p{L}\p{N}\s]/gu, '');
+            }
+            function normalizePhoneForCompare(phone) {
+                const digits = String(phone ?? '').replace(/\D/g, '');
+                if (!digits) return '';
+                if (digits.startsWith('964') && digits.length > 10) return '0' + digits.slice(3);
+                return digits;
+            }
+            function statusLooksExpired(statusText) {
+                return /expire|expired|expiry|terminated|suspended_expired|منتهي|منتهي|اكسباير|منتهي\s*الصلاحية|exp\b/.test(statusText);
+            }
+            function statusLooksActive(statusText) {
+                if (/inactive|disabled|suspend|معطل|غير\s*نشط|غير\s*فعال/.test(statusText)) return false;
+                return /active|activated|reactive|enabled|success|نشط|فعال|مفعل|مفعّل|تفعيل/.test(statusText);
+            }
+            function getCompactLatestStatus(state) {
+                if (!state) return 'غير محدد';
+                if (state.isActive) return 'مفعّل';
+                if (state.isExpired) return 'منتهي';
+                if (state.expirationDate) {
+                    return state.expirationDate.getTime() < Date.now() ? 'منتهي' : 'فعّال';
+                }
+                return 'غير واضح';
+            }
+            function buildExpireCompareState(row) {
+                const id = extractSubscriberIdFromRow(row);
+                const statusText = getRowStatusText(row);
+                const date = extractRowDate(row);
+                const expirationDate = extractExpirationDate(row);
+                const agentName = extractAgentNameFromRow(row);
+                return {
+                    id,
+                    statusText,
+                    date,
+                    expirationDate,
+                    agentName,
+                    subscriberName: extractSubscriberNameFromRow(row),
+                    phone: extractPhoneFromRow(row),
+                    isExpired: statusLooksExpired(statusText),
+                    isActive: statusLooksActive(statusText)
+                };
+            }
+            function choosePreferredState(existingState, nextState, preferExpired = false) {
+                if (!existingState) return nextState;
+                if (preferExpired && !existingState.isExpired && nextState.isExpired) return nextState;
+                if (existingState.date && nextState.date) {
+                    return nextState.date > existingState.date ? nextState : existingState;
+                }
+                if (!existingState.date && nextState.date) return nextState;
+                if (existingState.statusText.length < nextState.statusText.length) return nextState;
+                return existingState;
+            }
+            function extractRowDate(row) {
+                const directCandidates = [row['ColumnB'], row[1], row['ColumnE'], row[4], row['ColumnD'], row[3]];
+                directCandidates.push(row.created_at, row['ColumnS'], row[18]);
+                for (const c of directCandidates) {
+                    const parsed = parseFlexibleDate(c);
+                    if (parsed) return parsed;
+                }
+                for (let i = 0; i <= 20; i++) {
+                    const parsed = parseFlexibleDate(row[i]);
+                    if (parsed) return parsed;
+                }
+                return null;
+            }
+            function analyzeExpireCompareData() {
+                if (!expireOldData || !expireOldData.length) {
+                    alert('يرجى رفع ملف المشتركين المنتهين أولاً');
+                    return;
+                }
+                if (!expireLatestData || !expireLatestData.length) {
+                    alert('يرجى رفع الملف الحديث أولاً');
+                    return;
+                }
+                const fromValue = document.getElementById('expireDateFrom')?.value || '';
+                const toValue = document.getElementById('expireDateTo')?.value || '';
+                const fromDate = fromValue ? new Date(fromValue + 'T00:00:00') : null;
+                const toDate = toValue ? new Date(toValue + 'T23:59:59') : null;
+                if (fromDate && toDate && fromDate > toDate) {
+                    alert('تاريخ "من" يجب أن يكون قبل تاريخ "إلى"');
+                    return;
+                }
+
+                const oldStates = new Map();
+                expireOldData.forEach(row => {
+                    const state = buildExpireCompareState(row);
+                    if (!state.id) return;
+                    const current = oldStates.get(state.id);
+                    oldStates.set(state.id, choosePreferredState(current, state, true));
+                });
+
+                const latestStates = new Map();
+                expireLatestData.forEach(row => {
+                    const state = buildExpireCompareState(row);
+                    if (!state.id) return;
+                    const current = latestStates.get(state.id);
+                    latestStates.set(state.id, choosePreferredState(current, state));
+                });
+
+                const matches = [];
+                oldStates.forEach((oldState, id) => {
+                    const latestState = latestStates.get(id);
+                    if (!latestState) return;
+
+                    const oldExpiredByStatus = oldState.isExpired;
+                    const latestActiveByStatus = latestState.isActive;
+                    const latestExpiredByStatus = latestState.isExpired;
+                    const oldExpiration = oldState.expirationDate;
+                    const latestExpiration = latestState.expirationDate;
+                    const oldExpiredByDate = oldExpiration ? oldExpiration < new Date() : false;
+                    const extendedExpiration =
+                        oldExpiration &&
+                        latestExpiration &&
+                        latestExpiration.getTime() > oldExpiration.getTime();
+
+                    const transitionedByStatus =
+                        latestState.isActive ||
+                        (!latestState.isExpired &&
+                            !!latestState.statusText &&
+                            latestState.statusText !== oldState.statusText);
+                    const transitionedByExpiration = oldExpiredByDate && extendedExpiration;
+
+                    const oldWasExpired = oldExpiredByStatus || oldExpiredByDate;
+                    const latestLooksActive = latestActiveByStatus || (!latestExpiredByStatus && transitionedByExpiration);
+                    if (!oldWasExpired || !latestLooksActive) return;
+
+                    const rowDate = latestState.expirationDate || latestState.date;
+                    if (fromDate || toDate) {
+                        if (!rowDate) return;
+                        if (fromDate && rowDate < fromDate) return;
+                        if (toDate && rowDate > toDate) return;
+                    }
+
+                    matches.push({
+                        id: id,
+                        agentName: latestState.agentName || oldState.agentName || 'غير محدد',
+                        date: rowDate,
+                        oldExpireDate: oldExpiration || null,
+                        latestExpireDate: latestExpiration || null,
+                        activationDate: latestState.date || latestState.expirationDate || null,
+                        statusCompact: getCompactLatestStatus(latestState),
+                        statusText: latestState.statusText || 'غير محدد',
+                        oldName: oldState.subscriberName || '',
+                        latestName: latestState.subscriberName || '',
+                        oldPhone: oldState.phone || '',
+                        latestPhone: latestState.phone || ''
+                    });
+                });
+
+                matches.sort((a, b) => {
+                    if (!a.date && !b.date) return 0;
+                    if (!a.date) return 1;
+                    if (!b.date) return -1;
+                    return b.date - a.date;
+                });
+
+                matches.forEach(item => {
+                    const nameChanged = normalizeNameForCompare(item.oldName) !== normalizeNameForCompare(item.latestName);
+                    const phoneChanged = normalizePhoneForCompare(item.oldPhone) !== normalizePhoneForCompare(item.latestPhone);
+                    item.isViolation = nameChanged || phoneChanged;
+                    item.violationReason = [
+                        nameChanged ? 'اختلاف الاسم' : '',
+                        phoneChanged ? 'اختلاف الهاتف' : ''
+                    ].filter(Boolean).join(' + ');
+                });
+
+                displayExpireCompareResults(matches, oldStates.size, latestStates.size);
+                showSuccessMessage(`تم العثور على ${matches.length} مشترك كان منتهي وتم تفعيله`);
+                logActivity('تحليل عرض الاكسباير', `مطابقة ${matches.length} مشترك منتهي مع الملف الحديث`);
+            }
+            function displayExpireCompareResults(matches, sourceCount, latestCount) {
+                const resultsEl = document.getElementById('expireCompareResults');
+                const containerEl = document.getElementById('expireByAgentContainer');
+                if (!resultsEl || !containerEl) return;
+
+                document.getElementById('expireMatchedCount').textContent = matches.length.toLocaleString('en-US');
+                document.getElementById('expireSourceCount').textContent = sourceCount.toLocaleString('en-US');
+                document.getElementById('expireLatestCount').textContent = latestCount.toLocaleString('en-US');
+                const grouped = matches.reduce((acc, item) => {
+                    const key = item.agentName || 'غير محدد';
+                    if (!acc[key]) acc[key] = [];
+                    acc[key].push(item);
+                    return acc;
+                }, {});
+                const agentEntries = Object.entries(grouped).sort((a, b) => b[1].length - a[1].length);
+                document.getElementById('expireAgentsCount').textContent = agentEntries.length.toLocaleString('en-US');
+
+                if (!matches.length) {
+                    containerEl.innerHTML = `<div style="padding: 12px; text-align: center; color: var(--text-secondary); border: 1px solid var(--border-light); border-radius: 10px;">لا توجد نتائج ضمن الشروط الحالية</div>`;
+                } else {
+                    containerEl.innerHTML = agentEntries.map(([agentName, items]) => {
+                        const rowsHtml = items.map((item, index) => {
+                            const oldExpireText = item.oldExpireDate ? item.oldExpireDate.toLocaleString('en-GB') : 'غير محدد';
+                            const violationBadge = item.isViolation
+                                ? `<span style="background:#ffe6e6;color:#b00020;border:1px solid #ffb3b3;padding:3px 8px;border-radius:999px;font-weight:700;">مخالف</span>`
+                                : `<span style="background:#e8f5e9;color:#1b5e20;border:1px solid #c8e6c9;padding:3px 8px;border-radius:999px;font-weight:700;">مطابق</span>`;
+                            const violationText = item.isViolation ? item.violationReason : '-';
+                            return `
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid var(--border-light); text-align: center;">${index + 1}</td>
+                                    <td style="padding: 10px; border: 1px solid var(--border-light);">${item.id}</td>
+                                    <td style="padding: 10px; border: 1px solid var(--border-light);">${item.latestName || item.oldName || 'غير محدد'}</td>
+                                    <td style="padding: 10px; border: 1px solid var(--border-light);">${item.latestPhone || item.oldPhone || 'غير محدد'}</td>
+                                    <td style="padding: 10px; border: 1px solid var(--border-light);">${oldExpireText}</td>
+                                    <td style="padding: 10px; border: 1px solid var(--border-light);">${item.statusCompact || 'غير محدد'}</td>
+                                    <td style="padding: 10px; border: 1px solid var(--border-light); text-align:center;">${violationBadge}</td>
+                                    <td style="padding: 10px; border: 1px solid var(--border-light);">${violationText}</td>
+                                </tr>
+                            `;
+                        }).join('');
+                        const violationsCount = items.filter(x => x.isViolation).length;
+                        return `
+                            <div class="section" style="margin-bottom: 15px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;">
+                                    <h4 style="margin:0; color:var(--primary-color);">${agentName}</h4>
+                                    <span style="font-weight:700; color:var(--text-secondary);">عدد المشتركين: ${items.length} | مخالفات: ${violationsCount}</span>
+                                </div>
+                                <div style="overflow-x:auto;">
+                                    <table style="width:100%; border-collapse:collapse; min-width:700px;">
+                                        <thead>
+                                            <tr style="background: rgba(128, 28, 50, 0.08);">
+                                                <th style="padding: 10px; border: 1px solid var(--border-light);">#</th>
+                                                <th style="padding: 10px; border: 1px solid var(--border-light);">معرف المشترك</th>
+                                                <th style="padding: 10px; border: 1px solid var(--border-light);">اسم المشترك</th>
+                                                <th style="padding: 10px; border: 1px solid var(--border-light);">الهاتف</th>
+                                                <th style="padding: 10px; border: 1px solid var(--border-light);">تاريخ الاكسباير السابق</th>
+                                                <th style="padding: 10px; border: 1px solid var(--border-light);">الحالة في الملف الحديث</th>
+                                                <th style="padding: 10px; border: 1px solid var(--border-light);">نتيجة المطابقة</th>
+                                                <th style="padding: 10px; border: 1px solid var(--border-light);">سبب المخالفة</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>${rowsHtml}</tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                resultsEl.classList.remove('hidden');
+            }
+            function resetExpireCompareResults() {
+                const oldInput = document.getElementById('expireOldFileInput');
+                const latestInput = document.getElementById('expireLatestFileInput');
+                const oldName = document.getElementById('expireOldFileName');
+                const latestName = document.getElementById('expireLatestFileName');
+                const resultsEl = document.getElementById('expireCompareResults');
+                const byAgentEl = document.getElementById('expireByAgentContainer');
+                const fromDate = document.getElementById('expireDateFrom');
+                const toDate = document.getElementById('expireDateTo');
+
+                expireOldData = null;
+                expireLatestData = null;
+
+                if (oldInput) oldInput.value = '';
+                if (latestInput) latestInput.value = '';
+                if (fromDate) fromDate.value = '';
+                if (toDate) toDate.value = '';
+                if (oldName) oldName.classList.add('hidden');
+                if (latestName) latestName.classList.add('hidden');
+                if (byAgentEl) byAgentEl.innerHTML = '';
+                if (resultsEl) resultsEl.classList.add('hidden');
             }
             function setupFileUpload(type) {
                 const uploadDiv = document.getElementById(type + 'FileUpload');
@@ -16653,13 +17432,14 @@
                         year: 'numeric', month: 'long', day: 'numeric',
                         hour: '2-digit', minute: '2-digit'
                     });
+                    const displayUser = log.user || log.username || log.actor || log.user_name || 'غير محدد';
                     html += `
                     <div class="activity-item">
                         <span class="activity-icon">${getActivityIcon(log.action)}</span>
                         <div class="activity-details">
                             <strong>${log.action}</strong>
                             <div style="color: #666; font-size: 0.9rem; margin-top: 5px;">${log.details}</div>
-                            <div class="activity-time">${timeStr} - ${log.user}</div>
+                            <div class="activity-time">${timeStr} - ${displayUser}</div>
                         </div>
                     </div>
                 `;
@@ -16733,6 +17513,21 @@
             if (!key) return;
             baseSubscriptionPrices[`Iraqcell_${key}_Profile_NEW`] = value;
             baseSubscriptionPrices[`Iraqcell_${key}_Profile`] = value;
+        }
+        function syncDerivedOfficialOfferPrices() {
+            const profiles = ['Bronze', 'Silver', 'Gold', 'Platinum'];
+            profiles.forEach(profile => {
+                const keyNew = `Iraqcell_${profile}_Profile_NEW`;
+                const keyOld = `Iraqcell_${profile}_Profile`;
+                const baseNew = subscriptionPrices.basic[keyNew];
+                const baseOld = subscriptionPrices.basic[keyOld];
+                if (baseNew !== undefined && baseNew !== null && !Number.isNaN(baseNew)) {
+                    subscriptionPrices.advanced.official[keyNew] = baseNew * 3;
+                }
+                if (baseOld !== undefined && baseOld !== null && !Number.isNaN(baseOld)) {
+                    subscriptionPrices.advanced.official[keyOld] = baseOld * 3;
+                }
+            });
         }
         function loadSettings() {
             const saved = JSON.parse(localStorage.getItem('appSettings') || '{}');
@@ -16811,6 +17606,7 @@
                 subscriptionPrices.advanced.promo['Iraqcell_Platinum_Profile_NEW'] = saved.advancedPlatinum;
                 subscriptionPrices.advanced.promo['Iraqcell_Platinum_Profile'] = saved.advancedPlatinum;
             }
+            syncDerivedOfficialOfferPrices();
 
             if (saved.notifications !== undefined) {
                 const checkbox = document.getElementById('enableNotifications');
@@ -16863,6 +17659,7 @@
             subscriptionPrices.advanced.promo['Iraqcell_Gold_Profile'] = advancedGold;
             subscriptionPrices.advanced.promo['Iraqcell_Platinum_Profile_NEW'] = advancedPlatinum;
             subscriptionPrices.advanced.promo['Iraqcell_Platinum_Profile'] = advancedPlatinum;
+            syncDerivedOfficialOfferPrices();
 
             const settings = {
                 bronze,
@@ -19443,6 +20240,214 @@
                 }
             }
 
+            let calculatorExpression = '';
+            let calculatorWasDragging = false;
+
+            function initDraggableCalculatorButton() {
+                const btn = document.getElementById('floatingCalculatorBtn');
+                if (!btn) return;
+
+                const storageKey = 'floating_calculator_position';
+                const savedPosition = localStorage.getItem(storageKey);
+                if (savedPosition) {
+                    try {
+                        const parsed = JSON.parse(savedPosition);
+                        if (typeof parsed.left === 'number' && typeof parsed.top === 'number') {
+                            btn.style.left = `${parsed.left}px`;
+                            btn.style.top = `${parsed.top}px`;
+                            btn.style.bottom = 'auto';
+                        }
+                    } catch (error) {
+                    }
+                }
+
+                let dragging = false;
+                let moved = false;
+                let startX = 0;
+                let startY = 0;
+                let startLeft = 0;
+                let startTop = 0;
+
+                const getPoint = (event) => event.touches ? event.touches[0] : event;
+                const maxLeft = () => window.innerWidth - btn.offsetWidth - 6;
+                const maxTop = () => window.innerHeight - btn.offsetHeight - 6;
+
+                const onStart = (event) => {
+                    const point = getPoint(event);
+                    const rect = btn.getBoundingClientRect();
+                    dragging = true;
+                    moved = false;
+                    startX = point.clientX;
+                    startY = point.clientY;
+                    startLeft = rect.left;
+                    startTop = rect.top;
+                    btn.style.bottom = 'auto';
+                };
+
+                const onMove = (event) => {
+                    if (!dragging) return;
+                    const point = getPoint(event);
+                    const dx = point.clientX - startX;
+                    const dy = point.clientY - startY;
+
+                    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+                        moved = true;
+                    }
+
+                    const nextLeft = Math.min(Math.max(startLeft + dx, 6), maxLeft());
+                    const nextTop = Math.min(Math.max(startTop + dy, 6), maxTop());
+                    btn.style.left = `${nextLeft}px`;
+                    btn.style.top = `${nextTop}px`;
+
+                    if (event.cancelable) {
+                        event.preventDefault();
+                    }
+                };
+
+                const onEnd = () => {
+                    if (!dragging) return;
+                    dragging = false;
+
+                    if (moved) {
+                        calculatorWasDragging = true;
+                        const rect = btn.getBoundingClientRect();
+                        localStorage.setItem(storageKey, JSON.stringify({ left: rect.left, top: rect.top }));
+                        setTimeout(() => {
+                            calculatorWasDragging = false;
+                        }, 180);
+                    }
+                };
+
+                btn.addEventListener('mousedown', onStart);
+                btn.addEventListener('touchstart', onStart, { passive: true });
+                window.addEventListener('mousemove', onMove);
+                window.addEventListener('touchmove', onMove, { passive: false });
+                window.addEventListener('mouseup', onEnd);
+                window.addEventListener('touchend', onEnd);
+            }
+
+            function updateCalculatorDisplay(value) {
+                const display = document.getElementById('calculatorDisplay');
+                if (!display) return;
+                display.textContent = value || '0';
+            }
+
+            function openCalculatorModal() {
+                if (calculatorWasDragging) return;
+                const modal = document.getElementById('calculatorModal');
+                if (!modal) return;
+                modal.classList.add('show');
+                updateCalculatorDisplay(calculatorExpression);
+            }
+
+            function closeCalculatorModal() {
+                const modal = document.getElementById('calculatorModal');
+                if (!modal) return;
+                modal.classList.remove('show');
+            }
+
+            function appendCalculatorValue(value) {
+                calculatorExpression += value;
+                updateCalculatorDisplay(calculatorExpression);
+            }
+
+            function evaluateExpression(expressionText = calculatorExpression) {
+                if (!expressionText) return null;
+                if (!/^[0-9+\-*/().\s]+$/.test(expressionText)) {
+                    throw new Error('invalid');
+                }
+                const value = Function('"use strict"; return (' + expressionText + ')')();
+                if (!Number.isFinite(value)) {
+                    throw new Error('invalid');
+                }
+                return value;
+            }
+
+            function setCalculatorResult(value) {
+                if (!Number.isFinite(value)) {
+                    throw new Error('invalid');
+                }
+                calculatorExpression = String(value);
+                updateCalculatorDisplay(calculatorExpression);
+            }
+
+            function applyScientificOperation(type) {
+                try {
+                    const current = evaluateExpression();
+                    if (current === null) return;
+                    let result = current;
+
+                    if (type === 'percent') result = current / 100;
+                    else if (type === 'square') result = Math.pow(current, 2);
+                    else if (type === 'sqrt') result = Math.sqrt(current);
+                    else if (type === 'inverse') result = 1 / current;
+                    else if (type === 'sin') result = Math.sin(current * Math.PI / 180);
+                    else if (type === 'cos') result = Math.cos(current * Math.PI / 180);
+                    else if (type === 'tan') result = Math.tan(current * Math.PI / 180);
+                    else if (type === 'log') result = Math.log10(current);
+                    else if (type === 'ln') result = Math.log(current);
+                    else if (type === 'abs') result = Math.abs(current);
+                    else if (type === 'negate') result = -current;
+                    else throw new Error('invalid');
+
+                    setCalculatorResult(result);
+                } catch (error) {
+                    calculatorExpression = '';
+                    updateCalculatorDisplay('خطأ');
+                    setTimeout(() => updateCalculatorDisplay(''), 900);
+                }
+            }
+
+            function clearCalculatorDisplay() {
+                calculatorExpression = '';
+                updateCalculatorDisplay('');
+            }
+
+            function deleteCalculatorChar() {
+                calculatorExpression = calculatorExpression.slice(0, -1);
+                updateCalculatorDisplay(calculatorExpression);
+            }
+
+            function calculateResult() {
+                try {
+                    const result = evaluateExpression();
+                    if (result === null) return;
+                    setCalculatorResult(result);
+                } catch (error) {
+                    calculatorExpression = '';
+                    updateCalculatorDisplay('خطأ');
+                    setTimeout(() => updateCalculatorDisplay(''), 900);
+                }
+            }
+
+            window.addEventListener('keydown', function (event) {
+                const modal = document.getElementById('calculatorModal');
+                if (!modal || !modal.classList.contains('show')) return;
+
+                const allowedKeys = '0123456789+-*/().';
+                if (allowedKeys.includes(event.key)) {
+                    appendCalculatorValue(event.key);
+                } else if (event.key === 'Enter' || event.key === '=') {
+                    event.preventDefault();
+                    calculateResult();
+                } else if (event.key === 'Backspace') {
+                    event.preventDefault();
+                    deleteCalculatorChar();
+                } else if (event.key === 'Escape') {
+                    closeCalculatorModal();
+                } else if (event.key.toLowerCase() === 'c') {
+                    clearCalculatorDisplay();
+                } else if (event.key === '%') {
+                    applyScientificOperation('percent');
+                }
+            });
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initDraggableCalculatorButton);
+            } else {
+                initDraggableCalculatorButton();
+            }
+
             window.addEventListener('message', function (event) {
                 if (event.data && event.data.type === 'AUTO_LOGIN') {
                     const loginUsername = document.getElementById('loginUsername');
@@ -19485,6 +20490,65 @@
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
                     <button type="button" class="btn btn-danger" style="flex: 1;"
                         onclick="closePercentageSendOptions()">إلغاء</button>
+                </div>
+            </div>
+        </div>
+        <button id="floatingCalculatorBtn" class="floating-calculator-btn" title="آلة حاسبة"
+            onclick="openCalculatorModal()">🧮</button>
+        <div id="calculatorModal" class="modal" onclick="if(event.target===this) closeCalculatorModal()">
+            <div class="modal-content calculator-modal-content">
+                <div class="modal-header">
+                    <h3>آلة حاسبة</h3>
+                    <button class="modal-close" onclick="closeCalculatorModal()">&times;</button>
+                </div>
+                <div id="calculatorDisplay" class="calculator-display">0</div>
+
+                <div class="calculator-toolbar">
+                    <button class="calc-btn operator" onclick="clearCalculatorDisplay()">C</button>
+                    <button class="calc-btn operator" onclick="deleteCalculatorChar()">⌫</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('percent')">%</button>
+                    <button class="calc-btn operator" onclick="appendCalculatorValue('/')">÷</button>
+                </div>
+
+                <div class="calculator-scientific-grid">
+                    <button class="calc-btn scientific" onclick="appendCalculatorValue('**')">xʸ</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('sqrt')">√x</button>
+                    <button class="calc-btn scientific" onclick="appendCalculatorValue(String(Math.PI))">π</button>
+                    <button class="calc-btn scientific" onclick="appendCalculatorValue(String(Math.E))">e</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('abs')">|x|</button>
+
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('sin')">sin</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('cos')">cos</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('tan')">tan</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('log')">log</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('ln')">ln</button>
+
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('square')">x²</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('inverse')">1/x</button>
+                    <button class="calc-btn scientific" onclick="applyScientificOperation('negate')">±</button>
+                    <button class="calc-btn operator" onclick="appendCalculatorValue('(')">(</button>
+                    <button class="calc-btn operator" onclick="appendCalculatorValue(')')">)</button>
+                </div>
+
+                <div class="calculator-main-grid">
+                    <button class="calc-btn" onclick="appendCalculatorValue('7')">7</button>
+                    <button class="calc-btn" onclick="appendCalculatorValue('8')">8</button>
+                    <button class="calc-btn" onclick="appendCalculatorValue('9')">9</button>
+                    <button class="calc-btn operator" onclick="appendCalculatorValue('*')">×</button>
+
+                    <button class="calc-btn" onclick="appendCalculatorValue('4')">4</button>
+                    <button class="calc-btn" onclick="appendCalculatorValue('5')">5</button>
+                    <button class="calc-btn" onclick="appendCalculatorValue('6')">6</button>
+                    <button class="calc-btn operator" onclick="appendCalculatorValue('-')">−</button>
+
+                    <button class="calc-btn" onclick="appendCalculatorValue('1')">1</button>
+                    <button class="calc-btn" onclick="appendCalculatorValue('2')">2</button>
+                    <button class="calc-btn" onclick="appendCalculatorValue('3')">3</button>
+                    <button class="calc-btn operator" onclick="appendCalculatorValue('+')">+</button>
+
+                    <button class="calc-btn wide" onclick="appendCalculatorValue('0')">0</button>
+                    <button class="calc-btn" onclick="appendCalculatorValue('.')">.</button>
+                    <button class="calc-btn equal" onclick="calculateResult()">=</button>
                 </div>
             </div>
         </div>
